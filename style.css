@@ -74,6 +74,15 @@ select {
   padding: 0.8rem 1.2rem;
   font-size: 2.4rem;
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.selection-btn:hover {
+  background-color: #ccc;
+}
+
+.selection-btn:active {
+  background-color: #aaa;
 }
 
 .selection-btn {
