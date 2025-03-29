@@ -4,9 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="style.css" />
     <script type="module" src="src/js/controller.js"></script>
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <div class="main">
+      <div class="container">
+        <div class="div-logo">
+          <img
+            src="https://media.api-sports.io/football/leagues/39.png"
+            class="logo"
+          />
+        </div>
+        <div class="selection">
+          <ul class="selection-list">
+            <li class="selection-item">
+              <button class="selection-btn league-table-btn">
+                League table
+              </button>
+            </li>
+            <li class="selection-item">
+              <button class="selection-btn matches-btn">Matches</button>
+            </li>
+            <li class="selection-item">
+              <button class="selection-btn top-scorers-btn">Top scorers</button>
+            </li>
+            <li class="selection-item">
+              <select class="select-season">
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+              </select>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
