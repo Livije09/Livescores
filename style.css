@@ -106,6 +106,7 @@ select {
 
 .table-selection-btn {
   background-color: #ffe58f;
+  font-size: 1.6rem;
 }
 
 .table-selection-btn:hover {
@@ -124,10 +125,59 @@ select {
   background-color: #eee;
 }
 
-.table-header {
-  display: flex;
+.table {
+  display: grid;
 }
 
-.table-header-p {
+.table-header,
+.table-row {
+  display: flex;
+  align-items: center;
+  gap: 4.4rem;
   font-size: 1.6rem;
+  padding: 0 1.6rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-header {
+  padding-left: 1.3rem;
+}
+
+.table-header-p,
+.table-p {
+  display: flex;
+  justify-content: center;
+  width: 2.2rem;
+}
+
+.table-header-p:nth-child(2),
+.table-p:nth-child(2) {
+  width: 20rem;
+  justify-content: flex-start;
+}
+
+.table-header-p:nth-child(3),
+.table-p:nth-child(3) {
+  margin-left: 15rem;
+}
+
+.table-body {
+  display: grid;
+  grid-auto-rows: 3.2rem;
+}
+
+.club-team {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  width: 20rem;
+}
+
+.club-logo {
+  height: 2rem;
+}
+
+.club-last-five {
+  list-style: none;
+  display: flex;
 }
