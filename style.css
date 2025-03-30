@@ -45,20 +45,29 @@ select {
   cursor: pointer;
 }
 
-.selection {
+.selection,
+.table-selection,
+.table-header {
   margin-top: 0.04rem;
   border: solid #333;
   border-top: none;
 }
 
-.selection-list {
+.table-selection,
+.table-header {
+  margin-top: 0;
+}
+
+.selection-list,
+.table-selection-list {
   list-style: none;
   display: flex;
   /* gap: 1rem;
   padding: 0.8rem 0.8rem; */
 }
 
-.selection-item {
+.selection-item,
+.table-selection-item {
   display: flex;
   border-right: 3px solid #333;
 }
@@ -70,7 +79,8 @@ select {
 }
 
 .selection-btn,
-.select-season {
+.select-season,
+.table-selection-btn {
   padding: 0.8rem 1.2rem;
   font-size: 2.4rem;
   cursor: pointer;
@@ -82,13 +92,42 @@ select {
 }
 
 .selection-btn:active {
-  background-color: #aaa;
+  background-color: #ccc;
 }
 
-.selection-btn {
+.selection-btn,
+.table-selection-btn {
   border: none;
+}
+
+.selection-btn-active {
+  background-color: #c0e1ff;
+}
+
+.table-selection-btn {
+  background-color: #ffe58f;
+}
+
+.table-selection-btn:hover {
+  background-color: #f0d374;
+}
+
+.table-selection-btn:active {
+  background-color: #f0d374;
+}
+
+.table-selection-btn-active {
+  background-color: #f0a174;
 }
 
 .select-season {
   background-color: #eee;
+}
+
+.table-header {
+  display: flex;
+}
+
+.table-header-p {
+  font-size: 1.6rem;
 }
