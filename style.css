@@ -27,6 +27,8 @@ select {
   margin-top: 5rem;
 }
 
+/* ////////////////////////////////////////////////////////// */
+
 .div-logo,
 .selection {
   width: 100rem;
@@ -129,18 +131,26 @@ select {
   display: grid;
 }
 
+.table-row {
+  border: 3px solid #333;
+}
+
 .table-header,
 .table-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4.4rem;
   font-size: 1.6rem;
   padding: 0 1.6rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: none;
+  border-top: none;
+  box-shadow: inset 0px -1px 0px #ccc;
 }
 
 .table-header {
-  padding-left: 1.3rem;
+  /* padding-left: 1.3rem; */
+  height: 2.5rem;
 }
 
 .table-header-p,
@@ -158,12 +168,43 @@ select {
 
 .table-header-p:nth-child(3),
 .table-p:nth-child(3) {
-  margin-left: 15rem;
+  margin-left: auto;
+}
+
+.table-header-p:nth-child(10),
+.table-p:nth-child(10) {
+  margin-left: auto;
+  margin-right: 5rem;
 }
 
 .table-body {
   display: grid;
-  grid-auto-rows: 3.2rem;
+  grid-auto-rows: 2.5rem;
+}
+
+.table-row:last-child {
+  border-bottom: 3px solid #333;
+  box-shadow: none;
+}
+
+.club-position {
+  border-radius: 5px;
+}
+
+.club-position-cl {
+  background-color: #004682;
+}
+
+.club-position-uel {
+  background-color: #7f0029;
+}
+
+.club-position-col {
+  background-color: #b8860b;
+}
+
+.club-position-relegation {
+  background-color: #bd0000;
 }
 
 .club-team {
@@ -180,4 +221,26 @@ select {
 .club-last-five {
   list-style: none;
   display: flex;
+  gap: 0.4rem;
+}
+
+.club-last-five-p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 5px;
+}
+
+.club-last-five-w {
+  background-color: #00a83f;
+}
+
+.club-last-five-l {
+  background-color: #dc0000;
+}
+
+.club-last-five-d {
+  background-color: #f3a000;
 }
