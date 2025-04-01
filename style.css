@@ -24,7 +24,7 @@ select {
   justify-content: center;
   max-width: 100rem;
   margin: 0 auto;
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 
 /* ////////////////////////////////////////////////////////// */
@@ -45,12 +45,12 @@ select {
 
 .logo {
   cursor: pointer;
+  width: 10%;
 }
 
 .selection,
 .table-selection,
 .table-header {
-  margin-top: 0.04rem;
   border: solid #333;
   border-top: none;
 }
