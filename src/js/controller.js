@@ -6,21 +6,40 @@ import TableView from "./views/TableView.js";
 
 const controlShowLeague = async function (
   league = model.state.league.id,
-  season = model.state.season
+  season = model.state.season,
+  table = model.state.table
 ) {
   try {
     await model.getLeague(league, season);
     model.changeSeason(season);
-    TableView.showTable(model.state.teams);
+    TableView.showTable(model.state.teams[table]);
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
   } catch (e) {
     console.error(e);
   }
 };
 
+const controlShowDetail = function (team) {
+  try {
+    TableView.showDetails(team);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const controlHideDetail = function () {
+  try {
+    TableView.hideDetails();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const init = async function () {
   TableView.addHandlerPageLoaded(controlShowLeague);
   SelectionView.addHandlerChangeSeason(controlShowLeague);
+  TableView.addHandlerShowDetail(controlShowDetail);
+  TableView.addHandlerHideDetail(controlHideDetail);
 };
 
 // init();

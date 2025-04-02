@@ -8,6 +8,7 @@ export const state = {
     name: "",
   },
   season: DEFAULT_SEASON,
+  table: 0,
   teams: [],
 };
 
@@ -21,10 +22,15 @@ export const getLeague = async function (league, season) {
       console.log(result.response);
       const { id, country, logo, name } = result.response[0].league;
       state.league = { id, country, logo, name };
-
-      result.response[0].league.standings[0].forEach((club) =>
-        state.teams.push(club)
-      );
+      state.teams = [];
+      result.response[0].league.standings.forEach((standing) => {
+        const clubArray = [];
+        standing.forEach((club) => {
+          clubArray.push(club);
+        });
+        state.teams.push(clubArray);
+        console.log(state.teams);
+      });
     })
     .catch((error) => console.log("error", error));
 };

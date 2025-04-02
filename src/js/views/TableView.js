@@ -1,14 +1,70 @@
+import { SHIFT_TOP } from "../config";
 import View from "./View";
 
 export class TableView extends View {
-  _parentElement = document.querySelector(".table-body");
+  #parentElement = document.querySelector(".table-body");
+  #clubDetail = document.querySelector(".club-detail");
 
   constructor() {
     super(document.querySelector(".table-body"));
   }
 
   #clear() {
-    this._parentElement.innerHTML = "";
+    this.#parentElement.innerHTML = "";
+  }
+
+  #generateRecentForm(team) {
+    let html = "";
+    const lastFive = team.form.split("");
+    lastFive.forEach((match) => {
+      html += `
+                    <li class="club-last-five-item">
+                      <p class="club-last-five-${match.toLowerCase()} club-last-five-p">${match}</p>
+                    </li>`;
+    });
+    return html;
+  }
+
+  #checkStatus(team) {
+    if (!team.description) return;
+
+    if (team.description.includes("Champions League"))
+      return "club-position-cl";
+
+    if (team.description.includes("Europa League")) return "club-position-uel";
+
+    if (team.description.includes(" Conference League"))
+      return "club-position-col";
+
+    if (team.description.includes("Relegation"))
+      return "club-position-relegation";
+
+    if (team.description.includes("Play-off")) return "club-position-play-off";
+
+    if (team.description.includes("Promotion"))
+      return "club-position-promotion";
+
+    if (team.description.includes("Championship Round"))
+      return "club-championship-round";
+  }
+
+  #giveDescription(team) {
+    if (!team.description) return "";
+    return `${team.description}`;
+  }
+
+  showDetails(team) {
+    if (team.dataset.description === "") return;
+
+    const rect = team.getBoundingClientRect();
+    this.#clubDetail.style.display = "block";
+    this.#clubDetail.innerHTML = `${team.dataset.description}`;
+    this.#clubDetail.style.left = rect.left + window.scrollX + "px";
+    this.#clubDetail.style.top = rect.top + SHIFT_TOP + window.scrollY + "px";
+  }
+
+  hideDetails() {
+    this.#clubDetail.style.display = "none";
   }
 
   showTable(teams) {
@@ -17,7 +73,11 @@ export class TableView extends View {
     teams.forEach((team) => {
       const html = `
               <div class="table-row">
-                <p class="club-position table-p">${team.rank}</p>
+                <p class="club-position ${this.#checkStatus(
+                  team
+                )} table-p" data-description="${this.#giveDescription(team)}">${
+        team.rank
+      }.</p>
                 <div class="club-team table-p">
                   <img
                     class="club-logo"
@@ -37,29 +97,33 @@ export class TableView extends View {
                 }</p>
                 <p class="club-points table-p">${team.points}</p>
                 <ul class="club-last-five table-p">
-                  <li class="club-last-five-item">
-                    <p class="club-last-five-w club-last-five-p">W</p>
-                  </li>
-                  <li class="club-last-five-item">
-                    <p class="club-last-five-w club-last-five-p">W</p>
-                  </li>
-                  <li class="club-last-five-item">
-                    <p class="club-last-five-l club-last-five-p">L</p>
-                  </li>
-                  <li class="club-last-five-item">
-                    <p class="club-last-five-w club-last-five-p">W</p>
-                  </li>
-                  <li class="club-last-five-item">
-                    <p class="club-last-five-d club-last-five-p">D</p>
-                  </li>
+                  ${this.#generateRecentForm(team)}
                 </ul>
               </div>`;
-      this._parentElement.insertAdjacentHTML("beforeend", html);
+      this.#parentElement.insertAdjacentHTML("beforeend", html);
     });
   }
 
   addHandlerPageLoaded(handler) {
     document.addEventListener("DOMContentLoaded", function () {
+      handler();
+    });
+  }
+
+  addHandlerShowDetail(handler) {
+    this.#parentElement.addEventListener("mouseover", function (e) {
+      const position = e.target.closest(".club-position");
+      if (!position) return;
+
+      handler(position);
+    });
+  }
+
+  addHandlerHideDetail(handler) {
+    this.#parentElement.addEventListener("mouseout", function (e) {
+      const position = e.target.closest(".club-position");
+      if (!position) return;
+
       handler();
     });
   }
