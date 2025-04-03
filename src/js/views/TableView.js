@@ -29,23 +29,22 @@ export class TableView extends View {
     if (!team.description) return;
 
     if (team.description.includes("Champions League"))
-      return "club-position-cl";
+      return "club-position-blue";
 
-    if (team.description.includes("Europa League")) return "club-position-uel";
+    if (team.description.includes("Europa League"))
+      return "club-position-brown";
 
-    if (team.description.includes(" Conference League"))
-      return "club-position-col";
+    if (team.description.includes("Conference League"))
+      return "club-position-yellow";
 
-    if (team.description.includes("Relegation"))
-      return "club-position-relegation";
+    if (team.description.includes("Relegation")) return "club-position-red";
 
-    if (team.description.includes("Play-off")) return "club-position-play-off";
+    if (team.description.includes("Play-off")) return "club-position-brown";
 
-    if (team.description.includes("Promotion"))
-      return "club-position-promotion";
+    if (team.description.includes("Promotion")) return "club-position-blue";
 
     if (team.description.includes("Championship Round"))
-      return "club-championship-round";
+      return "club-championship-blue";
   }
 
   #giveDescription(team) {

@@ -1,5 +1,6 @@
 import { DEFAULT_LEAGUE, DEFAULT_SEASON } from "./config.js";
 import * as model from "./model.js";
+import HeaderView from "./views/HeaderView.js";
 import LogoView from "./views/LogoView.js";
 import SelectionView from "./views/selectionView.js";
 import TableView from "./views/TableView.js";
@@ -35,11 +36,21 @@ const controlHideDetail = function () {
   }
 };
 
+const controlSort = function (flag, select) {
+  try {
+    model.sortTeams(flag, select);
+    TableView.showTable(model.state.teams[model.state.table]);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const init = async function () {
   TableView.addHandlerPageLoaded(controlShowLeague);
   SelectionView.addHandlerChangeSeason(controlShowLeague);
   TableView.addHandlerShowDetail(controlShowDetail);
   TableView.addHandlerHideDetail(controlHideDetail);
+  HeaderView.addHandlerSort(controlSort);
 };
 
-// init();
+init();
