@@ -3,6 +3,7 @@ import * as model from "./model.js";
 import HeaderView from "./views/HeaderView.js";
 import LogoView from "./views/LogoView.js";
 import SelectionView from "./views/selectionView.js";
+import TableSelectionView from "./views/TableSelectionView.js";
 import TableView from "./views/TableView.js";
 
 const controlShowLeague = async function (
@@ -13,7 +14,7 @@ const controlShowLeague = async function (
   try {
     await model.getLeague(league, season);
     model.changeSeason(season);
-    TableView.showTable(model.state.teams[table]);
+    TableView.showTable(model.state.teams[table], model.state.where);
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
   } catch (e) {
     console.error(e);
@@ -39,7 +40,24 @@ const controlHideDetail = function () {
 const controlSort = function (flag, select) {
   try {
     model.sortTeams(flag, select);
-    TableView.showTable(model.state.teams[model.state.table]);
+    TableView.showTable(
+      model.state.teams[model.state.table],
+      model.state.where
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const controlChangeWhere = function (
+  table = model.state.table,
+  whichTable = model.state.where
+) {
+  try {
+    console.log(model.state.teams[table]);
+    model.changeWhere(whichTable);
+    model.sortWins();
+    TableSelectionView.changeWhere(model.state.teams[table], whichTable);
   } catch (e) {
     console.log(e);
   }
@@ -51,6 +69,7 @@ const init = async function () {
   TableView.addHandlerShowDetail(controlShowDetail);
   TableView.addHandlerHideDetail(controlHideDetail);
   HeaderView.addHandlerSort(controlSort);
+  TableSelectionView.addHandlerChangeTable(controlChangeWhere);
 };
 
 init();

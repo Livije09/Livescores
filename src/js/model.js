@@ -1,4 +1,9 @@
-import { DEFAULT_LEAGUE, DEFAULT_SEASON, REQUEST_OPTIONS } from "./config.js";
+import {
+  DEFAULT_LEAGUE,
+  DEFAULT_SEASON,
+  REQUEST_OPTIONS,
+  WHICH_TABLE,
+} from "./config.js";
 
 export const state = {
   league: {
@@ -9,6 +14,7 @@ export const state = {
   },
   season: DEFAULT_SEASON,
   table: 0,
+  where: 0,
   teams: [],
 };
 
@@ -40,24 +46,18 @@ export const changeSeason = function (season = state.season) {
 };
 
 export const sortTeams = function (direction, select) {
+  if (select.includes("team")) {
+    direction
+      ? state.teams[state.table].sort((a, b) =>
+          a.team.name.localeCompare(b.team.name)
+        )
+      : state.teams[state.table].sort((a, b) =>
+          b.team.name.localeCompare(a.team.name)
+        );
+  }
   if (select.includes(".")) {
-    if (select.includes("team")) {
-      direction
-        ? state.teams[state.table].sort((a, b) =>
-            b.team.name.localeCompare(a.team.name)
-          )
-        : state.teams[state.table].sort((a, b) =>
-            a.team.name.localeCompare(b.team.name)
-          );
-    }
-
-    if (select.includes("goals")) {
-      direction
-        ? state.teams[state.table].sort((a, b) => b.goalsDiff - a.goalsDiff)
-        : state.teams[state.table].sort((a, b) => a.goalsDiff - b.goalsDiff);
-    }
-
-    const doubleSelect = select.split(".");
+    const selection = WHICH_TABLE[state.where] + select;
+    const doubleSelect = selection.split(".");
     direction
       ? state.teams[state.table].sort(
           (a, b) =>
@@ -79,4 +79,35 @@ export const sortTeams = function (direction, select) {
         ? state.teams[state.table].sort((a, b) => b[select] - a[select])
         : state.teams[state.table].sort((a, b) => a[select] - b[select]);
   }
+  if (select.includes("goals")) {
+    direction
+      ? state.teams[state.table].sort((a, b) => {
+          const aGoals = a[WHICH_TABLE[state.where]].goals;
+          const bGoals = b[WHICH_TABLE[state.where]].goals;
+
+          const aDiff = aGoals.for - aGoals.against;
+          const bDiff = bGoals.for - bGoals.against;
+
+          return bDiff - aDiff;
+        })
+      : state.teams[state.table].sort((a, b) => {
+          const aGoals = a[WHICH_TABLE[state.where]].goals;
+          const bGoals = b[WHICH_TABLE[state.where]].goals;
+
+          const aDiff = aGoals.against - aGoals.for;
+          const bDiff = bGoals.against - bGoals.for;
+
+          return bDiff - aDiff;
+        });
+  }
+};
+
+export const changeWhere = function (where) {
+  state.where = where;
+};
+
+export const sortWins = function () {
+  state.teams[state.table].sort(
+    (a, b) => b[WHICH_TABLE[state.where]].win - a[WHICH_TABLE[state.where]].win
+  );
 };

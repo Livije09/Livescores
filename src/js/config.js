@@ -9,5 +9,6 @@ export const REQUEST_OPTIONS = {
 };
 
 export const DEFAULT_SEASON = 2021;
-export const DEFAULT_LEAGUE = 286;
+export const DEFAULT_LEAGUE = 39;
 export const SHIFT_TOP = 22;
+export const WHICH_TABLE = ["all", "home", "away"];

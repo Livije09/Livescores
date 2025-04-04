@@ -51,13 +51,19 @@
         <div class="table-selection">
           <ul class="table-selection-list">
             <li class="table-selection-item">
-              <button class="table-selection-btn overall-btn">Overall</button>
+              <button class="table-selection-btn overall-btn" data-where="0">
+                Overall
+              </button>
             </li>
             <li class="table-selection-item">
-              <button class="table-selection-btn home-btn">Home</button>
+              <button class="table-selection-btn home-btn" data-where="1">
+                Home
+              </button>
             </li>
             <li class="table-selection-item">
-              <button class="table-selection-btn away-btn">Away</button>
+              <button class="table-selection-btn away-btn" data-where="2">
+                Away
+              </button>
             </li>
           </ul>
         </div>
@@ -71,13 +77,11 @@
                 #
               </p>
               <p class="team table-header-p" data-header="team.name">Team</p>
-              <p class="games-played table-header-p" data-header="all.played">
-                P
-              </p>
-              <p class="wins table-header-p" data-header="all.win">W</p>
-              <p class="draws table-header-p" data-header="all.draw">D</p>
-              <p class="loses table-header-p" data-header="all.lose">L</p>
-              <p class="goals table-header-p" data-header="all.goals">Goals</p>
+              <p class="games-played table-header-p" data-header=".played">P</p>
+              <p class="wins table-header-p" data-header=".win">W</p>
+              <p class="draws table-header-p" data-header=".draw">D</p>
+              <p class="loses table-header-p" data-header=".lose">L</p>
+              <p class="goals table-header-p" data-header="goals">Goals</p>
               <p class="goal-difference table-header-p" data-header="goalsDiff">
                 GD
               </p>
