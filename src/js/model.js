@@ -46,59 +46,59 @@ export const changeSeason = function (season = state.season) {
 };
 
 export const sortTeams = function (direction, select) {
-  if (select.includes("team")) {
-    direction
-      ? state.teams[state.table].sort((a, b) =>
-          a.team.name.localeCompare(b.team.name)
-        )
-      : state.teams[state.table].sort((a, b) =>
-          b.team.name.localeCompare(a.team.name)
-        );
-  }
   if (select.includes(".")) {
-    const selection = WHICH_TABLE[state.where] + select;
-    const doubleSelect = selection.split(".");
-    direction
-      ? state.teams[state.table].sort(
-          (a, b) =>
-            b[doubleSelect[0]][doubleSelect[1]] -
-            a[doubleSelect[0]][doubleSelect[1]]
-        )
-      : state.teams[state.table].sort(
-          (a, b) =>
-            a[doubleSelect[0]][doubleSelect[1]] -
-            b[doubleSelect[0]][doubleSelect[1]]
-        );
+    if (select.includes("team")) {
+      direction
+        ? state.teams[state.table].sort((a, b) =>
+            a.team.name.localeCompare(b.team.name)
+          )
+        : state.teams[state.table].sort((a, b) =>
+            b.team.name.localeCompare(a.team.name)
+          );
+    } else {
+      const selection = WHICH_TABLE[state.where] + select;
+      const doubleSelect = selection.split(".");
+      direction
+        ? state.teams[state.table].sort(
+            (a, b) =>
+              b[doubleSelect[0]][doubleSelect[1]] -
+              a[doubleSelect[0]][doubleSelect[1]]
+          )
+        : state.teams[state.table].sort(
+            (a, b) =>
+              a[doubleSelect[0]][doubleSelect[1]] -
+              b[doubleSelect[0]][doubleSelect[1]]
+          );
+    }
   } else {
     if (select.includes("rank"))
       direction
         ? state.teams[state.table].sort((a, b) => a[select] - b[select])
         : state.teams[state.table].sort((a, b) => b[select] - a[select]);
-    else
+    else if (select.includes("goals")) {
+      direction
+        ? state.teams[state.table].sort((a, b) => {
+            const aGoals = a[WHICH_TABLE[state.where]].goals;
+            const bGoals = b[WHICH_TABLE[state.where]].goals;
+
+            const aDiff = aGoals.for - aGoals.against;
+            const bDiff = bGoals.for - bGoals.against;
+
+            return bDiff - aDiff;
+          })
+        : state.teams[state.table].sort((a, b) => {
+            const aGoals = a[WHICH_TABLE[state.where]].goals;
+            const bGoals = b[WHICH_TABLE[state.where]].goals;
+
+            const aDiff = aGoals.against - aGoals.for;
+            const bDiff = bGoals.against - bGoals.for;
+
+            return bDiff - aDiff;
+          });
+    } else
       direction
         ? state.teams[state.table].sort((a, b) => b[select] - a[select])
         : state.teams[state.table].sort((a, b) => a[select] - b[select]);
-  }
-  if (select.includes("goals")) {
-    direction
-      ? state.teams[state.table].sort((a, b) => {
-          const aGoals = a[WHICH_TABLE[state.where]].goals;
-          const bGoals = b[WHICH_TABLE[state.where]].goals;
-
-          const aDiff = aGoals.for - aGoals.against;
-          const bDiff = bGoals.for - bGoals.against;
-
-          return bDiff - aDiff;
-        })
-      : state.teams[state.table].sort((a, b) => {
-          const aGoals = a[WHICH_TABLE[state.where]].goals;
-          const bGoals = b[WHICH_TABLE[state.where]].goals;
-
-          const aDiff = aGoals.against - aGoals.for;
-          const bDiff = bGoals.against - bGoals.for;
-
-          return bDiff - aDiff;
-        });
   }
 };
 
