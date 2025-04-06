@@ -16,6 +16,7 @@ export const state = {
   table: 0,
   where: 0,
   teams: [],
+  currentTable: [],
 };
 
 export const getLeague = async function (league, season) {
@@ -36,7 +37,8 @@ export const getLeague = async function (league, season) {
         });
         state.teams.push(clubArray);
       });
-      console.log(state.teams[state.table], state.table);
+      state.currentTable = state.teams[0];
+      console.log(state.currentTable);
     })
     .catch((error) => console.log("error", error));
 };
@@ -106,8 +108,12 @@ export const changeWhere = function (where) {
   state.where = where;
 };
 
-export const sortWins = function () {
-  state.teams[state.table].sort(
-    (a, b) => b[WHICH_TABLE[state.where]].win - a[WHICH_TABLE[state.where]].win
-  );
+export const sortByPoints = function () {
+  state.currentTable.sort((a, b) => b.points - a.points);
+  state.currentTable.forEach((team, i) => (team.rank = i + 1));
+};
+
+export const updatePoints = function (teams) {
+  console.log(teams);
+  state.currentTable.forEach((team, i) => (team.points = teams[i]));
 };

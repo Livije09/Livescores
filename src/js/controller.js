@@ -8,13 +8,12 @@ import TableView from "./views/TableView.js";
 
 const controlShowLeague = async function (
   league = model.state.league.id,
-  season = model.state.season,
-  table = model.state.table
+  season = model.state.season
 ) {
   try {
     await model.getLeague(league, season);
     model.changeSeason(season);
-    TableView.showTable(model.state.teams[table], model.state.where);
+    TableView.showTable(model.state.currentTable, model.state.where);
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
   } catch (e) {
     console.error(e);
@@ -49,15 +48,16 @@ const controlSort = function (flag, select) {
   }
 };
 
-const controlChangeWhere = function (
-  table = model.state.table,
-  whichTable = model.state.where
-) {
+const controlChangeWhere = function (whichTable = model.state.where) {
   try {
-    console.log(model.state.teams[table]);
     model.changeWhere(whichTable);
-    model.sortWins();
-    TableSelectionView.changeWhere(model.state.teams[table], whichTable);
+    const newPoints = TableSelectionView.changePoints(
+      model.state.teams[model.state.table],
+      model.state.where
+    );
+    model.updatePoints(newPoints);
+    model.sortByPoints();
+    TableSelectionView.changeWhere(model.state.currentTable, whichTable);
   } catch (e) {
     console.log(e);
   }
