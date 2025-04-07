@@ -130,7 +130,11 @@ select {
 }
 
 .table-selection-btn-active {
-  background-color: #f0a174;
+  background-color: #f7b894;
+}
+
+.table-selection-btn-active:hover {
+  background-color: #f7b894;
 }
 
 .select-season {

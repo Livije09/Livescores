@@ -58,6 +58,7 @@ const controlChangeWhere = function (whichTable = model.state.where) {
     model.updatePoints(newPoints);
     model.sortByPoints();
     TableSelectionView.changeWhere(model.state.currentTable, whichTable);
+    TableSelectionView.changeSelectedTab(whichTable);
   } catch (e) {
     console.log(e);
   }

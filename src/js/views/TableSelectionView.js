@@ -36,6 +36,12 @@ export class TableSelection extends View {
     return updatedPoints;
   }
 
+  changeSelectedTab(tab) {
+    const btns = document.querySelectorAll(".table-selection-btn");
+    btns.forEach((btn) => btn.classList.remove("table-selection-btn-active"));
+    btns[tab].classList.add("table-selection-btn-active");
+  }
+
   addHandlerChangeTable(handler) {
     this.#parentElement.addEventListener("click", function (e) {
       const btn = e.target.closest(".table-selection-btn");
