@@ -12,6 +12,7 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
+    await model.getTopScorers(league, season);
     model.changeSeason(season);
     TableView.showTable(model.state.currentTable, model.state.where);
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
@@ -73,4 +74,4 @@ const init = async function () {
   TableSelectionView.addHandlerChangeTable(controlChangeWhere);
 };
 
-init();
+// init();

@@ -62,13 +62,20 @@ select {
 
 .selection,
 .table-selection,
-.table-header {
+.table-header,
+.top-scorers-header {
   border: solid #333;
   border-top: none;
 }
 
+.top-scorers-header,
+.top-scorers-body {
+  cursor: default;
+}
+
 .table-selection,
-.table-header {
+.table-header,
+.top-scorers-header {
   margin-top: 0;
 }
 
@@ -145,12 +152,16 @@ select {
   display: grid;
 }
 
-.table-row {
+.table-row,
+.top-scorers-row {
   border: 3px solid #333;
+  height: 2.5rem;
 }
 
 .table-header,
-.table-row {
+.table-row,
+.top-scorers-header,
+.top-scorers-row {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,12 +173,15 @@ select {
   box-shadow: inset 0px -1px 0px #ccc;
 }
 
-.table-header {
+.table-header,
+.top-scorers-header {
   height: 2.5rem;
 }
 
 .table-header-p,
-.table-p {
+.top-scorers-header-p,
+.table-p,
+.top-scorers-p {
   display: flex;
   justify-content: center;
   width: 2.2rem;
@@ -182,9 +196,27 @@ select {
 }
 
 .table-header-p:nth-child(2),
-.table-p:nth-child(2) {
+.table-p:nth-child(2),
+.top-scorers-header-p:nth-child(2),
+.top-scorers-p:nth-child(2) {
   width: 20rem;
   justify-content: flex-start;
+}
+
+.top-scorers-header-p:nth-child(3),
+.top-scorers-p:nth-child(3) {
+  width: 20rem;
+  justify-content: flex-start;
+}
+
+.top-scorers-header-p:nth-child(4),
+.top-scorers-p:nth-child(4) {
+  margin-left: auto;
+}
+
+.top-scorers-header-p:last-child,
+.top-scorers-p:last-child {
+  margin-right: 1.6rem;
 }
 
 .table-header-p:nth-child(3),
@@ -199,7 +231,8 @@ select {
   cursor: default;
 }
 
-.table-body {
+.table-,
+.top-scorers-body {
   display: grid;
   grid-auto-rows: 2.5rem;
   margin-bottom: 3rem;
@@ -276,4 +309,8 @@ select {
 
 .club-last-five-d {
   background-color: #f3a000;
+}
+
+.hidden {
+  display: none;
 }

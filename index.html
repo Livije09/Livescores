@@ -29,15 +29,19 @@
         <div class="selection">
           <ul class="selection-list">
             <li class="selection-item">
-              <button class="selection-btn league-table-btn">
+              <button class="selection-btn league-table-btn" data-selection="0">
                 League table
               </button>
             </li>
             <li class="selection-item">
-              <button class="selection-btn matches-btn">Matches</button>
+              <button class="selection-btn matches-btn" data-selection="1">
+                Matches
+              </button>
             </li>
             <li class="selection-item">
-              <button class="selection-btn top-scorers-btn">Top scorers</button>
+              <button class="selection-btn top-scorers-btn" data-selection="2">
+                Top scorers
+              </button>
             </li>
             <li class="selection-item">
               <select class="select-season">
@@ -47,6 +51,24 @@
               </select>
             </li>
           </ul>
+        </div>
+        <div class="top-scorers-container hidden">
+          <div class="top-scorers-header">
+            <p class="top-scorers-header-p top-scorers-rank">#</p>
+            <p class="top-scorers-header-p top-scorers-name">Name</p>
+            <p class="top-scorers-header-p top-scorers-club">Club</p>
+            <p class="top-scorers-header-p top-scorers-header-goals">G</p>
+            <p class="top-scorers-header-p top-scorers-header-assists">A</p>
+          </div>
+          <div class="top-scorers-body">
+            <div class="top-scorers-row">
+              <p class="top-scorers-rank top-scorers-p">1.</p>
+              <p class="top-scorers-name top-scorers-p">E. Haaland</p>
+              <p class="top-scorers-club top-scorers-p">Manchester City</p>
+              <p class="top-scorers-goals top-scorers-p">23</p>
+              <p class="top-scorers-assists top-scorers-p">7</p>
+            </div>
+          </div>
         </div>
         <div class="table-selection">
           <ul class="table-selection-list">

@@ -17,6 +17,7 @@ export const state = {
   where: 0,
   teams: [],
   currentTable: [],
+  topScorers: [],
 };
 
 export const getLeague = async function (league, season) {
@@ -116,4 +117,16 @@ export const sortByPoints = function () {
 export const updatePoints = function (teams) {
   console.log(teams);
   state.currentTable.forEach((team, i) => (team.points = teams[i]));
+};
+
+export const getTopScorers = async function (league, season) {
+  await fetch(
+    `https://v3.football.api-sports.io/players/topscorers?season=${season}&league=${league}`,
+    REQUEST_OPTIONS
+  )
+    .then((data) => data.json())
+    .then((result) => {
+      console.log(result.response);
+      result.response.forEach((player) => state.topScorers.push(player));
+    });
 };
