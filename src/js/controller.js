@@ -65,6 +65,10 @@ const controlChangeWhere = function (whichTable = model.state.where) {
   }
 };
 
+const controlChangeTab = function (id) {
+  SelectionView.changeTab(id);
+};
+
 const init = async function () {
   TableView.addHandlerPageLoaded(controlShowLeague);
   SelectionView.addHandlerChangeSeason(controlShowLeague);
@@ -72,7 +76,7 @@ const init = async function () {
   TableView.addHandlerHideDetail(controlHideDetail);
   HeaderView.addHandlerSort(controlSort);
   TableSelectionView.addHandlerChangeTable(controlChangeWhere);
+  SelectionView.addHandlerChangeTab(controlChangeTab);
 };
 
-// init();
-// test
+init();

@@ -52,7 +52,7 @@
             </li>
           </ul>
         </div>
-        <div class="top-scorers-container hidden">
+        <div class="top-scorers-container big-container hidden" data-tab="2">
           <div class="top-scorers-header">
             <p class="top-scorers-header-p top-scorers-rank">#</p>
             <p class="top-scorers-header-p top-scorers-name">Name</p>
@@ -70,51 +70,57 @@
             </div>
           </div>
         </div>
-        <div class="table-selection">
-          <ul class="table-selection-list">
-            <li class="table-selection-item">
-              <button
-                class="table-selection-btn table-selection-btn-active overall-btn"
-                data-where="0"
-              >
-                Overall
-              </button>
-            </li>
-            <li class="table-selection-item">
-              <button class="table-selection-btn home-btn" data-where="1">
-                Home
-              </button>
-            </li>
-            <li class="table-selection-item">
-              <button class="table-selection-btn away-btn" data-where="2">
-                Away
-              </button>
-            </li>
-          </ul>
-        </div>
-        <div class="table-container">
-          <div class="table">
-            <div class="table-header">
-              <p
-                class="position table-header-p table-header-p-clicked"
-                data-header="rank"
-              >
-                #
-              </p>
-              <p class="team table-header-p" data-header="team.name">Team</p>
-              <p class="games-played table-header-p" data-header=".played">P</p>
-              <p class="wins table-header-p" data-header=".win">W</p>
-              <p class="draws table-header-p" data-header=".draw">D</p>
-              <p class="loses table-header-p" data-header=".lose">L</p>
-              <p class="goals table-header-p" data-header="goals">Goals</p>
-              <p class="goal-difference table-header-p" data-header="goalsDiff">
-                GD
-              </p>
-              <p class="points table-header-p" data-header="points">PTS</p>
-              <p class="last-five table-header-p">Form</p>
-            </div>
-            <div class="table-body">
-              <!-- <div class="table-row">
+        <div class="league-table big-container" data-tab="0">
+          <div class="table-selection">
+            <ul class="table-selection-list">
+              <li class="table-selection-item">
+                <button
+                  class="table-selection-btn table-selection-btn-active overall-btn"
+                  data-where="0"
+                >
+                  Overall
+                </button>
+              </li>
+              <li class="table-selection-item">
+                <button class="table-selection-btn home-btn" data-where="1">
+                  Home
+                </button>
+              </li>
+              <li class="table-selection-item">
+                <button class="table-selection-btn away-btn" data-where="2">
+                  Away
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="table-container">
+            <div class="table">
+              <div class="table-header">
+                <p
+                  class="position table-header-p table-header-p-clicked"
+                  data-header="rank"
+                >
+                  #
+                </p>
+                <p class="team table-header-p" data-header="team.name">Team</p>
+                <p class="games-played table-header-p" data-header=".played">
+                  P
+                </p>
+                <p class="wins table-header-p" data-header=".win">W</p>
+                <p class="draws table-header-p" data-header=".draw">D</p>
+                <p class="loses table-header-p" data-header=".lose">L</p>
+                <p class="goals table-header-p" data-header="goals">Goals</p>
+                <p
+                  class="goal-difference table-header-p"
+                  data-header="goalsDiff"
+                >
+                  GD
+                </p>
+                <p class="points table-header-p" data-header="points">PTS</p>
+                <p class="last-five table-header-p">Form</p>
+              </div>
+              <div class="table-body">
+                <!-- <div class="table-row">
                 <p class="club-position table-p">1</p>
                 <div class="club-team table-p">
                   <img
@@ -148,6 +154,7 @@
                   </li>
                 </ul>
               </div> -->
+              </div>
             </div>
           </div>
         </div>
