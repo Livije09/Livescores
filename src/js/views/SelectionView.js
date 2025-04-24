@@ -3,6 +3,7 @@ import View from "./View";
 export class SelectionView extends View {
   #parentElement = document.querySelector(".selection");
   #bigContainers = document.querySelectorAll(".big-container");
+  #selectionBtns = document.querySelectorAll(".selection-btn");
 
   addHandlerChangeSeason(handler) {
     this.#parentElement.addEventListener("change", function (e) {
@@ -10,12 +11,19 @@ export class SelectionView extends View {
     });
   }
 
-  changeTab(id) {
+  changeTab(id = 0) {
     this.#bigContainers.forEach((container) => {
       container.classList.add("hidden");
     });
     this.#bigContainers.forEach((container) => {
       if (container.dataset.tab === id) container.classList.remove("hidden");
+    });
+    this.#selectionBtns.forEach((btn) =>
+      btn.classList.remove("selection-btn-active")
+    );
+    this.#selectionBtns.forEach((btn) => {
+      if (btn.dataset.selection === id)
+        btn.classList.add("selection-btn-active");
     });
   }
 

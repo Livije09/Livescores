@@ -2,9 +2,10 @@ import { DEFAULT_LEAGUE, DEFAULT_SEASON } from "./config.js";
 import * as model from "./model.js";
 import HeaderView from "./views/HeaderView.js";
 import LogoView from "./views/LogoView.js";
-import SelectionView from "./views/selectionView.js";
+import SelectionView from "./views/SelectionView.js";
 import TableSelectionView from "./views/TableSelectionView.js";
 import TableView from "./views/TableView.js";
+import TopScorersView from "./views/TopScorersView.js";
 
 const controlShowLeague = async function (
   league = model.state.league.id,
@@ -12,7 +13,6 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
-    await model.getTopScorers(league, season);
     model.changeSeason(season);
     TableView.showTable(model.state.currentTable, model.state.where);
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
@@ -65,7 +65,9 @@ const controlChangeWhere = function (whichTable = model.state.where) {
   }
 };
 
-const controlChangeTab = function (id) {
+const controlChangeTab = async function (id) {
+  await model.getTopScorers(model.state.league.id, model.state.season);
+  TopScorersView.generateTopScorers(model.state.topScorers);
   SelectionView.changeTab(id);
 };
 
@@ -79,4 +81,4 @@ const init = async function () {
   SelectionView.addHandlerChangeTab(controlChangeTab);
 };
 
-init();
+// init();

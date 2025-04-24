@@ -126,7 +126,8 @@ export const getTopScorers = async function (league, season) {
   )
     .then((data) => data.json())
     .then((result) => {
-      console.log(result.response);
+      state.topScorers = [];
       result.response.forEach((player) => state.topScorers.push(player));
+      console.log(state.topScorers);
     });
 };

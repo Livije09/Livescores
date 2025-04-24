@@ -123,6 +123,10 @@ select {
   background-color: #c0e1ff;
 }
 
+.selection-btn-active:hover {
+  background-color: #c0e1ff;
+}
+
 .table-selection-btn {
   background-color: #ffe58f;
   font-size: 1.6rem;
@@ -231,14 +235,15 @@ select {
   cursor: default;
 }
 
-.table-,
+.table,
 .top-scorers-body {
   display: grid;
   grid-auto-rows: 2.5rem;
   margin-bottom: 3rem;
 }
 
-.table-row:last-child {
+.table-row:last-child,
+.top-scorers-row:last-child {
   border-bottom: 3px solid #333;
   box-shadow: none;
 }
@@ -273,14 +278,16 @@ select {
   background-color: #bd0000;
 }
 
-.club-team {
+.club-team,
+.top-scorers-club {
   display: flex;
   gap: 0.8rem;
   align-items: center;
   width: 20rem;
 }
 
-.club-logo {
+.club-logo,
+.top-scorers-logo {
   height: 2rem;
 }
 
