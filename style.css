@@ -63,7 +63,8 @@ select {
 .selection,
 .table-selection,
 .table-header,
-.top-scorers-header {
+.top-scorers-header,
+.matches-header {
   border: solid #333;
   border-top: none;
 }
@@ -75,7 +76,8 @@ select {
 
 .table-selection,
 .table-header,
-.top-scorers-header {
+.top-scorers-header,
+.matches-header {
   margin-top: 0;
 }
 
@@ -157,7 +159,8 @@ select {
 }
 
 .table-row,
-.top-scorers-row {
+.top-scorers-row,
+.matches-row {
   border: 3px solid #333;
   height: 2.5rem;
 }
@@ -165,7 +168,9 @@ select {
 .table-header,
 .table-row,
 .top-scorers-header,
-.top-scorers-row {
+.top-scorers-row,
+.matches-header,
+.matches-row {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,7 +207,8 @@ select {
 .table-header-p:nth-child(2),
 .table-p:nth-child(2),
 .top-scorers-header-p:nth-child(2),
-.top-scorers-p:nth-child(2) {
+.top-scorers-p:nth-child(2),
+.matches-p:nth-child(3) {
   width: 20rem;
   justify-content: flex-start;
 }
@@ -214,7 +220,8 @@ select {
 }
 
 .top-scorers-header-p:nth-child(4),
-.top-scorers-p:nth-child(4) {
+.top-scorers-p:nth-child(4),
+.matches-p:nth-child(4) {
   margin-left: auto;
 }
 
@@ -236,14 +243,16 @@ select {
 }
 
 .table,
-.top-scorers-body {
+.top-scorers-body,
+.matches-body {
   display: grid;
   grid-auto-rows: 2.5rem;
   margin-bottom: 3rem;
 }
 
 .table-row:last-child,
-.top-scorers-row:last-child {
+.top-scorers-row:last-child,
+.matches-row:last-child {
   border-bottom: 3px solid #333;
   box-shadow: none;
 }
@@ -287,7 +296,8 @@ select {
 }
 
 .club-logo,
-.top-scorers-logo {
+.top-scorers-logo,
+.matches-logo {
   height: 2rem;
 }
 
@@ -316,6 +326,37 @@ select {
 
 .club-last-five-d {
   background-color: #f3a000;
+}
+
+.matches-header {
+  height: 3.5rem;
+}
+
+.gameweek {
+  display: flex;
+  gap: 2rem;
+  font-size: 2rem;
+}
+
+.arrow {
+  width: 2rem;
+  cursor: pointer;
+}
+
+.matches-row {
+  height: 5.6rem;
+  padding: 0 2.4rem;
+  /* justify-content: flex-start; */
+}
+
+.matches-team {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.matches-team:first-child,
+.result:first-child {
+  margin-bottom: 0.4rem;
 }
 
 .hidden {
