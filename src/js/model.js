@@ -12,7 +12,9 @@ export const state = {
     logo: "",
     name: "",
   },
+  currentLeagueId: "",
   season: DEFAULT_SEASON,
+  currentSeason: "",
   table: 0,
   where: 0,
   teams: [],
@@ -46,6 +48,14 @@ export const getLeague = async function (league, season) {
 
 export const changeSeason = function (season = state.season) {
   state.season = season;
+};
+
+export const changeCurrentSeasonAndLeague = function (
+  season = state.season,
+  leagueId = state.league.id
+) {
+  state.currentSeason = season;
+  state.currentLeagueId = leagueId;
 };
 
 export const sortTeams = function (direction, select) {
@@ -130,4 +140,13 @@ export const getTopScorers = async function (league, season) {
       result.response.forEach((player) => state.topScorers.push(player));
       console.log(state.topScorers);
     });
+};
+
+export const getFixtures = async function (league, season) {
+  await fetch(
+    `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}`,
+    REQUEST_OPTIONS
+  )
+    .then((data) => data.json())
+    .then((result) => console.log(result.response));
 };

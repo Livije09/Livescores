@@ -11,12 +11,14 @@ export class SelectionView extends View {
     });
   }
 
-  changeTab(id = 0) {
+  changeTab(id = "0") {
     this.#bigContainers.forEach((container) => {
       container.classList.add("hidden");
     });
     this.#bigContainers.forEach((container) => {
-      if (container.dataset.tab === id) container.classList.remove("hidden");
+      if (container.dataset.tab === id) {
+        container.classList.remove("hidden");
+      }
     });
     this.#selectionBtns.forEach((btn) =>
       btn.classList.remove("selection-btn-active")

@@ -13,8 +13,10 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
+    // await model.getFixtures(league, season);
     model.changeSeason(season);
     TableView.showTable(model.state.currentTable, model.state.where);
+    SelectionView.changeTab();
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
   } catch (e) {
     console.error(e);
@@ -66,7 +68,12 @@ const controlChangeWhere = function (whichTable = model.state.where) {
 };
 
 const controlChangeTab = async function (id) {
-  await model.getTopScorers(model.state.league.id, model.state.season);
+  if (
+    model.state.season !== model.state.currentSeason ||
+    model.state.league.id !== model.state.currentLeagueId
+  )
+    await model.getTopScorers(model.state.league.id, model.state.season);
+  model.changeCurrentSeasonAndLeague(model.state.season, model.state.league.id);
   TopScorersView.generateTopScorers(model.state.topScorers);
   SelectionView.changeTab(id);
 };
