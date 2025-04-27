@@ -163,6 +163,8 @@ select {
 .matches-row {
   border: 3px solid #333;
   height: 2.5rem;
+  color: #111;
+  background-color: #f8f8f8;
 }
 
 .table-header,
@@ -243,8 +245,7 @@ select {
 }
 
 .table,
-.top-scorers-body,
-.matches-body {
+.top-scorers-body {
   display: grid;
   grid-auto-rows: 2.5rem;
   margin-bottom: 3rem;
@@ -357,6 +358,11 @@ select {
 .matches-team:first-child,
 .result:first-child {
   margin-bottom: 0.4rem;
+}
+
+.winner {
+  font-weight: 700;
+  color: #000;
 }
 
 .hidden {

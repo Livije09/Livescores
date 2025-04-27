@@ -1,5 +1,6 @@
 import { DEFAULT_LEAGUE, DEFAULT_SEASON } from "./config.js";
 import * as model from "./model.js";
+import FixturesView from "./views/FixturesView.js";
 import HeaderView from "./views/HeaderView.js";
 import LogoView from "./views/LogoView.js";
 import SelectionView from "./views/SelectionView.js";
@@ -13,11 +14,13 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
-    // await model.getFixtures(league, season);
+    model.changeWhere(0);
+    TableSelectionView.changeSelectedTab(0);
     model.changeSeason(season);
     TableView.showTable(model.state.currentTable, model.state.where);
     SelectionView.changeTab();
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
+    model.resetCurrentScorersAndFixtures();
   } catch (e) {
     console.error(e);
   }
@@ -68,14 +71,24 @@ const controlChangeWhere = function (whichTable = model.state.where) {
 };
 
 const controlChangeTab = async function (id) {
-  if (
-    model.state.season !== model.state.currentSeason ||
-    model.state.league.id !== model.state.currentLeagueId
-  )
-    await model.getTopScorers(model.state.league.id, model.state.season);
-  model.changeCurrentSeasonAndLeague(model.state.season, model.state.league.id);
-  TopScorersView.generateTopScorers(model.state.topScorers);
-  SelectionView.changeTab(id);
+  try {
+    if (id === "1" && model.state.currentFixtures === 0) {
+      await model.getFixtures(model.state.league.id, model.state.season);
+      model.state.currentFixtures = 1;
+    }
+    if (id === "2" && model.state.currentTopScorers === 0) {
+      await model.getTopScorers(model.state.league.id, model.state.season);
+      model.state.currentTopScorers = 1;
+    }
+    if (id === "1") {
+      FixturesView.generateFixtures(model.state.fixtures.slice(0, 10));
+      FixturesView.addHandlerChangeGameweek();
+    }
+    if (id === "2") TopScorersView.generateTopScorers(model.state.topScorers);
+    SelectionView.changeTab(id);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const init = async function () {

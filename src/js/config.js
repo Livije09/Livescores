@@ -10,7 +10,11 @@ export const REQUEST_OPTIONS = {
 
 export const DEFAULT_SEASON = 2021;
 export const DEFAULT_LEAGUE = 39;
+export const DEFAULT_GAMEWEEK = 1;
 export const SHIFT_TOP = 22;
 export const WHICH_TABLE = ["all", "home", "away"];
 export const POINTS_FOR_WIN = 3;
 export const POINTS_FOR_DRAW = 1;
+export const FIXTURE_DATE = [0, 10];
+export const FIXTURE_TIME = [11, 13, 14, 16];
+export const NORMALIZE_TIME = 2;

@@ -1,4 +1,5 @@
 import {
+  DEFAULT_GAMEWEEK,
   DEFAULT_LEAGUE,
   DEFAULT_SEASON,
   REQUEST_OPTIONS,
@@ -12,14 +13,16 @@ export const state = {
     logo: "",
     name: "",
   },
-  currentLeagueId: "",
   season: DEFAULT_SEASON,
-  currentSeason: "",
   table: 0,
   where: 0,
   teams: [],
   currentTable: [],
   topScorers: [],
+  currentTopScorers: 0,
+  fixtures: [],
+  currentFixtures: 0,
+  gameweek: DEFAULT_GAMEWEEK,
 };
 
 export const getLeague = async function (league, season) {
@@ -48,14 +51,6 @@ export const getLeague = async function (league, season) {
 
 export const changeSeason = function (season = state.season) {
   state.season = season;
-};
-
-export const changeCurrentSeasonAndLeague = function (
-  season = state.season,
-  leagueId = state.league.id
-) {
-  state.currentSeason = season;
-  state.currentLeagueId = leagueId;
 };
 
 export const sortTeams = function (direction, select) {
@@ -148,5 +143,14 @@ export const getFixtures = async function (league, season) {
     REQUEST_OPTIONS
   )
     .then((data) => data.json())
-    .then((result) => console.log(result.response));
+    .then((result) => {
+      state.fixtures = [];
+      result.response.forEach((fixture) => state.fixtures.push(fixture));
+      console.log(state.fixtures);
+    });
+};
+
+export const resetCurrentScorersAndFixtures = function () {
+  state.currentFixtures = 0;
+  state.currentTopScorers = 0;
 };
