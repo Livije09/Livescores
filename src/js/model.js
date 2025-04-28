@@ -2,6 +2,7 @@ import {
   DEFAULT_GAMEWEEK,
   DEFAULT_LEAGUE,
   DEFAULT_SEASON,
+  LAST_GAMEWEEK,
   REQUEST_OPTIONS,
   WHICH_TABLE,
 } from "./config.js";
@@ -23,6 +24,7 @@ export const state = {
   fixtures: [],
   currentFixtures: 0,
   gameweek: DEFAULT_GAMEWEEK,
+  numberOfRounds: 0,
 };
 
 export const getLeague = async function (league, season) {
@@ -153,4 +155,15 @@ export const getFixtures = async function (league, season) {
 export const resetCurrentScorersAndFixtures = function () {
   state.currentFixtures = 0;
   state.currentTopScorers = 0;
+};
+
+export const getRounds = async function (league, season) {
+  await fetch(
+    `https://v3.football.api-sports.io/fixtures/rounds?season=${season}&league=${league}`,
+    REQUEST_OPTIONS
+  )
+    .then((data) => data.json())
+    .then((result) => {
+      state.numberOfRounds = result.response.length;
+    });
 };

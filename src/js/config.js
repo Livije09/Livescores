@@ -18,3 +18,4 @@ export const POINTS_FOR_DRAW = 1;
 export const FIXTURE_DATE = [0, 10];
 export const FIXTURE_TIME = [11, 13, 14, 16];
 export const NORMALIZE_TIME = 2;
+export const FIRST_GAMEWEEK = 1;

@@ -154,6 +154,13 @@ select {
   background-color: #eee;
 }
 
+.select-season:focus,
+.select-gameweek:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
 .table {
   display: grid;
 }
@@ -335,7 +342,7 @@ select {
 
 .gameweek {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   font-size: 2rem;
 }
 
@@ -344,15 +351,45 @@ select {
   cursor: pointer;
 }
 
+.select-gameweek {
+  font-size: 2rem;
+  border: none;
+  color: #111;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 0 0.8rem;
+}
+
 .matches-row {
   height: 5.6rem;
   padding: 0 2.4rem;
   /* justify-content: flex-start; */
 }
 
+.matches-date {
+  width: 8rem;
+}
+
+.matches-date,
+.matches-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.matches-time {
+  width: 5rem;
+}
+
 .matches-team {
   display: flex;
   gap: 0.8rem;
+}
+
+.matches-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .matches-team:first-child,
@@ -367,4 +404,8 @@ select {
 
 .hidden {
   display: none;
+}
+
+.hideArrow {
+  visibility: hidden;
 }

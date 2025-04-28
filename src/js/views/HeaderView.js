@@ -15,6 +15,13 @@ export class HeaderView extends View {
     );
   }
 
+  resetClicked() {
+    this.#childElements.forEach((el) =>
+      el.classList.remove("table-header-p-clicked")
+    );
+    this.#childElements[0].classList.add("table-header-p-clicked");
+  }
+
   #checkDirection() {
     if (this.#direction === 0) this.#direction = 1;
     else this.#direction = 0;

@@ -1,9 +1,18 @@
-import { FIXTURE_DATE, FIXTURE_TIME, NORMALIZE_TIME } from "../config";
+import {
+  FIRST_GAMEWEEK,
+  FIXTURE_DATE,
+  FIXTURE_TIME,
+  LAST_GAMEWEEK,
+  NORMALIZE_TIME,
+} from "../config";
 import View from "./View";
 
 export class FixturesView extends View {
   #parentElement = document.querySelector(".matches-body");
   #header = document.querySelector(".matches-header");
+  #select = document.querySelector(".select-gameweek");
+  #leftArrow = document.querySelector(".arrow-left");
+  #rightArrow = document.querySelector(".arrow-right");
 
   #clear() {
     this.#parentElement.innerHTML = "";
@@ -53,12 +62,28 @@ export class FixturesView extends View {
     });
   }
 
-  addHandlerChangeGameweek(handler) {
-    this.#header.addEventListener("click", function (e) {
-      const btn = e.target.closest(".arrow");
-      if (!btn) return;
+  generateSelectOptions(gameweeks) {
+    this.#select.innerHTML = ``;
+    for (let i = 1; i <= gameweeks; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.innerHTML = `Gameweek ${i}`;
+      this.#select.appendChild(option);
+    }
+  }
 
-      console.log(btn);
+  generateArrows(gameweek) {
+    console.log(gameweek);
+    this.#leftArrow.classList.remove("hideArrow");
+    this.#rightArrow.classList.remove("hideArrow");
+    if (+gameweek === FIRST_GAMEWEEK)
+      this.#leftArrow.classList.add("hideArrow");
+    if (+gameweek === 38) this.#rightArrow.classList.add("hideArrow");
+  }
+
+  addHandlerChangeGameweekSelect(handler) {
+    this.#header.addEventListener("change", function (e) {
+      handler(e.target.value);
     });
   }
 }

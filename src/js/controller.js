@@ -14,6 +14,7 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
+    await model.getRounds(league, season);
     model.changeWhere(0);
     TableSelectionView.changeSelectedTab(0);
     model.changeSeason(season);
@@ -21,6 +22,7 @@ const controlShowLeague = async function (
     SelectionView.changeTab();
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
     model.resetCurrentScorersAndFixtures();
+    HeaderView.resetClicked();
   } catch (e) {
     console.error(e);
   }
@@ -65,6 +67,7 @@ const controlChangeWhere = function (whichTable = model.state.where) {
     model.sortByPoints();
     TableSelectionView.changeWhere(model.state.currentTable, whichTable);
     TableSelectionView.changeSelectedTab(whichTable);
+    HeaderView.resetClicked();
   } catch (e) {
     console.log(e);
   }
@@ -74,6 +77,7 @@ const controlChangeTab = async function (id) {
   try {
     if (id === "1" && model.state.currentFixtures === 0) {
       await model.getFixtures(model.state.league.id, model.state.season);
+      await model.getRounds(model.state.league.id, model.state.season);
       model.state.currentFixtures = 1;
     }
     if (id === "2" && model.state.currentTopScorers === 0) {
@@ -81,11 +85,22 @@ const controlChangeTab = async function (id) {
       model.state.currentTopScorers = 1;
     }
     if (id === "1") {
+      FixturesView.generateSelectOptions(model.state.numberOfRounds);
       FixturesView.generateFixtures(model.state.fixtures.slice(0, 10));
-      FixturesView.addHandlerChangeGameweek();
     }
     if (id === "2") TopScorersView.generateTopScorers(model.state.topScorers);
     SelectionView.changeTab(id);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const controlChangeGameweekSelect = function (gameweek) {
+  try {
+    FixturesView.generateFixtures(
+      model.state.fixtures.slice((gameweek - 1) * 10, gameweek * 10)
+    );
+    FixturesView.generateArrows(gameweek);
   } catch (e) {
     console.log(e);
   }
@@ -99,6 +114,7 @@ const init = async function () {
   HeaderView.addHandlerSort(controlSort);
   TableSelectionView.addHandlerChangeTable(controlChangeWhere);
   SelectionView.addHandlerChangeTab(controlChangeTab);
+  FixturesView.addHandlerChangeGameweekSelect(controlChangeGameweekSelect);
 };
 
-// init();
+init();
