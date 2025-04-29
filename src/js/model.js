@@ -25,6 +25,7 @@ export const state = {
   currentFixtures: 0,
   gameweek: DEFAULT_GAMEWEEK,
   numberOfRounds: 0,
+  rounds: [],
 };
 
 export const getLeague = async function (league, season) {
@@ -139,9 +140,9 @@ export const getTopScorers = async function (league, season) {
     });
 };
 
-export const getFixtures = async function (league, season) {
+export const getFixtures = async function (league, season, round) {
   await fetch(
-    `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}`,
+    `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}&round=${round}`,
     REQUEST_OPTIONS
   )
     .then((data) => data.json())
@@ -164,6 +165,13 @@ export const getRounds = async function (league, season) {
   )
     .then((data) => data.json())
     .then((result) => {
+      state.rounds = [];
       state.numberOfRounds = result.response.length;
+      result.response.forEach((round) => state.rounds.push(round));
+      console.log(state.rounds);
     });
+};
+
+export const changeGameweek = function (gameweek) {
+  state.gameweek = gameweek;
 };

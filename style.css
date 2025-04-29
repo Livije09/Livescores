@@ -386,6 +386,11 @@ select {
   gap: 0.8rem;
 }
 
+.matches-name,
+.matches-result {
+  color: #222;
+}
+
 .matches-result {
   display: flex;
   flex-direction: column;

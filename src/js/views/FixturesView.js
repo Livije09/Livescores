@@ -1,7 +1,9 @@
 import {
+  AWAY_TEAM,
   FIRST_GAMEWEEK,
   FIXTURE_DATE,
   FIXTURE_TIME,
+  HOME_TEAM,
   LAST_GAMEWEEK,
   NORMALIZE_TIME,
 } from "../config";
@@ -16,6 +18,11 @@ export class FixturesView extends View {
 
   #clear() {
     this.#parentElement.innerHTML = "";
+  }
+
+  #checkWinner(fixture, where) {
+    const winner = fixture.teams[where]?.winner ? "winner" : "";
+    return winner;
   }
 
   generateFixtures(fixtures) {
@@ -39,23 +46,31 @@ export class FixturesView extends View {
                     class="matches-logo"
                     src="${fixture.teams.home.logo}"
                   />
-                  <p class="matches-name">${fixture.teams.home.name}</p>
+                  <p class="matches-name ${this.#checkWinner(
+                    fixture,
+                    HOME_TEAM
+                  )}">${fixture.teams.home.name}</p>
                 </div>
                 <div class="away-team matches-team matches-p">
                   <img
                     class="matches-logo"
                     src="${fixture.teams.away.logo}"
                   />
-                  <p class="matches-name">${fixture.teams.away.name}</p>
+                  <p class="matches-name ${this.#checkWinner(
+                    fixture,
+                    AWAY_TEAM
+                  )}">${fixture.teams.away.name}</p>
                 </div>
               </div>
               <div class="matches-result matches-p">
-                <p class="home-team-goals result ${
-                  fixture.teams.home.winner ? "winner" : ""
-                }">${fixture.score.fulltime.home}</p>
-                <p class="away-team-goals result ${
-                  fixture.teams.away.winner ? "winner" : ""
-                }">${fixture.score.fulltime.away}</p>
+                <p class="home-team-goals result ${this.#checkWinner(
+                  fixture,
+                  HOME_TEAM
+                )}">${fixture.score.fulltime.home}</p>
+                <p class="away-team-goals result ${this.#checkWinner(
+                  fixture,
+                  AWAY_TEAM
+                )}">${fixture.score.fulltime.away}</p>
               </div>
             </div>`;
       this.#parentElement.insertAdjacentHTML("beforeend", html);
@@ -84,6 +99,21 @@ export class FixturesView extends View {
   addHandlerChangeGameweekSelect(handler) {
     this.#header.addEventListener("change", function (e) {
       handler(e.target.value);
+    });
+  }
+
+  addHandlerChangeGameweekArrows(handler) {
+    const self = this;
+    this.#header.addEventListener("click", function (e) {
+      const btn = e.target.closest(".arrow");
+      if (!btn) return;
+
+      let id;
+      if (btn.classList.contains("arrow-left")) id = +self.#select.value - 1;
+      if (btn.classList.contains("arrow-right")) id = +self.#select.value + 1;
+      self.#select.value = id;
+
+      handler(id);
     });
   }
 }

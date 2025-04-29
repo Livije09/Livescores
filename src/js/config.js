@@ -19,3 +19,5 @@ export const FIXTURE_DATE = [0, 10];
 export const FIXTURE_TIME = [11, 13, 14, 16];
 export const NORMALIZE_TIME = 2;
 export const FIRST_GAMEWEEK = 1;
+export const HOME_TEAM = "home";
+export const AWAY_TEAM = "away";

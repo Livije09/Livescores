@@ -14,7 +14,6 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
-    await model.getRounds(league, season);
     model.changeWhere(0);
     TableSelectionView.changeSelectedTab(0);
     model.changeSeason(season);
@@ -76,8 +75,12 @@ const controlChangeWhere = function (whichTable = model.state.where) {
 const controlChangeTab = async function (id) {
   try {
     if (id === "1" && model.state.currentFixtures === 0) {
-      await model.getFixtures(model.state.league.id, model.state.season);
       await model.getRounds(model.state.league.id, model.state.season);
+      await model.getFixtures(
+        model.state.league.id,
+        model.state.season,
+        model.state.rounds[model.state.gameweek]
+      );
       model.state.currentFixtures = 1;
     }
     if (id === "2" && model.state.currentTopScorers === 0) {
@@ -95,11 +98,30 @@ const controlChangeTab = async function (id) {
   }
 };
 
-const controlChangeGameweekSelect = function (gameweek) {
+const controlChangeGameweekSelect = async function (gameweek) {
   try {
-    FixturesView.generateFixtures(
-      model.state.fixtures.slice((gameweek - 1) * 10, gameweek * 10)
+    model.changeGameweek(gameweek);
+    await model.getFixtures(
+      model.state.league.id,
+      model.state.season,
+      model.state.rounds[model.state.gameweek]
     );
+    FixturesView.generateFixtures(model.state.fixtures);
+    FixturesView.generateArrows(gameweek);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const controlChangeGameweekArrows = async function (gameweek) {
+  try {
+    model.changeGameweek(gameweek);
+    await model.getFixtures(
+      model.state.league.id,
+      model.state.season,
+      model.state.rounds[model.state.gameweek]
+    );
+    FixturesView.generateFixtures(model.state.fixtures);
     FixturesView.generateArrows(gameweek);
   } catch (e) {
     console.log(e);
@@ -115,6 +137,7 @@ const init = async function () {
   TableSelectionView.addHandlerChangeTable(controlChangeWhere);
   SelectionView.addHandlerChangeTab(controlChangeTab);
   FixturesView.addHandlerChangeGameweekSelect(controlChangeGameweekSelect);
+  FixturesView.addHandlerChangeGameweekArrows(controlChangeGameweekArrows);
 };
 
 init();
