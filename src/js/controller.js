@@ -1,4 +1,4 @@
-import { DEFAULT_LEAGUE, DEFAULT_SEASON } from "./config.js";
+import { DEFAULT_LEAGUE, DEFAULT_SEASON, FIRST_GAMEWEEK } from "./config.js";
 import * as model from "./model.js";
 import FixturesView from "./views/FixturesView.js";
 import HeaderView from "./views/HeaderView.js";
@@ -76,6 +76,7 @@ const controlChangeTab = async function (id) {
   try {
     if (id === "1" && model.state.currentFixtures === 0) {
       await model.getRounds(model.state.league.id, model.state.season);
+      model.state.gameweek = FIRST_GAMEWEEK;
       await model.getFixtures(
         model.state.league.id,
         model.state.season,
@@ -83,13 +84,13 @@ const controlChangeTab = async function (id) {
       );
       model.state.currentFixtures = 1;
     }
+    if (id === "1") {
+      FixturesView.generateSelectOptions(model.state.numberOfRounds);
+      FixturesView.generateFixtures(model.state.fixtures);
+    }
     if (id === "2" && model.state.currentTopScorers === 0) {
       await model.getTopScorers(model.state.league.id, model.state.season);
       model.state.currentTopScorers = 1;
-    }
-    if (id === "1") {
-      FixturesView.generateSelectOptions(model.state.numberOfRounds);
-      FixturesView.generateFixtures(model.state.fixtures.slice(0, 10));
     }
     if (id === "2") TopScorersView.generateTopScorers(model.state.topScorers);
     SelectionView.changeTab(id);
@@ -107,7 +108,7 @@ const controlChangeGameweekSelect = async function (gameweek) {
       model.state.rounds[model.state.gameweek]
     );
     FixturesView.generateFixtures(model.state.fixtures);
-    FixturesView.generateArrows(gameweek);
+    FixturesView.generateArrows(gameweek, model.state.numberOfRounds);
   } catch (e) {
     console.log(e);
   }
@@ -122,7 +123,7 @@ const controlChangeGameweekArrows = async function (gameweek) {
       model.state.rounds[model.state.gameweek]
     );
     FixturesView.generateFixtures(model.state.fixtures);
-    FixturesView.generateArrows(gameweek);
+    FixturesView.generateArrows(gameweek, model.state.numberOfRounds);
   } catch (e) {
     console.log(e);
   }

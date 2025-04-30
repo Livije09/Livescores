@@ -79,21 +79,22 @@ export class FixturesView extends View {
 
   generateSelectOptions(gameweeks) {
     this.#select.innerHTML = ``;
-    for (let i = 1; i <= gameweeks; i++) {
+    for (let i = 0; i < gameweeks; i++) {
       const option = document.createElement("option");
       option.value = i;
-      option.innerHTML = `Gameweek ${i}`;
+      option.innerHTML = `Gameweek ${i + 1}`;
       this.#select.appendChild(option);
     }
   }
 
-  generateArrows(gameweek) {
+  generateArrows(gameweek, lastGameweek) {
     console.log(gameweek);
     this.#leftArrow.classList.remove("hideArrow");
     this.#rightArrow.classList.remove("hideArrow");
     if (+gameweek === FIRST_GAMEWEEK)
       this.#leftArrow.classList.add("hideArrow");
-    if (+gameweek === 38) this.#rightArrow.classList.add("hideArrow");
+    if (+gameweek === lastGameweek - 1)
+      this.#rightArrow.classList.add("hideArrow");
   }
 
   addHandlerChangeGameweekSelect(handler) {
