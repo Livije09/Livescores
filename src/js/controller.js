@@ -82,6 +82,10 @@ const controlChangeTab = async function (id) {
         model.state.season,
         model.state.rounds[model.state.gameweek]
       );
+      FixturesView.generateArrows(
+        model.state.gameweek,
+        model.state.numberOfRounds
+      );
       model.state.currentFixtures = 1;
     }
     if (id === "1") {
