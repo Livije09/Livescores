@@ -79,12 +79,21 @@ export class FixturesView extends View {
 
   generateSelectOptions(gameweeks) {
     this.#select.innerHTML = ``;
-    for (let i = 0; i < gameweeks; i++) {
+    gameweeks.forEach((gameweek, i) => {
       const option = document.createElement("option");
       option.value = i;
-      option.innerHTML = `Gameweek ${i + 1}`;
+      option.innerHTML =
+        /\d/.test(gameweek) && !gameweek.includes("Round")
+          ? `Gameweek ${i + 1}`
+          : `${gameweek}`;
       this.#select.appendChild(option);
-    }
+    });
+    // for (let i = 0; i < gameweeks; i++) {
+    //   const option = document.createElement("option");
+    //   option.value = i;
+    //   option.innerHTML = `Gameweek ${i + 1}`;
+    //   this.#select.appendChild(option);
+    // }
   }
 
   generateArrows(gameweek, lastGameweek) {

@@ -63,6 +63,7 @@ select {
 .selection,
 .table-selection,
 .table-header,
+.league-phase-selection,
 .top-scorers-header,
 .matches-header {
   border: solid #333;
@@ -76,19 +77,22 @@ select {
 
 .table-selection,
 .table-header,
+.league-phase-selection,
 .top-scorers-header,
 .matches-header {
   margin-top: 0;
 }
 
 .selection-list,
-.table-selection-list {
+.table-selection-list,
+.league-phase-list {
   list-style: none;
   display: flex;
 }
 
 .selection-item,
-.table-selection-item {
+.table-selection-item,
+.league-phase-item {
   display: flex;
   border-right: 3px solid #333;
 }
@@ -108,8 +112,12 @@ select {
   transition: all 0.3s;
 }
 
+.selection-btn {
+  background-color: #c2e1fd;
+}
+
 .selection-btn:hover {
-  background-color: #ccc;
+  background-color: #b2d2ee;
 }
 
 .selection-btn:active {
@@ -117,25 +125,26 @@ select {
 }
 
 .selection-btn,
-.table-selection-btn {
+.table-selection-btn,
+.league-phase-btn {
   border: none;
 }
 
 .selection-btn-active {
-  background-color: #c0e1ff;
+  background-color: #9cc3e9;
 }
 
 .selection-btn-active:hover {
-  background-color: #c0e1ff;
+  background-color: #9cc3e9;
 }
 
 .table-selection-btn {
-  background-color: #ffe58f;
+  background-color: #f8fdad;
   font-size: 1.6rem;
 }
 
 .table-selection-btn:hover {
-  background-color: #f0d374;
+  background-color: #eaf09d;
 }
 
 .table-selection-btn:active {
@@ -143,11 +152,11 @@ select {
 }
 
 .table-selection-btn-active {
-  background-color: #f7b894;
+  background-color: #e6ec90;
 }
 
 .table-selection-btn-active:hover {
-  background-color: #f7b894;
+  background-color: #e6ec90;
 }
 
 .select-season {
@@ -163,6 +172,26 @@ select {
 
 .table {
   display: grid;
+}
+
+.league-phase-btn {
+  font-size: 1.6rem;
+  background-color: #b7ffd3;
+  padding: 0.8rem 0.8rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.league-phase-btn:hover {
+  background-color: #a4eec1;
+}
+
+.league-phase-btn-active {
+  background-color: #73ce96;
+}
+
+.league-phase-btn-active:hover {
+  background-color: #73ce96;
 }
 
 .table-row,
@@ -358,6 +387,7 @@ select {
   background-color: #eee;
   border-radius: 5px;
   padding: 0 0.8rem;
+  text-align: center;
 }
 
 .matches-row {

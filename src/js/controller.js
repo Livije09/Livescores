@@ -89,7 +89,7 @@ const controlChangeTab = async function (id) {
       model.state.currentFixtures = 1;
     }
     if (id === "1") {
-      FixturesView.generateSelectOptions(model.state.numberOfRounds);
+      FixturesView.generateSelectOptions(model.state.rounds);
       FixturesView.generateFixtures(model.state.fixtures);
     }
     if (id === "2" && model.state.currentTopScorers === 0) {
@@ -145,4 +145,4 @@ const init = async function () {
   FixturesView.addHandlerChangeGameweekArrows(controlChangeGameweekArrows);
 };
 
-init();
+// init();
