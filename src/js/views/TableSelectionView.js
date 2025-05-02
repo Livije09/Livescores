@@ -9,7 +9,7 @@ export class TableSelection extends View {
     this.#tableBody.innerHTML = "";
   }
 
-  changeWhere(teams, whichTable) {
+  changeWhere(teams, whichTable = 0) {
     this.#clear();
 
     teams.forEach((team) => {
@@ -36,7 +36,7 @@ export class TableSelection extends View {
     return updatedPoints;
   }
 
-  changeSelectedTab(tab) {
+  changeSelectedTab(tab = 0) {
     const btns = document.querySelectorAll(".table-selection-btn");
     btns.forEach((btn) => btn.classList.remove("table-selection-btn-active"));
     btns[tab].classList.add("table-selection-btn-active");

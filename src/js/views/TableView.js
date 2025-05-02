@@ -4,6 +4,7 @@ import View from "./View";
 export class TableView extends View {
   #parentElement = document.querySelector(".table-body");
   #clubDetail = document.querySelector(".club-detail");
+  #leaguePhase = document.querySelector(".league-phase-selection");
 
   constructor() {
     super(document.querySelector(".table-body"));
@@ -27,13 +28,16 @@ export class TableView extends View {
     this.#clubDetail.style.display = "none";
   }
 
-  showTable(teams, whichTable) {
+  showTable(teams, whichTable, phases) {
     this.#clear();
 
     teams.forEach((team) => {
       const html = this.generateTableHTML(team, whichTable);
       this.#parentElement.insertAdjacentHTML("beforeend", html);
     });
+
+    if (phases > 1) this.#leaguePhase.classList.add("hidden");
+    if (phases > 1) this.#leaguePhase.classList.remove("hidden");
   }
 
   addHandlerPageLoaded(handler) {

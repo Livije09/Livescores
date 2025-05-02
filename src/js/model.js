@@ -19,6 +19,7 @@ export const state = {
   where: 0,
   teams: [],
   currentTable: [],
+  currentTableCopy: [],
   topScorers: [],
   currentTopScorers: 0,
   fixtures: [],
@@ -47,6 +48,7 @@ export const getLeague = async function (league, season) {
         state.teams.push(clubArray);
       });
       state.currentTable = state.teams[0];
+      state.currentTableCopy = state.teams[0];
       console.log(state.currentTable);
     })
     .catch((error) => console.log("error", error));
@@ -113,7 +115,7 @@ export const sortTeams = function (direction, select) {
   }
 };
 
-export const changeWhere = function (where) {
+export const changeWhere = function (where = 0) {
   state.where = where;
 };
 
@@ -123,8 +125,11 @@ export const sortByPoints = function () {
 };
 
 export const updatePoints = function (teams) {
-  console.log(teams);
-  state.currentTable.forEach((team, i) => (team.points = teams[i]));
+  state.where === 0
+    ? state.currentTable.forEach(
+        (team, i) => (team.points = state.currentTableCopy[i])
+      )
+    : state.currentTable.forEach((team, i) => (team.points = teams[i]));
 };
 
 export const getTopScorers = async function (league, season) {
@@ -174,4 +179,9 @@ export const getRounds = async function (league, season) {
 
 export const changeGameweek = function (gameweek) {
   state.gameweek = gameweek;
+};
+
+export const changeTable = function (phase) {
+  state.table = phase;
+  state.currentTable = state.teams[phase];
 };

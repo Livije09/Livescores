@@ -2,6 +2,7 @@ import { DEFAULT_LEAGUE, DEFAULT_SEASON, FIRST_GAMEWEEK } from "./config.js";
 import * as model from "./model.js";
 import FixturesView from "./views/FixturesView.js";
 import HeaderView from "./views/HeaderView.js";
+import LeaguePhaseView from "./views/LeaguePhaseView.js";
 import LogoView from "./views/LogoView.js";
 import SelectionView from "./views/SelectionView.js";
 import TableSelectionView from "./views/TableSelectionView.js";
@@ -14,10 +15,16 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
-    model.changeWhere(0);
-    TableSelectionView.changeSelectedTab(0);
+    model.changeWhere();
+    TableSelectionView.changeSelectedTab();
     model.changeSeason(season);
-    TableView.showTable(model.state.currentTable, model.state.where);
+    if (model.state.teams.length > 1)
+      LeaguePhaseView.generateLeaguePhaseSelection(model.state.teams);
+    TableView.showTable(
+      model.state.currentTable,
+      model.state.where,
+      model.state.teams.length
+    );
     SelectionView.changeTab();
     LogoView.showLogo(model.state.league.logo, model.state.league.id);
     model.resetCurrentScorersAndFixtures();
@@ -133,6 +140,34 @@ const controlChangeGameweekArrows = async function (gameweek) {
   }
 };
 
+const controlChangePhase = function (phase) {
+  try {
+    model.changeTable(phase);
+    model.changeWhere();
+    TableView.showTable(
+      model.state.currentTable,
+      model.state.where,
+      model.state.teams.length
+    );
+    // const newPoints = TableSelectionView.changePoints(
+    //   model.state.currentTable,
+    //   model.state.where
+    // );
+    // model.updatePoints(newPoints);
+    // model.sortByPoints();
+    // TableView.showTable(
+    //   model.state.currentTable,
+    //   model.state.where,
+    //   model.state.teams.length
+    // );
+    LeaguePhaseView.changePhaseTab(phase);
+    TableSelectionView.changeSelectedTab();
+    HeaderView.resetClicked();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const init = async function () {
   TableView.addHandlerPageLoaded(controlShowLeague);
   SelectionView.addHandlerChangeSeason(controlShowLeague);
@@ -143,6 +178,7 @@ const init = async function () {
   SelectionView.addHandlerChangeTab(controlChangeTab);
   FixturesView.addHandlerChangeGameweekSelect(controlChangeGameweekSelect);
   FixturesView.addHandlerChangeGameweekArrows(controlChangeGameweekArrows);
+  LeaguePhaseView.addHandlerChangePhase(controlChangePhase);
 };
 
 // init();
