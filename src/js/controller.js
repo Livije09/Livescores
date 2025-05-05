@@ -149,17 +149,17 @@ const controlChangePhase = function (phase) {
       model.state.where,
       model.state.teams.length
     );
-    // const newPoints = TableSelectionView.changePoints(
-    //   model.state.currentTable,
-    //   model.state.where
-    // );
-    // model.updatePoints(newPoints);
-    // model.sortByPoints();
-    // TableView.showTable(
-    //   model.state.currentTable,
-    //   model.state.where,
-    //   model.state.teams.length
-    // );
+    const newPoints = TableSelectionView.changePoints(
+      model.state.currentTable,
+      model.state.where
+    );
+    model.updatePoints(newPoints);
+    model.sortByPoints();
+    TableView.showTable(
+      model.state.currentTable,
+      model.state.where,
+      model.state.teams.length
+    );
     LeaguePhaseView.changePhaseTab(phase);
     TableSelectionView.changeSelectedTab();
     HeaderView.resetClicked();
@@ -181,4 +181,4 @@ const init = async function () {
   LeaguePhaseView.addHandlerChangePhase(controlChangePhase);
 };
 
-// init();
+init();
