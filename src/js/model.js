@@ -50,8 +50,6 @@ export const getLeague = async function (league, season) {
       state.currentTable = state.teams[0];
       state.currentPoints = JSON.parse(JSON.stringify(state.teams));
       console.log(state.currentPoints);
-      console.log(state.currentPoints);
-      console.log(state.currentPoints);
       console.log(state.currentTable);
     })
     .catch((error) => console.log("error", error));
@@ -123,13 +121,15 @@ export const changeWhere = function (where = 0) {
 };
 
 export const sortByPoints = function () {
-  state.currentTable.sort((a, b) => b.points - a.points);
+  state.currentTable.sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    else return b.goalsDiff - a.goalsDiff;
+  });
   state.currentTable.forEach((team, i) => (team.rank = i + 1));
 };
 
 export const updatePoints = function (teams) {
   // state.currentTable.forEach((team, i) => (team.points = teams[i]));
-  console.log(state.currentPoints);
   state.teams.length > 1 &&
   state.table !== state.teams.length - 1 &&
   state.where === 0
@@ -137,12 +137,12 @@ export const updatePoints = function (teams) {
         const points = state.currentPoints[state.table].find(
           (t) => t.team.name === team.team.name
         );
-        console.log(points);
+        const played = state.currentPoints[state.teams.length - 1].find(
+          (t) => t.team.name === team.team.name
+        );
         if (points) {
           team.points = points.points;
-          // team.all.played =
-          //   +team.all.played +
-          //   +state.currentPoints[state.teams.length - 1].all.played;
+          // team.all.played = team.all.played + played .all.played;
         }
       })
     : state.currentTable.forEach((team, i) => (team.points = teams[i]));

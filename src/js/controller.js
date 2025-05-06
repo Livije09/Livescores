@@ -55,7 +55,8 @@ const controlSort = function (flag, select) {
     model.sortTeams(flag, select);
     TableView.showTable(
       model.state.teams[model.state.table],
-      model.state.where
+      model.state.where,
+      model.state.teams.length
     );
   } catch (e) {
     console.log(e);
@@ -71,7 +72,11 @@ const controlChangeWhere = function (whichTable = model.state.where) {
     );
     model.updatePoints(newPoints);
     model.sortByPoints();
-    TableSelectionView.changeWhere(model.state.currentTable, whichTable);
+    TableSelectionView.changeWhere(
+      model.state.currentTable,
+      whichTable,
+      model.state.teams.length
+    );
     TableSelectionView.changeSelectedTab(whichTable);
     HeaderView.resetClicked();
   } catch (e) {
@@ -181,4 +186,4 @@ const init = async function () {
   LeaguePhaseView.addHandlerChangePhase(controlChangePhase);
 };
 
-init();
+// init();

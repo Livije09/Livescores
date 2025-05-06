@@ -9,11 +9,11 @@ export class TableSelection extends View {
     this.#tableBody.innerHTML = "";
   }
 
-  changeWhere(teams, whichTable = 0) {
+  changeWhere(teams, whichTable = 0, phases) {
     this.#clear();
 
     teams.forEach((team) => {
-      const html = this.generateTableHTML(team, whichTable);
+      const html = this.generateTableHTML(team, whichTable, phases);
       this.#tableBody.insertAdjacentHTML("beforeend", html);
     });
   }

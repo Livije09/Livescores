@@ -32,7 +32,7 @@ export class TableView extends View {
     this.#clear();
 
     teams.forEach((team) => {
-      const html = this.generateTableHTML(team, whichTable);
+      const html = this.generateTableHTML(team, whichTable, phases);
       this.#parentElement.insertAdjacentHTML("beforeend", html);
     });
 

@@ -78,22 +78,37 @@ export class FixturesView extends View {
   }
 
   generateSelectOptions(gameweeks) {
-    this.#select.innerHTML = ``;
-    gameweeks.forEach((gameweek, i) => {
-      const option = document.createElement("option");
-      option.value = i;
-      option.innerHTML =
-        /\d/.test(gameweek) && !gameweek.includes("Round")
-          ? `Gameweek ${i + 1}`
-          : `${gameweek}`;
-      this.#select.appendChild(option);
-    });
-    // for (let i = 0; i < gameweeks; i++) {
+    // this.#select.innerHTML = ``;
+    // gameweeks.forEach((gameweek, i) => {
     //   const option = document.createElement("option");
     //   option.value = i;
-    //   option.innerHTML = `Gameweek ${i + 1}`;
+    //   option.innerHTML = gameweek.includes("Regular Season")
+    //     ? `Gameweek ${i + 1}`
+    //     : `${gameweek}`;
     //   this.#select.appendChild(option);
-    // }
+    // });
+    const regularSeason = gameweeks.filter((gameweek) =>
+      gameweek.includes("Regular Season")
+    );
+    const otherFixtures = gameweeks.filter(
+      (gameweek) => !gameweek.includes("Regular Season")
+    );
+    otherFixtures.sort((a, b) => b.localeCompare(a));
+    let counter = 0;
+    regularSeason.forEach((_) => {
+      const option = document.createElement("option");
+      option.value = counter;
+      option.innerHTML = `Gameweek ${counter + 1}`;
+      this.#select.appendChild(option);
+      counter++;
+    });
+    otherFixtures.forEach((gameweek) => {
+      const option = document.createElement("option");
+      option.value = counter;
+      option.innerHTML = `${gameweek}`;
+      this.#select.appendChild(option);
+      counter++;
+    });
   }
 
   generateArrows(gameweek, lastGameweek) {
