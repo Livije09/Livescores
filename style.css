@@ -251,9 +251,15 @@ select {
   justify-content: flex-start;
 }
 
+.table-header-p:nth-child(2),
+.top-scorers-header-p:nth-child(2),
+.top-scorers-header-p:nth-child(3) {
+  padding-left: 0.25rem;
+}
+
 .top-scorers-header-p:nth-child(3),
 .top-scorers-p:nth-child(3) {
-  width: 20rem;
+  width: 22rem;
   justify-content: flex-start;
 }
 

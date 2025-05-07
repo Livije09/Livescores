@@ -13,21 +13,19 @@ export class TopScorersView extends View {
       const html = `
             <div class="top-scorers-row">
               <p class="top-scorers-rank top-scorers-p">${i + 1}.</p>
-              <div class="top-scorers-club">
+              <div class="top-scorers-player top-scorers-p">
                 <img
                   class="top-scorers-logo"
                   src="${player.player.photo}"
                 />
-                <p class="top-scorers-name top-scorers-p">${
-                  player.player.name
-                }</p>
+                <p class="top-scorers-name">${player.player.name}</p>
               </div>
-              <div class="top-scorers-club">
+              <div class="top-scorers-club top-scorers-p">
                 <img
                   class="top-scorers-logo"
                   src="${player.statistics[0].team.logo}"
                 />
-                <p class="top-scorers-club top-scorers-p">${
+                <p class="top-scorers-club-name">${
                   player.statistics[0].team.name
                 }</p>
               </div>

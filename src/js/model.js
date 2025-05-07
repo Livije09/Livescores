@@ -123,7 +123,15 @@ export const changeWhere = function (where = 0) {
 export const sortByPoints = function () {
   state.currentTable.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points;
-    else return b.goalsDiff - a.goalsDiff;
+    else {
+      console.log(b.goalsDiff, a.goalsDiff);
+      return (
+        b[WHICH_TABLE[state.where]].goals.for -
+        b[WHICH_TABLE[state.where]].goals.against -
+        (a[WHICH_TABLE[state.where]].goals.for -
+          a[WHICH_TABLE[state.where]].goals.against)
+      );
+    }
   });
   state.currentTable.forEach((team, i) => (team.rank = i + 1));
 };
@@ -137,13 +145,7 @@ export const updatePoints = function (teams) {
         const points = state.currentPoints[state.table].find(
           (t) => t.team.name === team.team.name
         );
-        const played = state.currentPoints[state.teams.length - 1].find(
-          (t) => t.team.name === team.team.name
-        );
-        if (points) {
-          team.points = points.points;
-          // team.all.played = team.all.played + played .all.played;
-        }
+        if (points) team.points = points.points;
       })
     : state.currentTable.forEach((team, i) => (team.points = teams[i]));
 };
