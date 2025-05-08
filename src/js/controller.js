@@ -186,4 +186,4 @@ const init = async function () {
   LeaguePhaseView.addHandlerChangePhase(controlChangePhase);
 };
 
-// init();
+init();

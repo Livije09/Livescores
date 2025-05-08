@@ -435,6 +435,15 @@ select {
   align-items: center;
 }
 
+.matches-first-match,
+.matches-penalty {
+  margin-left: -3rem;
+}
+
+.matches-first-match {
+  color: #888;
+}
+
 .matches-team:first-child,
 .result:first-child {
   margin-bottom: 0.4rem;

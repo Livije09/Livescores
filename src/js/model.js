@@ -49,8 +49,6 @@ export const getLeague = async function (league, season) {
       });
       state.currentTable = state.teams[0];
       state.currentPoints = JSON.parse(JSON.stringify(state.teams));
-      console.log(state.currentPoints);
-      console.log(state.currentTable);
     })
     .catch((error) => console.log("error", error));
 };
@@ -124,7 +122,6 @@ export const sortByPoints = function () {
   state.currentTable.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points;
     else {
-      console.log(b.goalsDiff, a.goalsDiff);
       return (
         b[WHICH_TABLE[state.where]].goals.for -
         b[WHICH_TABLE[state.where]].goals.against -

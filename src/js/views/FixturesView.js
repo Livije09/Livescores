@@ -25,14 +25,34 @@ export class FixturesView extends View {
     return winner;
   }
 
+  #checkPair(seenPairs, pairKey, fixture) {
+    seenPairs[pairKey] = fixture;
+    return "";
+  }
+
   generateFixtures(fixtures) {
     this.#clear();
-    fixtures.forEach((fixture) => {
+    const seenPairs = {};
+    const round = fixtures[0].league.round;
+    fixtures.forEach((fixture, i) => {
+      const homeTeam = fixture.teams.home.name;
+      const awayTeam = fixture.teams.away.name;
+      const pairKey = [homeTeam, awayTeam].sort().join("-");
       const time =
         +fixture.fixture.date.slice(FIXTURE_TIME[0], FIXTURE_TIME[1]) +
         NORMALIZE_TIME +
         ":" +
         fixture.fixture.date.slice(FIXTURE_TIME[2], FIXTURE_TIME[3]);
+      if (round.includes("finals") || round.includes("Round of 16")) {
+        if (i === 0) {
+          const html = `
+          <div class="matches-row">
+          <p class="matches-p">First leg</p>
+          </div>
+          `;
+          this.#parentElement.insertAdjacentHTML("beforeend", html);
+        }
+      }
       const html = `
             <div class="matches-row">
               <p class="matches-date matches-p">${fixture.fixture.date.slice(
@@ -72,8 +92,42 @@ export class FixturesView extends View {
                   AWAY_TEAM
                 )}">${fixture.score.fulltime.away}</p>
               </div>
+              ${
+                seenPairs[pairKey]
+                  ? `
+                <div class="matches-result matches-first-match matches-p">
+                <p class="home-team-goals result">${seenPairs[pairKey].score.fulltime.home}</p>
+                <p class="away-team-goals result">${seenPairs[pairKey].score.fulltime.away}</p>
+              </div>`
+                  : this.#checkPair(seenPairs, pairKey, fixture)
+              }
+              ${
+                fixture.score.penalty.home !== null &&
+                fixture.score.penalty.away !== null
+                  ? `<div class="matches-result matches-penalty matches-p">
+                  <p class="home-team-goals result ${this.#checkWinner(
+                    fixture,
+                    HOME_TEAM
+                  )}">(${fixture.score.penalty.home})</p>
+                  <p class="away-team-goals result ${this.#checkWinner(
+                    fixture,
+                    AWAY_TEAM
+                  )}">(${fixture.score.penalty.away})</p>
+                </div>`
+                  : ""
+              }
             </div>`;
       this.#parentElement.insertAdjacentHTML("beforeend", html);
+      if (round.includes("finals") || round.includes("Round of 16")) {
+        if (i === fixtures.length / 2 - 1) {
+          const html = `
+          <div class="matches-row">
+          <p class="matches-p">Second leg</p>
+          </div>
+          `;
+          this.#parentElement.insertAdjacentHTML("beforeend", html);
+        }
+      }
     });
   }
 
