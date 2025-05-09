@@ -43,16 +43,16 @@ export class FixturesView extends View {
         NORMALIZE_TIME +
         ":" +
         fixture.fixture.date.slice(FIXTURE_TIME[2], FIXTURE_TIME[3]);
-      if (round.includes("finals") || round.includes("Round of 16")) {
-        if (i === 0) {
-          const html = `
-          <div class="matches-row">
-          <p class="matches-p">First leg</p>
-          </div>
-          `;
-          this.#parentElement.insertAdjacentHTML("beforeend", html);
-        }
-      }
+      // if (round.includes("finals") || round.includes("Round of 16")) {
+      //   if (i === 0) {
+      //     const html = `
+      //     <div class="matches-row">
+      //     <p class="matches-p"></p>
+      //     </div>
+      //     `;
+      //     this.#parentElement.insertAdjacentHTML("beforeend", html);
+      //   }
+      // }
       const html = `
             <div class="matches-row">
               <p class="matches-date matches-p">${fixture.fixture.date.slice(
@@ -96,8 +96,8 @@ export class FixturesView extends View {
                 seenPairs[pairKey]
                   ? `
                 <div class="matches-result matches-first-match matches-p">
-                <p class="home-team-goals result">${seenPairs[pairKey].score.fulltime.home}</p>
-                <p class="away-team-goals result">${seenPairs[pairKey].score.fulltime.away}</p>
+                <p class="home-team-goals result">${seenPairs[pairKey].score.fulltime.away}</p>
+                <p class="away-team-goals result">${seenPairs[pairKey].score.fulltime.home}</p>
               </div>`
                   : this.#checkPair(seenPairs, pairKey, fixture)
               }
@@ -121,8 +121,22 @@ export class FixturesView extends View {
       if (round.includes("finals") || round.includes("Round of 16")) {
         if (i === fixtures.length / 2 - 1) {
           const html = `
-          <div class="matches-row">
-          <p class="matches-p">Second leg</p>
+          <div class="matches-row matches-row-blank">
+          <p class="matches-p"></p>
+          </div>
+          `;
+          this.#parentElement.insertAdjacentHTML("beforeend", html);
+        }
+      }
+      if (
+        round.includes("Qualifying Round") ||
+        round.includes("Preliminary Round") ||
+        round === "Relegation Round"
+      ) {
+        if (i > 0 && (i - 1) % 2 === 0 && i !== fixtures.length - 1) {
+          const html = `
+          <div class="matches-row matches-row-blank">
+          <p class="matches-p"></p>
           </div>
           `;
           this.#parentElement.insertAdjacentHTML("beforeend", html);

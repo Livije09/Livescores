@@ -404,6 +404,11 @@ select {
   /* justify-content: flex-start; */
 }
 
+.matches-row-blank {
+  height: 2.4rem;
+  background-color: #e9e9e9;
+}
+
 .matches-date {
   width: 8rem;
 }
