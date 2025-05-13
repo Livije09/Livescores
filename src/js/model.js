@@ -200,3 +200,14 @@ export const changeTable = function (phase) {
   state.table = phase;
   state.currentTable = state.teams[phase];
 };
+
+export const getFixture = async function (fixture) {
+  await fetch(
+    `https://v3.football.api-sports.io/fixtures?id=851364`,
+    REQUEST_OPTIONS
+  )
+    .then((data) => data.json())
+    .then((result) => {
+      console.log(result.response);
+    });
+};

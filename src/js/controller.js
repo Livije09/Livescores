@@ -15,6 +15,7 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
+    await model.getFixture();
     model.changeWhere();
     TableSelectionView.changeSelectedTab();
     model.changeSeason(season);
