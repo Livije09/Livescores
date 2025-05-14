@@ -478,6 +478,13 @@ select {
 .fixture-teams {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  padding: 2rem 0;
+}
+
+.fixture-teams,
+.fixture-filter,
+.fixture-details {
+  border-bottom: 1px solid #aaa;
 }
 
 .fixture-date {
@@ -507,6 +514,114 @@ select {
   font-weight: 700;
   color: #111;
   align-self: center;
+}
+
+.fixture-filter {
+  gap: 1.6rem;
+}
+
+.fixture-filter,
+.fixture-details {
+  display: flex;
+  font-size: 1.6rem;
+  padding: 0 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.fixture-filter-p {
+  cursor: pointer;
+  padding: 0.8rem 0;
+}
+
+.fixture-filter-p-active {
+  color: #ffa600;
+  border-bottom: 3px solid #ffa600;
+}
+
+.fixture-details {
+  gap: 1.2rem;
+  padding-bottom: 1.2rem;
+}
+
+.fixture-details-p {
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  background-color: #ddd;
+  color: #333;
+  border-radius: 10px;
+}
+
+.fixture-details-p-active {
+  background-color: #ffa600;
+  color: #fff;
+}
+
+.first-half {
+}
+
+.first-half-header,
+.second-half-header {
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.4rem 1.6rem;
+  margin-bottom: 1.2rem;
+  background-color: #e4e4e4;
+  color: #555;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.first-half-header-p:last-child,
+.second-half-header-p:last-child {
+  margin-left: auto;
+}
+
+.details {
+  margin-bottom: 1.2rem;
+  padding: 0 0.8rem;
+}
+
+.detail {
+  display: flex;
+  gap: 0.8rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.away-detail {
+  flex-direction: row-reverse;
+  justify-self: flex-end;
+}
+
+.details-icon {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 0.2rem;
+}
+
+.yellow-card {
+  fill: #ffcd00;
+}
+
+.red-card {
+  fill: #dc0000;
+}
+
+.own-goal,
+.missed-penalty {
+  fill: #e02020;
+}
+
+.assist,
+.substitute-out,
+.penalty {
+  color: #999;
 }
 
 .hidden {
