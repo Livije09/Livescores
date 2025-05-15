@@ -38,11 +38,7 @@ export class FixturesView extends View {
       const homeTeam = fixture.teams.home.name;
       const awayTeam = fixture.teams.away.name;
       const pairKey = [homeTeam, awayTeam].sort().join("-");
-      const time =
-        +fixture.fixture.date.slice(FIXTURE_TIME[0], FIXTURE_TIME[1]) +
-        NORMALIZE_TIME +
-        ":" +
-        fixture.fixture.date.slice(FIXTURE_TIME[2], FIXTURE_TIME[3]);
+      const time = this.getFixtureTime(fixture);
       // if (round.includes("finals") || round.includes("Round of 16")) {
       //   if (i === 0) {
       //     const html = `
@@ -54,10 +50,9 @@ export class FixturesView extends View {
       //   }
       // }
       const html = `
-            <div class="matches-row">
-              <p class="matches-date matches-p">${fixture.fixture.date.slice(
-                FIXTURE_DATE[0],
-                FIXTURE_DATE[1]
+            <div class="matches-row" data-matchid=${fixture.fixture.id}>
+              <p class="matches-date matches-p">${this.getFixtureDate(
+                fixture
               )}</p>
               <p class="matches-time matches-p">${time}</p>
               <div class="matches-clubs matches-p">
@@ -155,33 +150,9 @@ export class FixturesView extends View {
         : `${gameweek}`;
       this.#select.appendChild(option);
     });
-    // const regularSeason = gameweeks.filter((gameweek) =>
-    //   gameweek.includes("Regular Season")
-    // );
-    // const otherFixtures = gameweeks.filter(
-    //   (gameweek) => !gameweek.includes("Regular Season")
-    // );
-    // otherFixtures.sort((a, b) => b.localeCompare(a));
-    // console.log(otherFixtures);
-    // let counter = 0;
-    // regularSeason.forEach((_) => {
-    //   const option = document.createElement("option");
-    //   option.value = counter;
-    //   option.innerHTML = `Gameweek ${counter + 1}`;
-    //   this.#select.appendChild(option);
-    //   counter++;
-    // });
-    // otherFixtures.forEach((gameweek) => {
-    //   const option = document.createElement("option");
-    //   option.value = gameweeks.findIndex((gw) => gw === gameweek);
-    //   option.innerHTML = `${gameweek}`;
-    //   this.#select.appendChild(option);
-    //   counter++;
-    // });
   }
 
   generateArrows(gameweek, lastGameweek) {
-    console.log(gameweek);
     this.#leftArrow.classList.remove("hideArrow");
     this.#rightArrow.classList.remove("hideArrow");
     if (+gameweek === FIRST_GAMEWEEK)
@@ -208,6 +179,15 @@ export class FixturesView extends View {
       self.#select.value = id;
 
       handler(id);
+    });
+  }
+
+  addHandlerShowMatch(handler) {
+    this.#parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".matches-row");
+      if (!btn) return;
+
+      handler(btn.dataset.matchid);
     });
   }
 }

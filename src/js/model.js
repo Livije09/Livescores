@@ -27,6 +27,7 @@ export const state = {
   gameweek: DEFAULT_GAMEWEEK,
   numberOfRounds: 0,
   rounds: [],
+  match: {},
 };
 
 export const getLeague = async function (league, season) {
@@ -203,11 +204,12 @@ export const changeTable = function (phase) {
 
 export const getFixture = async function (fixture) {
   await fetch(
-    `https://v3.football.api-sports.io/fixtures?id=851364`,
+    `https://v3.football.api-sports.io/fixtures?id=${fixture}`,
     REQUEST_OPTIONS
   )
     .then((data) => data.json())
     .then((result) => {
-      console.log(result.response);
+      state.match = result.response[0];
+      console.log(state.match);
     });
 };

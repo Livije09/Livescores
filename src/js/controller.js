@@ -4,6 +4,7 @@ import FixturesView from "./views/FixturesView.js";
 import HeaderView from "./views/HeaderView.js";
 import LeaguePhaseView from "./views/LeaguePhaseView.js";
 import LogoView from "./views/LogoView.js";
+import MatchView from "./views/MatchView.js";
 import SelectionView from "./views/SelectionView.js";
 import TableSelectionView from "./views/TableSelectionView.js";
 import TableView from "./views/TableView.js";
@@ -15,7 +16,6 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getLeague(league, season);
-    await model.getFixture();
     model.changeWhere();
     TableSelectionView.changeSelectedTab();
     model.changeSeason(season);
@@ -174,6 +174,11 @@ const controlChangePhase = function (phase) {
   }
 };
 
+const controlShowMatch = async function (matchId) {
+  await model.getFixture(matchId);
+  MatchView.generateMatchTeams(model.state.match);
+};
+
 const init = async function () {
   TableView.addHandlerPageLoaded(controlShowLeague);
   SelectionView.addHandlerChangeSeason(controlShowLeague);
@@ -185,6 +190,7 @@ const init = async function () {
   FixturesView.addHandlerChangeGameweekSelect(controlChangeGameweekSelect);
   FixturesView.addHandlerChangeGameweekArrows(controlChangeGameweekArrows);
   LeaguePhaseView.addHandlerChangePhase(controlChangePhase);
+  FixturesView.addHandlerShowMatch(controlShowMatch);
 };
 
 // init();

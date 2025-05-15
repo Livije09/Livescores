@@ -1,4 +1,9 @@
-import { WHICH_TABLE } from "../config";
+import {
+  WHICH_TABLE,
+  FIXTURE_TIME,
+  NORMALIZE_TIME,
+  FIXTURE_DATE,
+} from "../config";
 
 export default class View {
   generateRecentForm(team) {
@@ -79,5 +84,19 @@ export default class View {
                   ${this.generateRecentForm(team)}
                 </ul>
               </div>`;
+  }
+
+  getFixtureTime(fixture) {
+    const time =
+      +fixture.fixture.date.slice(FIXTURE_TIME[0], FIXTURE_TIME[1]) +
+      NORMALIZE_TIME +
+      ":" +
+      fixture.fixture.date.slice(FIXTURE_TIME[2], FIXTURE_TIME[3]);
+    return time;
+  }
+
+  getFixtureDate(fixture) {
+    const date = fixture.fixture.date.slice(FIXTURE_DATE[0], FIXTURE_DATE[1]);
+    return date;
   }
 }
