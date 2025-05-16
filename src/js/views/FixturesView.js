@@ -81,11 +81,11 @@ export class FixturesView extends View {
                 <p class="home-team-goals result ${this.#checkWinner(
                   fixture,
                   HOME_TEAM
-                )}">${fixture.score.fulltime.home}</p>
+                )}">${fixture.goals.home}</p>
                 <p class="away-team-goals result ${this.#checkWinner(
                   fixture,
                   AWAY_TEAM
-                )}">${fixture.score.fulltime.away}</p>
+                )}">${fixture.goals.away}</p>
               </div>
               ${
                 seenPairs[pairKey]
@@ -113,7 +113,7 @@ export class FixturesView extends View {
               }
             </div>`;
       this.#parentElement.insertAdjacentHTML("beforeend", html);
-      if (round.includes("finals") || round.includes("Round of 16")) {
+      if (round.includes("finals")) {
         if (i === fixtures.length / 2 - 1) {
           const html = `
           <div class="matches-row matches-row-blank">
@@ -126,7 +126,8 @@ export class FixturesView extends View {
       if (
         round.includes("Qualifying Round") ||
         round.includes("Preliminary Round") ||
-        round === "Relegation Round"
+        round === "Relegation Round" ||
+        round.includes("Round of 16")
       ) {
         if (i > 0 && (i - 1) % 2 === 0 && i !== fixtures.length - 1) {
           const html = `
@@ -187,7 +188,16 @@ export class FixturesView extends View {
       const btn = e.target.closest(".matches-row");
       if (!btn) return;
 
-      handler(btn.dataset.matchid);
+      const firstMatch = btn.querySelector(".matches-first-match");
+
+      if (firstMatch) {
+        const goals = firstMatch.querySelectorAll("p");
+        const homeGoals = goals[0].innerHTML;
+        const awayGoals = goals[1].innerHTML;
+        handler(btn.dataset.matchid, homeGoals, awayGoals);
+      } else {
+        handler(btn.dataset.matchid);
+      }
     });
   }
 }

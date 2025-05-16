@@ -174,9 +174,13 @@ const controlChangePhase = function (phase) {
   }
 };
 
-const controlShowMatch = async function (matchId) {
+const controlShowMatch = async function (
+  matchId,
+  homeGoals = null,
+  awayGoals = null
+) {
   await model.getFixture(matchId);
-  MatchView.generateMatchTeams(model.state.match);
+  MatchView.generateMatchTeams(model.state.match, homeGoals, awayGoals);
 };
 
 const init = async function () {
@@ -193,4 +197,4 @@ const init = async function () {
   FixturesView.addHandlerShowMatch(controlShowMatch);
 };
 
-// init();
+init();

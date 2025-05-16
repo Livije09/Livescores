@@ -4,21 +4,34 @@ export class MatchView extends View {
   #parentElement = document.querySelector(".fixture-container");
   #matchTeams = document.querySelector(".fixture-teams");
   #xIcon = document.querySelector(".x-icon");
+  #overlay = document.querySelector(".overlay");
 
   constructor() {
     super();
-    this.#addHandlerHideMatch();
+    this.#addHandlerHideMatchAndOverlay();
   }
 
-  #addHandlerHideMatch() {
-    this.#xIcon.addEventListener("click", () =>
-      this.#parentElement.classList.add("hidden")
-    );
+  #addHandlerHideMatchAndOverlay() {
+    this.#xIcon.addEventListener("click", () => {
+      this.#parentElement.classList.add("hidden");
+      this.#overlay.classList.add("hidden");
+    });
   }
 
-  generateMatchTeams(match) {
+  #checkFirstMatch(homeGoals1, awayGoals1, homeGoals2, awayGoals2) {
+    if (homeGoals1 === null || awayGoals1 === null) return "";
+    return `
+                <p class="fixture-first-game">
+                  2. Game. Result of first game is ${homeGoals1}-${awayGoals1}. Aggregate score is ${
+      +homeGoals1 + +homeGoals2
+    }-${+awayGoals1 + +awayGoals2}.
+                </p>`;
+  }
+
+  generateMatchTeams(match, homeGoals, awayGoals) {
     this.#matchTeams.innerHTML = "";
     this.#parentElement.classList.remove("hidden");
+    this.#overlay.classList.remove("hidden");
     const html = `
                 <p class="fixture-date">${this.getFixtureDate(
                   match
@@ -38,9 +51,14 @@ export class MatchView extends View {
                     class="fixture-logo"
                     src="${match.teams.away.logo}"
                   />
-                  <p class="fixture-away-team-name">${
-                    match.teams.away.name
-                  }</p> 
+                  <p class="fixture-away-team-name">${match.teams.away.name}</p>
+                  </div>
+                  ${this.#checkFirstMatch(
+                    homeGoals,
+                    awayGoals,
+                    match.goals.home,
+                    match.goals.away
+                  )}
                   `;
     this.#matchTeams.insertAdjacentHTML("beforeend", html);
   }
