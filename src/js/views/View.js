@@ -4,6 +4,7 @@ import {
   NORMALIZE_TIME,
   FIXTURE_DATE,
 } from "../config";
+import { SVGS } from "../svgs";
 
 export default class View {
   generateRecentForm(team) {
@@ -98,5 +99,39 @@ export default class View {
   getFixtureDate(fixture) {
     const date = fixture.fixture.date.slice(FIXTURE_DATE[0], FIXTURE_DATE[1]);
     return date;
+  }
+
+  checkWinner(team) {
+    if (team) return "winner";
+    return "";
+  }
+
+  checkGoingThrough(
+    homeGoals,
+    awayGoals,
+    homeGoals1,
+    awayGoals1,
+    homePenalties,
+    awayPenalties,
+    whichTeam
+  ) {
+    if (homeGoals === null || awayGoals === null) return "";
+    const returnHTML =
+      SVGS.goingThrough + `<p class="going-through-detail">Going through</p>`;
+    if (whichTeam === "home") {
+      if (homeGoals + homeGoals1 > awayGoals + awayGoals1) return returnHTML;
+      if (homeGoals + homeGoals1 === awayGoals + awayGoals1) {
+        if (homePenalties > awayPenalties) return returnHTML;
+        return "";
+      }
+    }
+    if (whichTeam === "away") {
+      if (homeGoals + homeGoals1 < awayGoals + awayGoals1) return returnHTML;
+      if (homeGoals + homeGoals1 === awayGoals + awayGoals1) {
+        if (homePenalties < awayPenalties) return returnHTML;
+        return "";
+      }
+    }
+    return "";
   }
 }

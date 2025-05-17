@@ -55,7 +55,7 @@
             </li>
           </ul>
         </div>
-        <div class="league-table big-container" data-tab="0">
+        <div class="league-table big-container hidden" data-tab="0">
           <div class="league-phase-selection hidden">
             <ul class="league-phase-list">
               <!-- <li class="league-phase-item">
@@ -165,7 +165,7 @@
             </div>
           </div>
         </div>
-        <div class="matches-container big-container hidden" data-tab="1">
+        <div class="matches-container big-container" data-tab="1">
           <div class="matches-header">
             <div class="gameweek">
               <svg
@@ -226,7 +226,7 @@
             </div> -->
           </div>
         </div>
-        <div class="fixture-container hidden">
+        <div class="fixture-container">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -249,7 +249,26 @@
                   class="fixture-logo"
                   src="https://media.api-sports.io/football/teams/33.png"
                 />
-                <p class="fixture-home-team-name">Chelsea</p>
+                <div class="fixture-team-div">
+                  <p class="fixture-home-team-name">Chelsea</p>
+                  <div class="icon-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="going-through-icon"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"
+                      />
+                    </svg>
+                    <p class="going-through-detail">Going through</p>
+                  </div>
+                </div>
               </div>
               <p class="fixture-result">3-1</p>
               <div class="fixture-away-team fixture-team">
@@ -262,6 +281,10 @@
               <p class="fixture-first-game">
                 2. Game. Result of first game is 1-0. Aggregate score is 3-1.
               </p>
+              <!-- <div class="fixture-after-penalties">
+                <p class="fixture-after-penalties-p">After penalties:</p>
+                <p class="fixture-after-penalties-p">3-4</p>
+              </div> -->
             </div>
             <div class="fixture-filter">
               <p

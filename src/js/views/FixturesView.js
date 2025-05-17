@@ -20,11 +20,6 @@ export class FixturesView extends View {
     this.#parentElement.innerHTML = "";
   }
 
-  #checkWinner(fixture, where) {
-    const winner = fixture.teams[where]?.winner ? "winner" : "";
-    return winner;
-  }
-
   #checkPair(seenPairs, pairKey, fixture) {
     seenPairs[pairKey] = fixture;
     return "";
@@ -39,16 +34,6 @@ export class FixturesView extends View {
       const awayTeam = fixture.teams.away.name;
       const pairKey = [homeTeam, awayTeam].sort().join("-");
       const time = this.getFixtureTime(fixture);
-      // if (round.includes("finals") || round.includes("Round of 16")) {
-      //   if (i === 0) {
-      //     const html = `
-      //     <div class="matches-row">
-      //     <p class="matches-p"></p>
-      //     </div>
-      //     `;
-      //     this.#parentElement.insertAdjacentHTML("beforeend", html);
-      //   }
-      // }
       const html = `
             <div class="matches-row" data-matchid=${fixture.fixture.id}>
               <p class="matches-date matches-p">${this.getFixtureDate(
@@ -61,9 +46,8 @@ export class FixturesView extends View {
                     class="matches-logo"
                     src="${fixture.teams.home.logo}"
                   />
-                  <p class="matches-name ${this.#checkWinner(
-                    fixture,
-                    HOME_TEAM
+                  <p class="matches-name ${this.checkWinner(
+                    fixture.teams.home.winner
                   )}">${fixture.teams.home.name}</p>
                 </div>
                 <div class="away-team matches-team matches-p">
@@ -71,20 +55,17 @@ export class FixturesView extends View {
                     class="matches-logo"
                     src="${fixture.teams.away.logo}"
                   />
-                  <p class="matches-name ${this.#checkWinner(
-                    fixture,
-                    AWAY_TEAM
+                  <p class="matches-name ${this.checkWinner(
+                    fixture.teams.away.winner
                   )}">${fixture.teams.away.name}</p>
                 </div>
               </div>
               <div class="matches-result matches-p">
-                <p class="home-team-goals result ${this.#checkWinner(
-                  fixture,
-                  HOME_TEAM
+                <p class="home-team-goals result ${this.checkWinner(
+                  fixture.teams.home.winner
                 )}">${fixture.goals.home}</p>
-                <p class="away-team-goals result ${this.#checkWinner(
-                  fixture,
-                  AWAY_TEAM
+                <p class="away-team-goals result ${this.checkWinner(
+                  fixture.teams.away.winner
                 )}">${fixture.goals.away}</p>
               </div>
               ${
@@ -100,13 +81,11 @@ export class FixturesView extends View {
                 fixture.score.penalty.home !== null &&
                 fixture.score.penalty.away !== null
                   ? `<div class="matches-result matches-penalty matches-p">
-                  <p class="home-team-goals result ${this.#checkWinner(
-                    fixture,
-                    HOME_TEAM
+                  <p class="home-team-goals result ${this.checkWinner(
+                    fixture.teams.home.winner
                   )}">(${fixture.score.penalty.home})</p>
-                  <p class="away-team-goals result ${this.#checkWinner(
-                    fixture,
-                    AWAY_TEAM
+                  <p class="away-team-goals result ${this.checkWinner(
+                    fixture.teams.away.winner
                   )}">(${fixture.score.penalty.away})</p>
                 </div>`
                   : ""

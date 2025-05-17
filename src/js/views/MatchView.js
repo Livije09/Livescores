@@ -1,3 +1,4 @@
+import { AWAY_TEAM, HOME_TEAM } from "../config";
 import View from "./View";
 
 export class MatchView extends View {
@@ -18,13 +19,29 @@ export class MatchView extends View {
     });
   }
 
-  #checkFirstMatch(homeGoals1, awayGoals1, homeGoals2, awayGoals2) {
+  #checkIfPenalties(homePenalties, awayPenalties) {
+    if (homePenalties === null || awayPenalties === null) return "";
+    return `
+            After penalties: ${homePenalties}-${awayPenalties}`;
+  }
+
+  #checkFirstMatch(
+    homeGoals1,
+    awayGoals1,
+    homeGoals2,
+    awayGoals2,
+    homePenalties,
+    awayPenalties
+  ) {
     if (homeGoals1 === null || awayGoals1 === null) return "";
     return `
                 <p class="fixture-first-game">
                   2. Game. Result of first game is ${homeGoals1}-${awayGoals1}. Aggregate score is ${
       +homeGoals1 + +homeGoals2
-    }-${+awayGoals1 + +awayGoals2}.
+    }-${+awayGoals1 + +awayGoals2}. ${this.#checkIfPenalties(
+      homePenalties,
+      awayPenalties
+    )}
                 </p>`;
   }
 
@@ -41,7 +58,22 @@ export class MatchView extends View {
                     class="fixture-logo"
                     src="${match.teams.home.logo}"
                   />
-                  <p class="fixture-home-team-name">${match.teams.home.name}</p>
+                  <div class="fixture-team-div">
+                    <p class="fixture-home-team-name ${this.checkWinner(
+                      match.teams.home.winner
+                    )}">${match.teams.home.name}</p>
+                    <div class="icon-wrapper">
+                      ${this.checkGoingThrough(
+                        homeGoals,
+                        awayGoals,
+                        +match.goals.home,
+                        +match.goals.away,
+                        +match.score.penalty.home,
+                        +match.score.penalty.away,
+                        HOME_TEAM
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <p class="fixture-result">${match.goals.home}-${
       match.goals.away
@@ -51,13 +83,30 @@ export class MatchView extends View {
                     class="fixture-logo"
                     src="${match.teams.away.logo}"
                   />
-                  <p class="fixture-away-team-name">${match.teams.away.name}</p>
+                  <div class="fixture-team-div">
+                    <p class="fixture-away-team-name ${this.checkWinner(
+                      match.teams.away.winner
+                    )}">${match.teams.away.name}</p>
+                    <div class="icon-wrapper">
+                      ${this.checkGoingThrough(
+                        homeGoals,
+                        awayGoals,
+                        +match.goals.home,
+                        +match.goals.away,
+                        +match.score.penalty.home,
+                        +match.score.penalty.away,
+                        AWAY_TEAM
+                      )}
+                    </div>
+                  </div>
                   </div>
                   ${this.#checkFirstMatch(
                     homeGoals,
                     awayGoals,
                     match.goals.home,
-                    match.goals.away
+                    match.goals.away,
+                    match.score.penalty.home,
+                    match.score.penalty.away
                   )}
                   `;
     this.#matchTeams.insertAdjacentHTML("beforeend", html);

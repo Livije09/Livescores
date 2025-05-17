@@ -197,4 +197,4 @@ const init = async function () {
   FixturesView.addHandlerShowMatch(controlShowMatch);
 };
 
-init();
+// init();
