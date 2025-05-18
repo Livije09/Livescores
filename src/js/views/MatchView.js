@@ -1,4 +1,5 @@
 import { AWAY_TEAM, HOME_TEAM } from "../config";
+import { SVGS } from "../svgs";
 import View from "./View";
 
 export class MatchView extends View {
@@ -6,10 +7,21 @@ export class MatchView extends View {
   #matchTeams = document.querySelector(".fixture-teams");
   #xIcon = document.querySelector(".x-icon");
   #overlay = document.querySelector(".overlay");
+  #firstHalfContainer = document.querySelector(".first-half");
+  #secondHalfContainer = document.querySelector(".second-half");
+  #score = {
+    home: 0,
+    away: 0,
+  };
 
   constructor() {
     super();
     this.#addHandlerHideMatchAndOverlay();
+  }
+
+  showMatch() {
+    this.#parentElement.classList.remove("hidden");
+    this.#overlay.classList.remove("hidden");
   }
 
   #addHandlerHideMatchAndOverlay() {
@@ -47,8 +59,6 @@ export class MatchView extends View {
 
   generateMatchTeams(match, homeGoals, awayGoals) {
     this.#matchTeams.innerHTML = "";
-    this.#parentElement.classList.remove("hidden");
-    this.#overlay.classList.remove("hidden");
     const html = `
                 <p class="fixture-date">${this.getFixtureDate(
                   match
@@ -110,6 +120,101 @@ export class MatchView extends View {
                   )}
                   `;
     this.#matchTeams.insertAdjacentHTML("beforeend", html);
+  }
+
+  #clearHalfs() {
+    this.#firstHalfContainer.innerHTML = "";
+    this.#secondHalfContainer.innerHTML = "";
+  }
+
+  #resetScore() {
+    this.#score.home = 0;
+    this.#score.away = 0;
+  }
+
+  #shortenTheName(name) {
+    const nameInParts = name.trim().split(" ");
+    if (nameInParts.length < 2) return name;
+
+    const initials = nameInParts[0][0].toUpperCase();
+    const lastName = nameInParts.slice(1).join(" ");
+    return `${initials}. ${lastName}`;
+  }
+
+  #showMinute(event) {
+    if (event.time.extra === null) return Math.abs(event.time.elapsed);
+    return `${Math.abs(event.time.elapsed)}+${event.time.extra}`;
+  }
+
+  #showSVG(event) {
+    if (!event.detail.toLowerCase().includes("Substitution"))
+      return SVGS[event.detail.toLowerCase().replace(/\s+/g, "")];
+    return SVGS[event.detail.toLowerCase().split(" ")[0]];
+  }
+
+  #generateEventHTML(match) {
+    const halfs = {
+      firstHalf: "",
+      secondHalf: "",
+    };
+    match.events.forEach((event) => {
+      if (event.type === "Goal")
+        event.team.id === match.teams.home.id
+          ? this.#score.home++
+          : this.#score.away++;
+      const html = `<div class="first-half-details details">
+                <div class="detail ${
+                  event.team.id === match.teams.home.id
+                    ? "home-detail"
+                    : "away-detail"
+                }">
+                  <p class="minute">${this.#showMinute(event)}'</p>
+                  ${this.#showSVG(event)}
+                  ${
+                    event.type === "Goal"
+                      ? `
+                  <p class="current-score">${this.#score.home} - ${
+                          this.#score.away
+                        }</p>`
+                      : ""
+                  }
+                  <p class="scorer player">${this.#shortenTheName(
+                    event.player.name
+                  )}</p>
+                  ${
+                    event.assist.id === null
+                      ? `<p class="assist player">(${this.#shortenTheName(
+                          event.assist.name
+                        )})</p>`
+                      : ""
+                  }
+                </div>
+              </div>`;
+      Math.abs(event.time.elapsed) <= 45
+        ? (halfs.firstHalf += html)
+        : (halfs.secondHalf += html);
+    });
+    return halfs;
+  }
+
+  generateMatchDetails(match) {
+    this.#clearHalfs();
+    this.#resetScore();
+    const { firstHalf, secondHalf } = this.#generateEventHTML(match);
+    const htmlFirstHalf = `<div class="first-half-header">
+                    <p class="first-half-header-p">1. Half</p>
+                    <p class="first-half-header-p">${match.score.halftime.home} - ${match.score.halftime.away}</p>
+                  </div>
+                  ${firstHalf}
+    `;
+    this.#firstHalfContainer.insertAdjacentHTML("beforeend", htmlFirstHalf);
+    const htmlSecondHalf = `<div class="second-half-header">
+                    <p class="second-half-header-p">2. Half</p>
+                    <p class="second-half-header-p">${match.score.fulltime.home} - ${match.score.fulltime.away}</p>
+                  </div>
+                  ${secondHalf}
+     `;
+    this.#secondHalfContainer.insertAdjacentHTML("beforeend", htmlSecondHalf);
   }
 }
 

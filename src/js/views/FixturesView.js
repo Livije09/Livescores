@@ -49,6 +49,21 @@ export class FixturesView extends View {
                   <p class="matches-name ${this.checkWinner(
                     fixture.teams.home.winner
                   )}">${fixture.teams.home.name}</p>
+                  <div class="icon-wrapper">
+                  ${
+                    seenPairs[pairKey]
+                      ? this.checkGoingThrough(
+                          +fixture.goals.home,
+                          +fixture.goals.away,
+                          +seenPairs[pairKey].score.fulltime.away,
+                          +seenPairs[pairKey].score.fulltime.home,
+                          +fixture.score.penalty.home,
+                          +fixture.score.penalty.away,
+                          HOME_TEAM
+                        )
+                      : ""
+                  }
+                  </div>
                 </div>
                 <div class="away-team matches-team matches-p">
                   <img
@@ -58,6 +73,21 @@ export class FixturesView extends View {
                   <p class="matches-name ${this.checkWinner(
                     fixture.teams.away.winner
                   )}">${fixture.teams.away.name}</p>
+                  <div class="icon-wrapper">
+                  ${
+                    seenPairs[pairKey]
+                      ? this.checkGoingThrough(
+                          +fixture.goals.home,
+                          +fixture.goals.away,
+                          +seenPairs[pairKey].score.fulltime.away,
+                          +seenPairs[pairKey].score.fulltime.home,
+                          +fixture.score.penalty.home,
+                          +fixture.score.penalty.away,
+                          AWAY_TEAM
+                        )
+                      : ""
+                  }
+                  </div>
                 </div>
               </div>
               <div class="matches-result matches-p">
