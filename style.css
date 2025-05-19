@@ -466,7 +466,7 @@ select {
 
 .fixture-container {
   position: absolute;
-  top: 20%;
+  top: 5%;
   /* left: 15%; */
   transform: translate(15%, 0%);
   width: 80rem;
@@ -622,7 +622,9 @@ select {
 }
 
 .first-half-header,
-.second-half-header {
+.second-half-header,
+.first-extra-half-header,
+.second-extra-half-header {
   display: flex;
   font-size: 1.2rem;
   font-weight: 700;
@@ -636,7 +638,9 @@ select {
 }
 
 .first-half-header-p:last-child,
-.second-half-header-p:last-child {
+.second-half-header-p:last-child,
+.first-extra-half-header-p:last-child,
+.second-extra-half-header-p:last-child {
   margin-left: auto;
 }
 
