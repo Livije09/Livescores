@@ -169,10 +169,17 @@ export class MatchView extends View {
   }
 
   #checkAssist(event) {
-    if (event.assist.id === null || event.assist.name === null) return "";
-    return `<p class="assist player">(${this.#shortenTheName(
-      event.assist.name
-    )})</p>`;
+    if (event.assist.id !== null && event.assist.name !== null)
+      return `<p class="assist player">(${this.#shortenTheName(
+        event.assist.name
+      )})</p>`;
+    if (event.comments)
+      return `<p class="comment player">(${event.comments})</p>`;
+    if (event.type === "Var")
+      return `<p class="comment player">(${event.type.toUpperCase()}: ${
+        event.detail
+      })</p>`;
+    return "";
   }
 
   #addGoal(match, event) {
@@ -205,7 +212,28 @@ export class MatchView extends View {
       firstExtraHalf: "",
       secondExtraHalf: "",
     };
+    match.events.sort((a, b) => {
+      const ea = a.time.elapsed;
+      const eb = b.time.elapsed;
+
+      if (ea !== eb) {
+        return ea - eb;
+      }
+
+      const extraA = a.time.extra;
+      const extraB = b.time.extra;
+      if (extraA === null && extraB !== null) return -1;
+      if (extraA !== null && extraB === null) return 1;
+      if (extraA !== null && extraB !== null) return extraA - extraB;
+
+      return 0;
+    });
     match.events.forEach((event) => {
+      if (
+        event.detail === "Penalty awarded" ||
+        event.detail === "Goal confirmed"
+      )
+        return;
       this.#addGoal(match, event);
       const html = `<div class="details">
                 <div class="detail ${
@@ -265,8 +293,8 @@ export class MatchView extends View {
      `;
     this.#secondHalfContainer.insertAdjacentHTML("beforeend", htmlSecondHalf);
     if (
-      !match.score.extratime.home === null &&
-      !match.score.extratime.away === null
+      match.score.extratime.home !== null &&
+      match.score.extratime.away !== null
     ) {
       const htmlFirstExtraHalf = `
       <div class="first-extra-half-header">

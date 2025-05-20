@@ -207,6 +207,11 @@ export class FixturesView extends View {
       } else {
         handler(btn.dataset.matchid);
       }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     });
   }
 }

@@ -467,7 +467,6 @@ select {
 .fixture-container {
   position: absolute;
   top: 5%;
-  /* left: 15%; */
   transform: translate(15%, 0%);
   width: 80rem;
   color: #333;
@@ -681,12 +680,14 @@ select {
 
 .own-goal,
 .missed-penalty {
-  fill: #e02020;
+  stroke: #e02020;
 }
 
 .assist,
 .substitute-out,
-.penalty {
+.penalty,
+.comment,
+.var {
   color: #999;
 }
 
