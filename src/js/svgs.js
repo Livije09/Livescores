@@ -204,7 +204,7 @@ export const SVGS = {
                     </g>
                   </svg>`,
   missedpenalty: `<svg
-                    fill="#000000"
+                    fill="#dc0000"
                     height="200px"
                     width="200px"
                     version="1.1"

@@ -11,9 +11,18 @@ export class MatchView extends View {
   #secondHalfContainer = document.querySelector(".second-half");
   #firstExtraHalfContainer = document.querySelector(".first-extra-half");
   #secondExtraHalfContainer = document.querySelector(".second-extra-half");
+  #penaltyShootoutContainer = document.querySelector(".penalty-shootout");
   #score = {
     home: 0,
     away: 0,
+    firstHalf: {
+      home: 0,
+      away: 0,
+    },
+    secondHalf: {
+      home: 0,
+      away: 0,
+    },
     firstExtraHalf: {
       home: 0,
       away: 0,
@@ -22,11 +31,15 @@ export class MatchView extends View {
       home: 0,
       away: 0,
     },
+    penaltyShootout: {
+      home: 0,
+      away: 0,
+    },
   };
 
   constructor() {
     super();
-    this.#addHandlerHideMatchAndOverlay();
+    this.#addHandlerToggleMatchAndOverlay();
   }
 
   showMatch() {
@@ -34,11 +47,16 @@ export class MatchView extends View {
     this.#overlay.classList.remove("hidden");
   }
 
-  #addHandlerHideMatchAndOverlay() {
-    this.#xIcon.addEventListener("click", () => {
-      this.#parentElement.classList.add("hidden");
-      this.#overlay.classList.add("hidden");
-    });
+  #toggleMatchAndOverlay() {
+    this.#parentElement.classList.toggle("hidden");
+    this.#overlay.classList.toggle("hidden");
+  }
+
+  #addHandlerToggleMatchAndOverlay() {
+    this.#xIcon.addEventListener("click", () => this.#toggleMatchAndOverlay());
+    this.#overlay.addEventListener("click", () =>
+      this.#toggleMatchAndOverlay()
+    );
   }
 
   #checkIfPenalties(homePenalties, awayPenalties) {
@@ -84,8 +102,8 @@ export class MatchView extends View {
                     )}">${match.teams.home.name}</p>
                     <div class="icon-wrapper">
                       ${this.checkGoingThrough(
-                        homeGoals,
-                        awayGoals,
+                        +homeGoals,
+                        +awayGoals,
                         +match.goals.home,
                         +match.goals.away,
                         +match.score.penalty.home,
@@ -109,8 +127,8 @@ export class MatchView extends View {
                     )}">${match.teams.away.name}</p>
                     <div class="icon-wrapper">
                       ${this.checkGoingThrough(
-                        homeGoals,
-                        awayGoals,
+                        +homeGoals,
+                        +awayGoals,
                         +match.goals.home,
                         +match.goals.away,
                         +match.score.penalty.home,
@@ -137,15 +155,22 @@ export class MatchView extends View {
     this.#secondHalfContainer.innerHTML = "";
     this.#firstExtraHalfContainer.innerHTML = "";
     this.#secondExtraHalfContainer.innerHTML = "";
+    this.#penaltyShootoutContainer.innerHTML = "";
   }
 
   #resetScore() {
     this.#score.home = 0;
     this.#score.away = 0;
+    this.#score.firstHalf.home = 0;
+    this.#score.firstHalf.away = 0;
+    this.#score.secondHalf.home = 0;
+    this.#score.secondHalf.away = 0;
     this.#score.firstExtraHalf.home = 0;
     this.#score.firstExtraHalf.away = 0;
     this.#score.secondExtraHalf.home = 0;
     this.#score.secondExtraHalf.away = 0;
+    this.#score.penaltyShootout.home = 0;
+    this.#score.penaltyShootout.away = 0;
   }
 
   #shortenTheName(name) {
@@ -182,27 +207,35 @@ export class MatchView extends View {
     return "";
   }
 
+  #addGoalToTeam(event, team) {
+    if (
+      event.comments === "Penalty Shootout" &&
+      event.detail !== "Missed Penalty"
+    ) {
+      this.#score.penaltyShootout[team]++;
+    } else {
+      this.#score[team]++;
+      if (Math.abs(event.time.elapsed) <= 45) this.#score.firstHalf[team]++;
+      if (
+        Math.abs(event.time.elapsed) > 45 &&
+        Math.abs(event.time.elapsed) <= 90
+      )
+        this.#score.secondHalf[team]++;
+      if (
+        Math.abs(event.time.elapsed) > 90 &&
+        Math.abs(event.time.elapsed) <= 105
+      )
+        this.#score.firstExtraHalf[team]++;
+      if (Math.abs(event.time.elapsed) > 105)
+        this.#score.secondExtraHalf[team]++;
+    }
+  }
+
   #addGoal(match, event) {
     if (event.type === "Goal")
-      if (event.team.id === match.teams.home.id) {
-        this.#score.home++;
-        if (
-          Math.abs(event.time.elapsed) > 90 &&
-          Math.abs(event.time.elapsed) <= 105
-        )
-          this.#score.firstExtraHalf.home++;
-        if (Math.abs(event.time.elapsed) > 105)
-          this.#score.secondExtraHalf.home++;
-      } else {
-        this.#score.away++;
-        if (
-          Math.abs(event.time.elapsed) > 90 &&
-          Math.abs(event.time.elapsed) <= 105
-        )
-          this.#score.firstExtraHalf.away++;
-        if (Math.abs(event.time.elapsed) > 105)
-          this.#score.secondExtraHalf.away++;
-      }
+      if (event.team.id === match.teams.home.id)
+        this.#addGoalToTeam(event, HOME_TEAM);
+      else this.#addGoalToTeam(event, AWAY_TEAM);
   }
 
   #generateEventHTML(match) {
@@ -211,6 +244,7 @@ export class MatchView extends View {
       secondHalf: "",
       firstExtraHalf: "",
       secondExtraHalf: "",
+      penaltyShootout: "",
     };
     match.events.sort((a, b) => {
       const ea = a.time.elapsed;
@@ -268,7 +302,11 @@ export class MatchView extends View {
         Math.abs(event.time.elapsed) <= 105
       )
         halfs.firstExtraHalf += html;
-      if (Math.abs(event.time.elapsed) > 105) halfs.secondExtraHalf += html;
+      if (Math.abs(event.time.elapsed) > 105) {
+        event.comments === "Penalty Shootout"
+          ? (halfs.penaltyShootout += html)
+          : (halfs.secondExtraHalf += html);
+      }
     });
     return halfs;
   }
@@ -276,18 +314,27 @@ export class MatchView extends View {
   generateMatchDetails(match) {
     this.#clearHalfs();
     this.#resetScore();
-    const { firstHalf, secondHalf, firstExtraHalf, secondExtraHalf } =
-      this.#generateEventHTML(match);
+    const {
+      firstHalf,
+      secondHalf,
+      firstExtraHalf,
+      secondExtraHalf,
+      penaltyShootout,
+    } = this.#generateEventHTML(match);
     const htmlFirstHalf = `<div class="first-half-header">
                     <p class="first-half-header-p">1. Half</p>
-                    <p class="first-half-header-p">${match.score.halftime.home} - ${match.score.halftime.away}</p>
+                    <p class="first-half-header-p">${
+                      this.#score.firstHalf.home
+                    } - ${this.#score.firstHalf.away}</p>
                   </div>
                   ${firstHalf}
     `;
     this.#firstHalfContainer.insertAdjacentHTML("beforeend", htmlFirstHalf);
     const htmlSecondHalf = `<div class="second-half-header">
                     <p class="second-half-header-p">2. Half</p>
-                    <p class="second-half-header-p">${match.score.fulltime.home} - ${match.score.fulltime.away}</p>
+                    <p class="second-half-header-p">${
+                      this.#score.secondHalf.home
+                    } - ${this.#score.secondHalf.away}</p>
                   </div>
                   ${secondHalf}
      `;
@@ -298,11 +345,11 @@ export class MatchView extends View {
     ) {
       const htmlFirstExtraHalf = `
       <div class="first-extra-half-header">
-      <p class="first-extra-half-header-p">1. Extra half</p>
-      <p class="first-extra-half-header-p">${
-        this.#score.firstExtraHalf.home
-      } - ${this.#score.firstExtraHalf.away}</p>
-        </div>
+        <p class="first-extra-half-header-p">1. Extra half</p>
+        <p class="first-extra-half-header-p">${
+          this.#score.firstExtraHalf.home
+        } - ${this.#score.firstExtraHalf.away}</p>
+      </div>
         ${firstExtraHalf}
         `;
       this.#firstExtraHalfContainer.insertAdjacentHTML(
@@ -311,16 +358,28 @@ export class MatchView extends View {
       );
       const htmlSecondExtraHalf = `
         <div class="second-extra-half-header">
-        <p class="second-extra-half-header-p">2. Extra half</p>
-        <p class="second-extra-half-header-p">${
-          this.#score.secondExtraHalf.home
-        } - ${this.#score.secondExtraHalf.away}</p>
-          </div>
+          <p class="second-extra-half-header-p">2. Extra half</p>
+          <p class="second-extra-half-header-p">${
+            this.#score.secondExtraHalf.home
+          } - ${this.#score.secondExtraHalf.away}</p>
+        </div>
           ${secondExtraHalf}
           `;
       this.#secondExtraHalfContainer.insertAdjacentHTML(
         "beforeend",
         htmlSecondExtraHalf
+      );
+      const htmlPenaltyShootout = `<div class="penalty-shootout-header">
+          <p class="penalty-shootout-header-p">Penalty Shootout</p>
+          <p class="penalty-shootout-header-p">${
+            this.#score.penaltyShootout.home
+          } - ${this.#score.penaltyShootout.away}</p>
+        </div>
+          ${penaltyShootout}
+      `;
+      this.#penaltyShootoutContainer.insertAdjacentHTML(
+        "beforeend",
+        htmlPenaltyShootout
       );
     }
   }

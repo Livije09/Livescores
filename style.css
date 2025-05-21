@@ -623,7 +623,8 @@ select {
 .first-half-header,
 .second-half-header,
 .first-extra-half-header,
-.second-extra-half-header {
+.second-extra-half-header,
+.penalty-shootout-header {
   display: flex;
   font-size: 1.2rem;
   font-weight: 700;
@@ -639,7 +640,8 @@ select {
 .first-half-header-p:last-child,
 .second-half-header-p:last-child,
 .first-extra-half-header-p:last-child,
-.second-extra-half-header-p:last-child {
+.second-extra-half-header-p:last-child,
+.penalty-shootout-header-p:last-child {
   margin-left: auto;
 }
 
