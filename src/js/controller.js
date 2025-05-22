@@ -16,6 +16,7 @@ const controlShowLeague = async function (
 ) {
   try {
     // await model.getFixture(851369);
+    // MatchView.showStatistics(model.state.match);
     await model.getLeague(league, season);
     model.changeWhere();
     TableSelectionView.changeSelectedTab();
@@ -184,6 +185,14 @@ const controlShowMatch = async function (
   MatchView.showMatch();
   MatchView.generateMatchTeams(model.state.match, homeGoals, awayGoals);
   MatchView.generateMatchDetails(model.state.match);
+  model.state.matchTab = 0;
+  MatchView.changeDetailsTab(model.state.matchTab);
+};
+
+const controlChangeDetailsTab = function (id) {
+  MatchView.changeDetailsTab(id);
+  MatchView.showStatistics(model.state.match);
+  model.state.matchTab = id;
 };
 
 const init = async function () {
@@ -198,6 +207,7 @@ const init = async function () {
   FixturesView.addHandlerChangeGameweekArrows(controlChangeGameweekArrows);
   LeaguePhaseView.addHandlerChangePhase(controlChangePhase);
   FixturesView.addHandlerShowMatch(controlShowMatch);
+  MatchView.addHandlerChangeDetailsTab(controlChangeDetailsTab);
 };
 
-init();
+init()aa;

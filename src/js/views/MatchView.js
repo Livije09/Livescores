@@ -12,6 +12,7 @@ export class MatchView extends View {
   #firstExtraHalfContainer = document.querySelector(".first-extra-half");
   #secondExtraHalfContainer = document.querySelector(".second-extra-half");
   #penaltyShootoutContainer = document.querySelector(".penalty-shootout");
+  #detailsContainer = document.querySelectorAll(".details-container");
   #score = {
     home: 0,
     away: 0,
@@ -382,6 +383,80 @@ export class MatchView extends View {
         htmlPenaltyShootout
       );
     }
+  }
+
+  addHandlerChangeDetailsTab(handler) {
+    this.#parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".fixture-details-p");
+      if (!btn) return;
+
+      const id = btn.dataset.details;
+      handler(id);
+    });
+  }
+
+  #showTab(id) {
+    this.#detailsContainer.forEach((tab) => {
+      tab.classList.add("hidden");
+      if (tab.dataset.dcontainers === id) tab.classList.remove("hidden");
+    });
+  }
+
+  #showActiveBtn(id) {
+    const tabButtons = document.querySelectorAll(".fixture-details-p");
+    tabButtons.forEach((tab) => {
+      tab.classList.remove("fixture-details-p-active");
+      if (tab.dataset.details === id)
+        tab.classList.add("fixture-details-p-active");
+    });
+  }
+
+  changeDetailsTab(id) {
+    this.#showActiveBtn(+id);
+    this.#showTab(+id);
+  }
+
+  showStatistics(match) {
+    this.#detailsContainer[1].innerHTML = "";
+    let html = "";
+    const homeValues = [];
+    const awayValues = [];
+    match.statistics[0].statistics.forEach((stat, i) => {
+      console.log(stat);
+      const valueHome = parseFloat(stat.value);
+      if (valueHome === null) valueHome = 0;
+      const valueAway = parseFloat(match.statistics[1].statistics[i].value);
+      if (valueAway === null) valueAway = 0;
+      homeValues.push(valueHome);
+      awayValues.push(valueAway);
+
+      html += `<div class="statistics-div">
+                <p class="statistics-p">${stat.type}</p>
+                <div class="statistics-chart">
+                  <p class="statistics-home">${valueHome}</p>
+                  <div class="statistics-bar-container">
+                    <div class="statistics-home-div statistics-home-${i}"></div>
+                    <div class="statistics-away-div statistics-away-${i}"></div>
+                  </div>
+                  <p class="statistics-away">${valueAway}</p>
+                </div>
+              </div>`;
+    });
+
+    this.#detailsContainer[1].insertAdjacentHTML("beforeend", html);
+
+    homeValues.forEach((home, i) => {
+      const away = awayValues[i];
+      const total = home + away;
+      const homeWidth = (home / total) * 100;
+      const awayWidth = (away / total) * 100;
+
+      const homeDiv = document.querySelector(`.statistics-home-${i}`);
+      const awayDiv = document.querySelector(`.statistics-away-${i}`);
+
+      if (homeDiv) homeDiv.style.width = `${homeWidth}%`;
+      if (awayDiv) awayDiv.style.width = `${awayWidth}%`;
+    });
   }
 }
 

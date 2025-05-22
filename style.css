@@ -605,6 +605,7 @@ select {
 .fixture-details {
   gap: 1.2rem;
   padding-bottom: 1.2rem;
+  margin-bottom: 0;
 }
 
 .fixture-details-p {
@@ -691,6 +692,50 @@ select {
 .comment,
 .var {
   color: #999;
+}
+
+.statistics-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.statistics-chart {
+  display: flex;
+  align-items: center;
+}
+
+.statistics-bar-container {
+  display: flex;
+  height: 1rem;
+  width: 30rem;
+  background-color: #e6e6e6;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.statistics-home {
+  margin-right: 2rem;
+}
+
+.statistics-away {
+  margin-left: 2rem;
+}
+
+.statistics-home-div,
+.statistics-away-div {
+  height: 100%;
+}
+
+.statistics-home-div {
+  background-color: #2df77a;
+  /* width: 60%; */
+}
+
+.statistics-away-div {
+  background-color: #167fdb;
+  /* width: 40%; */
 }
 
 .hidden {

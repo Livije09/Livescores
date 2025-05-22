@@ -28,6 +28,7 @@ export const state = {
   numberOfRounds: 0,
   rounds: [],
   match: {},
+  matchTab: 0,
 };
 
 export const getLeague = async function (league, season) {
