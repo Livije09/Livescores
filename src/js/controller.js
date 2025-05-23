@@ -177,15 +177,21 @@ const controlChangePhase = function (phase) {
 };
 
 const controlShowMatch = async function (
+  secondMatch,
   matchId,
   homeGoals = null,
   awayGoals = null
 ) {
   await model.getFixture(matchId);
   MatchView.showMatch();
-  MatchView.generateMatchTeams(model.state.match, homeGoals, awayGoals);
+  MatchView.generateMatchTeams(
+    secondMatch,
+    model.state.match,
+    homeGoals,
+    awayGoals
+  );
   MatchView.generateMatchDetails(model.state.match);
-  model.state.matchTab = 0;
+  model.state.matchTab = "0";
   MatchView.changeDetailsTab(model.state.matchTab);
 };
 
@@ -210,4 +216,4 @@ const init = async function () {
   MatchView.addHandlerChangeDetailsTab(controlChangeDetailsTab);
 };
 
-init()aa;
+init();

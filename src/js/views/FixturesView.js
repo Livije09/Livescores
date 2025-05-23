@@ -35,7 +35,9 @@ export class FixturesView extends View {
       const pairKey = [homeTeam, awayTeam].sort().join("-");
       const time = this.getFixtureTime(fixture);
       const html = `
-            <div class="matches-row" data-matchid=${fixture.fixture.id}>
+            <div class="matches-row ${
+              seenPairs[pairKey] ? "second-game" : ""
+            }" data-matchid=${fixture.fixture.id}>
               <p class="matches-date matches-p">${this.getFixtureDate(
                 fixture
               )}</p>
@@ -198,14 +200,15 @@ export class FixturesView extends View {
       if (!btn) return;
 
       const firstMatch = btn.querySelector(".matches-first-match");
+      const secondMatch = btn.classList.contains("second-game") ? 1 : 0;
 
       if (firstMatch) {
         const goals = firstMatch.querySelectorAll("p");
         const homeGoals = goals[0].innerHTML;
         const awayGoals = goals[1].innerHTML;
-        handler(btn.dataset.matchid, homeGoals, awayGoals);
+        handler(secondMatch, btn.dataset.matchid, homeGoals, awayGoals);
       } else {
-        handler(btn.dataset.matchid);
+        handler(secondMatch, btn.dataset.matchid);
       }
 
       window.scrollTo({

@@ -86,7 +86,7 @@ export class MatchView extends View {
                 </p>`;
   }
 
-  generateMatchTeams(match, homeGoals, awayGoals) {
+  generateMatchTeams(secondMatch, match, homeGoals, awayGoals) {
     this.#matchTeams.innerHTML = "";
     const html = `
                 <p class="fixture-date">${this.getFixtureDate(
@@ -102,15 +102,19 @@ export class MatchView extends View {
                       match.teams.home.winner
                     )}">${match.teams.home.name}</p>
                     <div class="icon-wrapper">
-                      ${this.checkGoingThrough(
-                        +homeGoals,
-                        +awayGoals,
-                        +match.goals.home,
-                        +match.goals.away,
-                        +match.score.penalty.home,
-                        +match.score.penalty.away,
-                        HOME_TEAM
-                      )}
+                      ${
+                        secondMatch
+                          ? this.checkGoingThrough(
+                              +homeGoals,
+                              +awayGoals,
+                              +match.goals.home,
+                              +match.goals.away,
+                              +match.score.penalty.home,
+                              +match.score.penalty.away,
+                              HOME_TEAM
+                            )
+                          : ""
+                      }
                     </div>
                   </div>
                 </div>
@@ -127,15 +131,19 @@ export class MatchView extends View {
                       match.teams.away.winner
                     )}">${match.teams.away.name}</p>
                     <div class="icon-wrapper">
-                      ${this.checkGoingThrough(
-                        +homeGoals,
-                        +awayGoals,
-                        +match.goals.home,
-                        +match.goals.away,
-                        +match.score.penalty.home,
-                        +match.score.penalty.away,
-                        AWAY_TEAM
-                      )}
+                      ${
+                        secondMatch
+                          ? this.checkGoingThrough(
+                              +homeGoals,
+                              +awayGoals,
+                              +match.goals.home,
+                              +match.goals.away,
+                              +match.score.penalty.home,
+                              +match.score.penalty.away,
+                              AWAY_TEAM
+                            )
+                          : ""
+                      }
                     </div>
                   </div>
                   </div>
@@ -412,8 +420,8 @@ export class MatchView extends View {
   }
 
   changeDetailsTab(id) {
-    this.#showActiveBtn(+id);
-    this.#showTab(+id);
+    this.#showActiveBtn(id);
+    this.#showTab(id);
   }
 
   showStatistics(match) {
@@ -422,16 +430,23 @@ export class MatchView extends View {
     const homeValues = [];
     const awayValues = [];
     match.statistics[0].statistics.forEach((stat, i) => {
-      console.log(stat);
-      const valueHome = parseFloat(stat.value);
+      const homeValue = stat.value;
+      const awayValue = match.statistics[1].statistics[i].value;
+      let valueHome =
+        typeof homeValue === "string" ? parseFloat(homeValue) : homeValue;
       if (valueHome === null) valueHome = 0;
-      const valueAway = parseFloat(match.statistics[1].statistics[i].value);
+      let valueAway =
+        typeof awayValue === "string" ? parseFloat(awayValue) : awayValue;
       if (valueAway === null) valueAway = 0;
       homeValues.push(valueHome);
       awayValues.push(valueAway);
 
       html += `<div class="statistics-div">
-                <p class="statistics-p">${stat.type}</p>
+                <p class="statistics-p">${
+                  stat.type === "expected_goals"
+                    ? "Expected goals(xG)"
+                    : stat.type
+                }</p>
                 <div class="statistics-chart">
                   <p class="statistics-home">${valueHome}</p>
                   <div class="statistics-bar-container">

@@ -8,7 +8,7 @@ export const REQUEST_OPTIONS = {
   redirect: "follow",
 };
 
-export const DEFAULT_SEASON = 2023;
+export const DEFAULT_SEASON = 2021;
 export const DEFAULT_LEAGUE = 2;
 export const DEFAULT_GAMEWEEK = 1;
 export const SHIFT_TOP = 22;
