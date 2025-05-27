@@ -625,7 +625,8 @@ select {
 .second-half-header,
 .first-extra-half-header,
 .second-extra-half-header,
-.penalty-shootout-header {
+.penalty-shootout-header,
+.formations-header {
   display: flex;
   font-size: 1.2rem;
   font-weight: 700;
@@ -635,7 +636,6 @@ select {
   color: #555;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
 }
 
 .first-half-header-p:last-child,
@@ -736,6 +736,92 @@ select {
 .statistics-away-div {
   background-color: #167fdb;
   /* width: 40%; */
+}
+
+.formations-header {
+  justify-content: space-between;
+}
+
+.formations-field-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formations-field {
+  display: flex;
+  width: 57.5rem;
+  height: 36rem;
+  background-image: url("https://cstringer.github.io/football-formation-creator/static/media/pitch.38e87773.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.formations-home,
+.formations-away {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  height: 100%;
+  width: 50%;
+}
+
+.formations-away {
+  flex-direction: row-reverse;
+}
+
+.formations-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4.4rem;
+  transform: translate(0, -5%);
+}
+
+.formations-column-home:first-child {
+  margin-left: 2.4rem;
+}
+
+.formations-column-away:first-child {
+  margin-right: 2.4rem;
+}
+
+.formations-player {
+  color: #000;
+  width: 3.6rem;
+  height: 3.6rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.jersey-wrapper {
+  position: relative;
+}
+
+.formations-player-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.formations-player-name {
+  position: relative;
+  top: -0.75rem;
+  padding: 0 0.2rem;
+  background-color: #999;
+  font-size: 1.2rem;
+  color: #111;
+  border-radius: 5px;
+}
+
+.jersey {
+  width: 100%;
 }
 
 .hidden {

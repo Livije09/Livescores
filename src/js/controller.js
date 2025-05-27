@@ -15,9 +15,9 @@ const controlShowLeague = async function (
   season = model.state.season
 ) {
   try {
-    // await model.getFixture(851369);
+    await model.getFixture(851369);
     // MatchView.showStatistics(model.state.match);
-    await model.getLeague(league, season);
+    // await model.getLeague(league, season);
     model.changeWhere();
     TableSelectionView.changeSelectedTab();
     model.changeSeason(season);
@@ -216,4 +216,4 @@ const init = async function () {
   MatchView.addHandlerChangeDetailsTab(controlChangeDetailsTab);
 };
 
-init();
+// init();

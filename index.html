@@ -55,7 +55,7 @@
             </li>
           </ul>
         </div>
-        <div class="league-table big-container" data-tab="0">
+        <div class="league-table big-container hidden" data-tab="0">
           <div class="league-phase-selection hidden">
             <ul class="league-phase-list">
               <!-- <li class="league-phase-item">
@@ -165,7 +165,7 @@
             </div>
           </div>
         </div>
-        <div class="matches-container big-container hidden" data-tab="1">
+        <div class="matches-container big-container" data-tab="1">
           <div class="matches-header">
             <div class="gameweek">
               <svg
@@ -226,7 +226,7 @@
             </div> -->
           </div>
         </div>
-        <div class="fixture-container hidden">
+        <div class="fixture-container">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -296,14 +296,14 @@
               <p class="fixture-filter-p" data-filter="1">Matches</p>
             </div>
             <div class="fixture-details">
+              <p class="fixture-details-p" data-details="0">Details</p>
+              <p class="fixture-details-p" data-details="1">Stats</p>
               <p
                 class="fixture-details-p fixture-details-p-active"
-                data-details="0"
+                data-details="2"
               >
-                Details
+                Lineups
               </p>
-              <p class="fixture-details-p" data-details="1">Stats</p>
-              <p class="fixture-details-p" data-details="2">Lineups</p>
             </div>
             <div class="details-container" data-dcontainers="0">
               <div class="first-half">
@@ -327,7 +327,7 @@
             </div>
             <div class="details-container" data-dcontainers="1">
               <div class="statistics-div">
-                <p class="statistics-p">Shots on Goal</p>
+                <!-- <p class="statistics-p">Shots on Goal</p>
                 <div class="statistics-chart">
                   <p class="statistics-home">5</p>
                   <div class="statistics-bar-container">
@@ -335,6 +335,81 @@
                     <div class="statistics-away-div"></div>
                   </div>
                   <p class="statistics-away">4</p>
+                </div> -->
+              </div>
+            </div>
+            <div class="details-container" data-dcontainers="2">
+              <div class="lineups-div">
+                <div class="formations-header">
+                  <!-- <p class="formations-header-p">4-3-3</p>
+                  <p class="formations-header-text">Formations</p>
+                  <p class="formations-header-p">4-4-2</p> -->
+                </div>
+                <div class="formations-field-container">
+                  <div class="formations-field">
+                    <div class="formations-home">
+                      <!-- <div
+                        class="formations-column-home formations-column"
+                        data-grid="1"
+                      >
+                        <div class="formations-player">
+                          <div class="jersey-wrapper">
+                            <svg
+                              viewBox="0 0 16 16"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="#000000"
+                              class="jersey-home jersey"
+                            >
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                              <g
+                                id="SVGRepo_tracerCarrier"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></g>
+                              <g id="SVGRepo_iconCarrier">
+                                <path
+                                  d="M11.91 14.22H4.06l-.5-.5V7.06H2.15l-.48-.38L1 4l.33-.6L5.59 2l.64.32a2.7 2.7 0 0 0 .21.44c.071.103.152.2.24.29.168.169.369.302.59.39a1.82 1.82 0 0 0 1.43 0 1.74 1.74 0 0 0 .59-.39c.09-.095.173-.195.25-.3l.15-.29a1.21 1.21 0 0 0 .05-.14l.64-.32 4.26 1.42L15 4l-.66 2.66-.49.38h-1.44v6.66l-.5.52zm-7.35-1h6.85V6.56l.5-.5h1.52l.46-1.83-3.4-1.14a1.132 1.132 0 0 1-.12.21c-.11.161-.233.312-.37.45a2.75 2.75 0 0 1-.91.61 2.85 2.85 0 0 1-2.22 0A2.92 2.92 0 0 1 6 3.75a2.17 2.17 0 0 1-.36-.44l-.13-.22-3.43 1.14.46 1.83h1.52l.5.5v6.66z"
+                                ></path>
+                              </g>
+                            </svg>
+                            <div class="formations-player-number">1</div>
+                          </div>
+                          <div class="formations-player-name">Sanchez</div>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="formations-away">
+                      <!-- <div
+                        class="formations-column formations-column-away"
+                        data-grid="1"
+                      >
+                        <div class="formations-player">
+                          <div class="jersey-wrapper">
+                            <svg
+                              viewBox="0 0 16 16"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="#000000"
+                              class="jersey-home jersey"
+                            >
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                              <g
+                                id="SVGRepo_tracerCarrier"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></g>
+                              <g id="SVGRepo_iconCarrier">
+                                <path
+                                  d="M11.91 14.22H4.06l-.5-.5V7.06H2.15l-.48-.38L1 4l.33-.6L5.59 2l.64.32a2.7 2.7 0 0 0 .21.44c.071.103.152.2.24.29.168.169.369.302.59.39a1.82 1.82 0 0 0 1.43 0 1.74 1.74 0 0 0 .59-.39c.09-.095.173-.195.25-.3l.15-.29a1.21 1.21 0 0 0 .05-.14l.64-.32 4.26 1.42L15 4l-.66 2.66-.49.38h-1.44v6.66l-.5.52zm-7.35-1h6.85V6.56l.5-.5h1.52l.46-1.83-3.4-1.14a1.132 1.132 0 0 1-.12.21c-.11.161-.233.312-.37.45a2.75 2.75 0 0 1-.91.61 2.85 2.85 0 0 1-2.22 0A2.92 2.92 0 0 1 6 3.75a2.17 2.17 0 0 1-.36-.44l-.13-.22-3.43 1.14.46 1.83h1.52l.5.5v6.66z"
+                                ></path>
+                              </g>
+                            </svg>
+                            <div class="formations-player-number">1</div>
+                          </div>
+                          <div class="formations-player-name">Sanchez</div>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
