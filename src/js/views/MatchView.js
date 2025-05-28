@@ -378,18 +378,23 @@ export class MatchView extends View {
         "beforeend",
         htmlSecondExtraHalf
       );
-      const htmlPenaltyShootout = `<div class="penalty-shootout-header">
-          <p class="penalty-shootout-header-p">Penalty Shootout</p>
-          <p class="penalty-shootout-header-p">${
-            this.#score.penaltyShootout.home
-          } - ${this.#score.penaltyShootout.away}</p>
-        </div>
+      if (
+        match.score.penalty.home !== null &&
+        match.score.penalty.away !== null
+      ) {
+        const htmlPenaltyShootout = `<div class="penalty-shootout-header">
+        <p class="penalty-shootout-header-p">Penalty Shootout</p>
+        <p class="penalty-shootout-header-p">${
+          this.#score.penaltyShootout.home
+        } - ${this.#score.penaltyShootout.away}</p>
+          </div>
           ${penaltyShootout}
-      `;
-      this.#penaltyShootoutContainer.insertAdjacentHTML(
-        "beforeend",
-        htmlPenaltyShootout
-      );
+          `;
+        this.#penaltyShootoutContainer.insertAdjacentHTML(
+          "beforeend",
+          htmlPenaltyShootout
+        );
+      }
     }
   }
 
@@ -422,56 +427,6 @@ export class MatchView extends View {
   changeDetailsTab(id) {
     this.#showActiveBtn(id);
     this.#showTab(id);
-  }
-
-  showStatistics(match) {
-    this.#detailsContainer[1].innerHTML = "";
-    let html = "";
-    const homeValues = [];
-    const awayValues = [];
-    match.statistics[0].statistics.forEach((stat, i) => {
-      const homeValue = stat.value;
-      const awayValue = match.statistics[1].statistics[i].value;
-      let valueHome =
-        typeof homeValue === "string" ? parseFloat(homeValue) : homeValue;
-      if (valueHome === null) valueHome = 0;
-      let valueAway =
-        typeof awayValue === "string" ? parseFloat(awayValue) : awayValue;
-      if (valueAway === null) valueAway = 0;
-      homeValues.push(valueHome);
-      awayValues.push(valueAway);
-
-      html += `<div class="statistics-div">
-                <p class="statistics-p">${
-                  stat.type === "expected_goals"
-                    ? "Expected goals(xG)"
-                    : stat.type
-                }</p>
-                <div class="statistics-chart">
-                  <p class="statistics-home">${valueHome}</p>
-                  <div class="statistics-bar-container">
-                    <div class="statistics-home-div statistics-home-${i}"></div>
-                    <div class="statistics-away-div statistics-away-${i}"></div>
-                  </div>
-                  <p class="statistics-away">${valueAway}</p>
-                </div>
-              </div>`;
-    });
-
-    this.#detailsContainer[1].insertAdjacentHTML("beforeend", html);
-
-    homeValues.forEach((home, i) => {
-      const away = awayValues[i];
-      const total = home + away;
-      const homeWidth = (home / total) * 100;
-      const awayWidth = (away / total) * 100;
-
-      const homeDiv = document.querySelector(`.statistics-home-${i}`);
-      const awayDiv = document.querySelector(`.statistics-away-${i}`);
-
-      if (homeDiv) homeDiv.style.width = `${homeWidth}%`;
-      if (awayDiv) awayDiv.style.width = `${awayWidth}%`;
-    });
   }
 }
 

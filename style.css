@@ -763,9 +763,21 @@ select {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2rem;
+  /* gap: 2rem; */
   height: 100%;
   width: 50%;
+}
+
+.formations-column-3 {
+  gap: 5.6rem;
+}
+
+.formations-column-4 {
+  gap: 4rem;
+}
+
+.formations-column-5 {
+  gap: 2rem;
 }
 
 .formations-away {
@@ -818,10 +830,13 @@ select {
   font-size: 1.2rem;
   color: #111;
   border-radius: 5px;
+  white-space: nowrap;
 }
 
 .jersey {
   width: 100%;
+  /* fill: red;
+  stroke: #f3a000; */
 }
 
 .hidden {

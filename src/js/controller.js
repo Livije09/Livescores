@@ -3,9 +3,11 @@ import * as model from "./model.js";
 import FixturesView from "./views/FixturesView.js";
 import HeaderView from "./views/HeaderView.js";
 import LeaguePhaseView from "./views/LeaguePhaseView.js";
+import LineupsView from "./views/LineupsView.js";
 import LogoView from "./views/LogoView.js";
 import MatchView from "./views/MatchView.js";
 import SelectionView from "./views/SelectionView.js";
+import StatisticsView from "./views/StatisticsView.js";
 import TableSelectionView from "./views/TableSelectionView.js";
 import TableView from "./views/TableView.js";
 import TopScorersView from "./views/TopScorersView.js";
@@ -16,7 +18,10 @@ const controlShowLeague = async function (
 ) {
   try {
     await model.getFixture(851369);
-    // MatchView.showStatistics(model.state.match);
+    MatchView.showMatch();
+    MatchView.generateMatchDetails(model.state.match);
+    model.state.matchTab = "0";
+    MatchView.changeDetailsTab(model.state.matchTab);
     // await model.getLeague(league, season);
     model.changeWhere();
     TableSelectionView.changeSelectedTab();
@@ -197,7 +202,8 @@ const controlShowMatch = async function (
 
 const controlChangeDetailsTab = function (id) {
   MatchView.changeDetailsTab(id);
-  MatchView.showStatistics(model.state.match);
+  StatisticsView.showStatistics(model.state.match);
+  LineupsView.showLineups(model.state.match);
   model.state.matchTab = id;
 };
 
@@ -216,4 +222,4 @@ const init = async function () {
   MatchView.addHandlerChangeDetailsTab(controlChangeDetailsTab);
 };
 
-// init();
+init();
