@@ -28,6 +28,7 @@ export class LineupsView extends View {
   #returnSecondName(name) {
     const nameInParts = name.trim().split(" ");
     if (nameInParts.length < 2) return name;
+    if (nameInParts.length > 2) return nameInParts.slice(1).join(" ");
 
     return nameInParts[1];
   }
