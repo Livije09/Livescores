@@ -626,7 +626,10 @@ select {
 .first-extra-half-header,
 .second-extra-half-header,
 .penalty-shootout-header,
-.formations-header {
+.formations-header,
+.starting-xi-header,
+.substitutes-header,
+.managers-header {
   display: flex;
   font-size: 1.2rem;
   font-weight: 700;
@@ -837,6 +840,82 @@ select {
   width: 100%;
   /* fill: red;
   stroke: #f3a000; */
+}
+
+.starting-xi-header,
+.substitutes-header,
+.managers-header {
+  margin-bottom: 0;
+}
+
+.starting-xi-div,
+.substitutes-div,
+.managers-div {
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.6rem;
+}
+
+.starting-xi-home,
+.starting-xi-away,
+.substitutes-home,
+.substitutes-away {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.lineup-away {
+  justify-self: flex-end;
+}
+
+.lineup-player {
+  display: flex;
+  gap: 0.8rem;
+  padding: 0 0.8rem;
+  height: 3rem;
+}
+
+.lineup-player:nth-child(even) {
+  background-color: #e7e7e7;
+  width: 100%;
+}
+
+.lineup-player-away {
+  flex-direction: row-reverse;
+}
+
+.lineup-number,
+.lineup-p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.8rem;
+}
+
+.lineup-p {
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+
+.lineup-player-away .lineup-p {
+  justify-content: flex-end;
+}
+
+.managers-div {
+  padding: 0 0.8rem;
+}
+
+.manager-p {
+  display: flex;
+  align-items: center;
+  height: 2.4rem;
+}
+
+.manager-p:last-child {
+  margin-left: auto;
 }
 
 .hidden {

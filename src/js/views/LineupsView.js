@@ -4,11 +4,23 @@ export class LineupsView extends View {
   #formationsHeader = document.querySelector(".formations-header");
   #lineupsHome = document.querySelector(".formations-home");
   #lineupsAway = document.querySelector(".formations-away");
+  #startingXIHome = document.querySelector(".starting-xi-home");
+  #startingXIAway = document.querySelector(".starting-xi-away");
+  #substitutesHome = document.querySelector(".substitutes-home");
+  #substitutesAway = document.querySelector(".substitutes-away");
+  #managers = document.querySelector(".managers-div");
+  #homeRows;
+  #awayRows;
 
   #clear() {
     this.#formationsHeader.innerHTML = "";
     this.#lineupsHome.innerHTML = "";
     this.#lineupsAway.innerHTML = "";
+    this.#startingXIHome.innerHTML = "";
+    this.#startingXIAway.innerHTML = "";
+    this.#substitutesHome.innerHTML = "";
+    this.#substitutesAway.innerHTML = "";
+    this.#managers.innerHTML = "";
   }
 
   #showHeader(match) {
@@ -49,10 +61,7 @@ export class LineupsView extends View {
     });
     const playerPositions = Object.values(players);
     this.#addClassForGap(whichTeam, playerPositions.length);
-    console.log(match, playerPositions);
     let html = ``;
-    console.log(match.lineups[whichTeam].team.colors.player.border);
-    console.log(match.lineups[whichTeam].team.colors.player.primary);
     playerPositions.forEach((playerArray, i) => {
       html += `
                         <div
@@ -65,7 +74,6 @@ export class LineupsView extends View {
         html += `
                         <div class="formations-player">
                           <div class="jersey-wrapper">
-                            
                             <svg
                               viewBox="0 -7.72 127.24603 127.24603"
                               xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -127,10 +135,83 @@ export class LineupsView extends View {
       : this.#lineupsAway.insertAdjacentHTML("beforeend", html);
   }
 
+  #showName(player, whichTeam) {
+    if (!whichTeam) return `${player.name} ${player.pos === "G" ? "(G)" : ""}`;
+    if (whichTeam) return `${player.pos === "G" ? "(G)" : ""} ${player.name}`;
+  }
+
+  #showSquad(team, whichTeam) {
+    let htmlStartXI = "";
+    let htmlSubstitutes = "";
+    team.startXI.forEach((player) => {
+      htmlStartXI += `
+                    <div class="lineup-player lineup-player-${
+                      !whichTeam ? "home" : "away"
+                    }">
+                      <p class="lineup-number">${player.player.number}</p>
+                      <p class="lineup-p">${this.#showName(
+                        player.player,
+                        whichTeam
+                      )}</p>
+                    </div>
+      `;
+    });
+    !whichTeam
+      ? this.#startingXIHome.insertAdjacentHTML("beforeend", htmlStartXI)
+      : this.#startingXIAway.insertAdjacentHTML("beforeend", htmlStartXI);
+    team.substitutes.forEach((player) => {
+      htmlSubstitutes += `
+                    <div class="lineup-player lineup-player-${
+                      !whichTeam ? "home" : "away"
+                    }">
+                      <p class="lineup-number">${player.player.number}</p>
+                      <p class="lineup-p">${this.#showName(
+                        player.player,
+                        whichTeam
+                      )}</p>
+                    </div>
+      `;
+    });
+    !whichTeam
+      ? this.#substitutesHome.insertAdjacentHTML("beforeend", htmlSubstitutes)
+      : this.#substitutesAway.insertAdjacentHTML("beforeend", htmlSubstitutes);
+    !whichTeam
+      ? (this.#homeRows = document.querySelectorAll(
+          ".lineup-player-home"
+        ).length)
+      : (this.#awayRows = document.querySelectorAll(
+          ".lineup-player-away"
+        ).length);
+  }
+
+  #checkForExtraRows() {
+    const htmlEmptyRow = `<div class="lineup-player">
+                    </div>`;
+    if (this.#homeRows > this.#awayRows)
+      for (let i = 0; i < this.#homeRows - this.#awayRows; i++)
+        this.#substitutesAway.insertAdjacentHTML("beforeend", htmlEmptyRow);
+    if (this.#awayRows > this.#homeRows)
+      for (let i = 0; i < this.#awayRows - this.#homeRows; i++)
+        this.#substitutesHome.insertAdjacentHTML("beforeend", htmlEmptyRow);
+  }
+
+  #showManagers(manager, whichTeam) {
+    const html = `<p class="manager-p manager-p-${
+      !whichTeam ? "home" : "away"
+    }">${manager}</p>`;
+    this.#managers.insertAdjacentHTML("beforeend", html);
+  }
+
   showLineups(match) {
     this.#clear();
     this.#showHeader(match);
-    match.lineups.forEach((team, i) => this.#showTeam(team, match, i));
+    match.lineups.forEach((team, i) => {
+      this.#showTeam(team, match, i);
+      this.#showSquad(team, i);
+      this.#showManagers(team.coach.name, i);
+    });
+    // match.lineups.forEach((team, i) => this.#showSquad(team, i));
+    this.#checkForExtraRows();
   }
 }
 
