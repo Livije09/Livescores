@@ -790,7 +790,7 @@ select {
 .formations-column {
   display: flex;
   flex-direction: column;
-  gap: 4.4rem;
+  gap: 3.6rem;
   transform: translate(0, -5%);
 }
 

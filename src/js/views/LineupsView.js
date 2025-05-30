@@ -21,6 +21,10 @@ export class LineupsView extends View {
     this.#substitutesHome.innerHTML = "";
     this.#substitutesAway.innerHTML = "";
     this.#managers.innerHTML = "";
+    this.#lineupsHome.classList.remove("formations-column-4");
+    this.#lineupsHome.classList.remove("formations-column-5");
+    this.#lineupsAway.classList.remove("formations-column-4");
+    this.#lineupsAway.classList.remove("formations-column-5");
   }
 
   #showHeader(match) {
@@ -46,6 +50,7 @@ export class LineupsView extends View {
   }
 
   #addClassForGap(whichTeam, lines) {
+    console.log(lines);
     !whichTeam
       ? this.#lineupsHome.classList.add(`formations-column-${lines}`)
       : this.#lineupsAway.classList.add(`formations-column-${lines}`);

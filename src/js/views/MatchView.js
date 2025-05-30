@@ -36,6 +36,10 @@ export class MatchView extends View {
       home: 0,
       away: 0,
     },
+    penaltyOrder: {
+      home: 0,
+      away: 0,
+    },
   };
 
   constructor() {
@@ -191,9 +195,14 @@ export class MatchView extends View {
     return `${initials}. ${lastName}`;
   }
 
-  #showMinute(event) {
-    if (event.time.extra === null) return Math.abs(event.time.elapsed);
-    return `${Math.abs(event.time.elapsed)}+${event.time.extra}`;
+  #showMinute(event, match) {
+    if (event.comments === "Penalty Shootout") {
+      if (event.team.id === match.teams.home.id)
+        return this.#score.penaltyOrder.home;
+      else return this.#score.penaltyOrder.away;
+    }
+    if (event.time.extra === null) return `${Math.abs(event.time.elapsed)}'`;
+    return `${Math.abs(event.time.elapsed)}+${event.time.extra}'`;
   }
 
   #showSVG(event) {
@@ -217,6 +226,7 @@ export class MatchView extends View {
   }
 
   #addGoalToTeam(event, team) {
+    if (event.comments === "Penalty Shootout") this.#score.penaltyOrder[team]++;
     if (
       event.comments === "Penalty Shootout" &&
       event.detail !== "Missed Penalty"
@@ -284,13 +294,19 @@ export class MatchView extends View {
                     ? "home-detail"
                     : "away-detail"
                 }">
-                  <p class="minute">${this.#showMinute(event)}'</p>
+                  <p class="minute">${this.#showMinute(event, match)}</p>
                   ${this.#showSVG(event)}
                   ${
                     event.type === "Goal"
                       ? `
-                  <p class="current-score">${this.#score.home} - ${
-                          this.#score.away
+                  <p class="current-score">${
+                    event.comments !== "Penalty Shootout"
+                      ? this.#score.home
+                      : this.#score.penaltyShootout.home
+                  } - ${
+                          event.comments !== "Penalty Shootout"
+                            ? this.#score.away
+                            : this.#score.penaltyShootout.away
                         }</p>`
                       : ""
                   }

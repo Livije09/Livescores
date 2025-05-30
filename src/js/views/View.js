@@ -115,6 +115,7 @@ export default class View {
     awayPenalties,
     whichTeam
   ) {
+    console.log(awayGoals, awayGoals1);
     if (homeGoals === null || awayGoals === null) return "";
     const returnHTML =
       SVGS.goingThrough + `<p class="going-through-detail">Going through</p>`;
@@ -122,6 +123,7 @@ export default class View {
       if (homeGoals + homeGoals1 > awayGoals + awayGoals1) return returnHTML;
       if (homeGoals + homeGoals1 === awayGoals + awayGoals1) {
         if (homePenalties > awayPenalties) return returnHTML;
+        if (awayGoals1 > awayGoals) return returnHTML;
         return "";
       }
     }
@@ -129,6 +131,7 @@ export default class View {
       if (homeGoals + homeGoals1 < awayGoals + awayGoals1) return returnHTML;
       if (homeGoals + homeGoals1 === awayGoals + awayGoals1) {
         if (homePenalties < awayPenalties) return returnHTML;
+        if (awayGoals > awayGoals1) return returnHTML;
         return "";
       }
     }
