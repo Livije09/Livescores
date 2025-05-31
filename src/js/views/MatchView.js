@@ -109,10 +109,10 @@ export class MatchView extends View {
                       ${
                         secondMatch
                           ? this.checkGoingThrough(
-                              +homeGoals,
-                              +awayGoals,
                               +match.goals.home,
                               +match.goals.away,
+                              +homeGoals,
+                              +awayGoals,
                               +match.score.penalty.home,
                               +match.score.penalty.away,
                               HOME_TEAM
@@ -138,10 +138,10 @@ export class MatchView extends View {
                       ${
                         secondMatch
                           ? this.checkGoingThrough(
-                              +homeGoals,
-                              +awayGoals,
                               +match.goals.home,
                               +match.goals.away,
+                              +homeGoals,
+                              +awayGoals,
                               +match.score.penalty.home,
                               +match.score.penalty.away,
                               AWAY_TEAM
@@ -336,6 +336,14 @@ export class MatchView extends View {
     return halfs;
   }
 
+  #insertNoDetail(container) {
+    if (container.childElementCount !== 1) return;
+    const html = `<div class="details">
+                      <p class="detail no-details">-</p>
+                    </div>`;
+    container.insertAdjacentHTML("beforeend", html);
+  }
+
   generateMatchDetails(match) {
     this.#clearHalfs();
     this.#resetScore();
@@ -355,6 +363,8 @@ export class MatchView extends View {
                   ${firstHalf}
     `;
     this.#firstHalfContainer.insertAdjacentHTML("beforeend", htmlFirstHalf);
+    if (this.#firstHalfContainer.childElementCount === 1)
+      this.#insertNoDetail(this.#firstHalfContainer);
     const htmlSecondHalf = `<div class="second-half-header">
                     <p class="second-half-header-p">2. Half</p>
                     <p class="second-half-header-p">${
@@ -364,6 +374,11 @@ export class MatchView extends View {
                   ${secondHalf}
      `;
     this.#secondHalfContainer.insertAdjacentHTML("beforeend", htmlSecondHalf);
+    if (this.#secondHalfContainer.childElementCount === 1)
+      this.#insertNoDetail(this.#secondHalfContainer);
+    [this.#firstHalfContainer, this.#secondHalfContainer].forEach((container) =>
+      this.#insertNoDetail(container)
+    );
     if (
       match.score.extratime.home !== null &&
       match.score.extratime.away !== null
@@ -393,6 +408,9 @@ export class MatchView extends View {
       this.#secondExtraHalfContainer.insertAdjacentHTML(
         "beforeend",
         htmlSecondExtraHalf
+      );
+      [this.#firstExtraHalfContainer, this.#secondExtraHalfContainer].forEach(
+        (container) => this.#insertNoDetail(container)
       );
       if (
         match.score.penalty.home !== null &&

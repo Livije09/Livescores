@@ -115,7 +115,9 @@ export default class View {
     awayPenalties,
     whichTeam
   ) {
-    console.log(awayGoals, awayGoals1);
+    console.log(
+      `Home goals: ${homeGoals}, Away goals: ${awayGoals}, Home goals 1: ${homeGoals1}, Away goals 1: ${awayGoals1}`
+    );
     if (homeGoals === null || awayGoals === null) return "";
     const returnHTML =
       SVGS.goingThrough + `<p class="going-through-detail">Going through</p>`;

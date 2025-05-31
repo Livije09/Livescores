@@ -663,6 +663,11 @@ select {
   margin-bottom: 0.8rem;
 }
 
+.no-details {
+  justify-content: center;
+  align-items: center;
+}
+
 .away-detail {
   flex-direction: row-reverse;
   justify-self: flex-end;
