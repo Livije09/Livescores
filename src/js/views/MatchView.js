@@ -13,6 +13,8 @@ export class MatchView extends View {
   #secondExtraHalfContainer = document.querySelector(".second-extra-half");
   #penaltyShootoutContainer = document.querySelector(".penalty-shootout");
   #detailsContainer = document.querySelectorAll(".details-container");
+  #fixtureTabs = document.querySelectorAll(".fixture-tab");
+  #fixtureFilters = document.querySelectorAll(".fixture-filter-p");
   #score = {
     home: 0,
     away: 0,
@@ -458,9 +460,26 @@ export class MatchView extends View {
     });
   }
 
-  changeDetailsTab(id) {
+  changeDetailsTab(id = "0") {
     this.#showActiveBtn(id);
     this.#showTab(id);
+  }
+
+  changeFixtureTab() {
+    this.#fixtureTabs.forEach((tab) => tab.classList.toggle("hidden"));
+    this.#fixtureFilters.forEach((filter) =>
+      filter.classList.toggle("fixture-filter-p-active")
+    );
+  }
+
+  addHandlerChangeFixtureTab(handler) {
+    this.#parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".fixture-filter-p");
+      if (!btn || btn.classList.contains("fixture-filter-p-active")) return;
+
+      const filter = +btn.dataset.filter;
+      handler(filter);
+    });
   }
 }
 

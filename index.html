@@ -295,19 +295,26 @@
               </p>
               <p class="fixture-filter-p" data-filter="1">Matches</p>
             </div>
-            <div class="fixture-details">
-              <p
-                class="fixture-details-p fixture-details-p-active"
-                data-details="0"
+            <div
+              class="fixture-details-container fixture-tab"
+              data-fixturecont="0"
+            >
+              <div class="fixture-details">
+                <p
+                  class="fixture-details-p fixture-details-p-active"
+                  data-details="0"
+                >
+                  Details
+                </p>
+                <p class="fixture-details-p" data-details="1">Stats</p>
+                <p class="fixture-details-p" data-details="2">Lineups</p>
+              </div>
+              <div
+                class="details-container details-details"
+                data-dcontainers="0"
               >
-                Details
-              </p>
-              <p class="fixture-details-p" data-details="1">Stats</p>
-              <p class="fixture-details-p" data-details="2">Lineups</p>
-            </div>
-            <div class="details-container details-details" data-dcontainers="0">
-              <div class="first-half">
-                <!-- <div class="first-half-header">
+                <div class="first-half">
+                  <!-- <div class="first-half-header">
                   <p class="first-half-header-p">1. Half</p>
                 <p class="first-half-header-p">1 - 0</p>
               </div>
@@ -319,18 +326,18 @@
                   <p class="assist player">(P. Neto)</p>
                 </div>
               </div> -->
+                </div>
+                <div class="second-half"></div>
+                <div class="first-extra-half"></div>
+                <div class="second-extra-half"></div>
+                <div class="penalty-shootout"></div>
               </div>
-              <div class="second-half"></div>
-              <div class="first-extra-half"></div>
-              <div class="second-extra-half"></div>
-              <div class="penalty-shootout"></div>
-            </div>
-            <div
-              class="details-container details-statistics"
-              data-dcontainers="1"
-            >
-              <div class="statistics-div">
-                <!-- <p class="statistics-p">Shots on Goal</p>
+              <div
+                class="details-container details-statistics"
+                data-dcontainers="1"
+              >
+                <div class="statistics-div">
+                  <!-- <p class="statistics-p">Shots on Goal</p>
                 <div class="statistics-chart">
                   <p class="statistics-home">5</p>
                   <div class="statistics-bar-container">
@@ -339,19 +346,22 @@
                   </div>
                   <p class="statistics-away">4</p>
                 </div> -->
-              </div>
-            </div>
-            <div class="details-container details-lineups" data-dcontainers="2">
-              <div class="formations-div">
-                <div class="formations-header">
-                  <p class="formations-header-p">4-3-3</p>
-                  <p class="formations-header-text">Formations</p>
-                  <p class="formations-header-p">4-4-2</p>
                 </div>
-                <div class="formations-field-container">
-                  <div class="formations-field">
-                    <div class="formations-home">
-                      <!-- <div
+              </div>
+              <div
+                class="details-container details-lineups"
+                data-dcontainers="2"
+              >
+                <div class="formations-div">
+                  <div class="formations-header">
+                    <p class="formations-header-p">4-3-3</p>
+                    <p class="formations-header-text">Formations</p>
+                    <p class="formations-header-p">4-4-2</p>
+                  </div>
+                  <div class="formations-field-container">
+                    <div class="formations-field">
+                      <div class="formations-home">
+                        <!-- <div
                         class="formations-column-home formations-column"
                         data-grid="1"
                       >
@@ -380,9 +390,9 @@
                           <div class="formations-player-name">Sanchez</div>
                         </div>
                       </div> -->
-                    </div>
-                    <div class="formations-away">
-                      <!-- <div
+                      </div>
+                      <div class="formations-away">
+                        <!-- <div
                         class="formations-column formations-column-away"
                         data-grid="1"
                       >
@@ -411,15 +421,15 @@
                           <div class="formations-player-name">Sanchez</div>
                         </div>
                       </div> -->
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="starting-xi-header">
-                  <p class="starting-xi-p">Starting XI</p>
-                </div>
-                <div class="starting-xi-div">
-                  <div class="starting-xi-home">
-                    <!-- <div class="lineup-player lineup-player-home">
+                  <div class="starting-xi-header">
+                    <p class="starting-xi-p">Starting XI</p>
+                  </div>
+                  <div class="starting-xi-div">
+                    <div class="starting-xi-home">
+                      <!-- <div class="lineup-player lineup-player-home">
                       <p class="lineup-number">8</p>
                       <p class="lineup-p">E. Fernandez</p>
                     </div>
@@ -427,9 +437,9 @@
                       <p class="lineup-number">24</p>
                       <p class="lineup-p">R. James</p>
                     </div> -->
-                  </div>
-                  <div class="starting-xi-away">
-                    <!-- <div class="lineup-player lineup-player-away">
+                    </div>
+                    <div class="starting-xi-away">
+                      <!-- <div class="lineup-player lineup-player-away">
                       <p class="lineup-number">9</p>
                       <p class="lineup-p">K. Mbappe</p>
                     </div>
@@ -437,14 +447,14 @@
                       <p class="lineup-number">20</p>
                       <p class="lineup-p">D. Carvajal</p>
                     </div> -->
+                    </div>
                   </div>
-                </div>
-                <div class="substitutes-header">
-                  <p class="substitutes-p">Substitutes</p>
-                </div>
-                <div class="substitutes-div">
-                  <div class="substitutes-home">
-                    <!-- <div class="lineup-player lineup-player-home">
+                  <div class="substitutes-header">
+                    <p class="substitutes-p">Substitutes</p>
+                  </div>
+                  <div class="substitutes-div">
+                    <div class="substitutes-home">
+                      <!-- <div class="lineup-player lineup-player-home">
                       <p class="lineup-number">8</p>
                       <p class="lineup-p">E. Fernandez</p>
                     </div>
@@ -452,9 +462,9 @@
                       <p class="lineup-number">24</p>
                       <p class="lineup-p">R. James</p>
                     </div> -->
-                  </div>
-                  <div class="substitutes-away">
-                    <!-- <div class="lineup-player lineup-player-away">
+                    </div>
+                    <div class="substitutes-away">
+                      <!-- <div class="lineup-player lineup-player-away">
                       <p class="lineup-number">9</p>
                       <p class="lineup-p">K. Mbappe</p>
                     </div>
@@ -462,12 +472,61 @@
                       <p class="lineup-number">20</p>
                       <p class="lineup-p">D. Carvajal</p>
                     </div> -->
+                    </div>
+                  </div>
+                  <div class="managers-header">
+                    <p class="managers-p">Managers</p>
+                  </div>
+                  <div class="managers-div"></div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="fixture-matches-container fixture-tab hidden"
+              data-fixturecont="1"
+            >
+              <div class="last-matches-div">
+                <div class="last-matches-home">
+                  <div class="last-matches-header">
+                    <p class="last-matches-header-p">Chelsea last matches</p>
+                  </div>
+                  <div class="last-matches-home-div">
+                    <div class="last-matches-row">
+                      <p class="last-matches-p">03.06.2025.</p>
+                      <div class="last-matches-teams">
+                        <div class="last-matches-home-team last-matches-team">
+                          <img
+                            src="https://media.api-sports.io/football/teams/35.png"
+                            class="last-matches-logo"
+                          />
+                          <p class="last-matches-name">Bournemouth</p>
+                        </div>
+                        <div class="last-matches-away-team last-matches-team">
+                          <img
+                            src="https://media.api-sports.io/football/teams/33.png"
+                            class="last-matches-logo"
+                          />
+                          <p class="last-matches-name">Manchester United</p>
+                        </div>
+                      </div>
+                      <div class="last-matches-result">
+                        <p class="last-matches-p winner">1</p>
+                        <p class="last-matches-p">0</p>
+                      </div>
+                      <p
+                        class="club-last-five-w club-last-five-p last-matches-status"
+                      >
+                        W
+                      </p>
+                    </div>
+                    <div class="last-matches-btn-div">
+                      <button class="last-matches-btn">
+                        Show more matches
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div class="managers-header">
-                  <p class="managers-p">Managers</p>
-                </div>
-                <div class="managers-div"></div>
+                <div class="last-matches-away"></div>
               </div>
             </div>
           </div>

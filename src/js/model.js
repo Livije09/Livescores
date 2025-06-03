@@ -29,6 +29,15 @@ export const state = {
   rounds: [],
   match: {},
   matchTab: 0,
+  currentTeams: {
+    home: 0,
+    away: 0,
+  },
+  lastMatchesShown: 0,
+  lastMatches: {
+    homeTeam: [],
+    awayTeam: [],
+  },
 };
 
 export const getLeague = async function (league, season) {
@@ -212,5 +221,24 @@ export const getFixture = async function (fixture) {
     .then((result) => {
       state.match = result.response[0];
       console.log(state.match);
+      state.currentTeams.home = result.response[0].teams.home;
+      state.currentTeams.away = result.response[0].teams.away;
+      console.log(state.currentTeams.home, state.currentTeams.away);
+    });
+};
+
+export const getLastMatches = async function (team, whichTeam) {
+  await fetch(
+    `https://v3.football.api-sports.io/fixtures?team=${team}&season=${state.season}&league=${state.league.id}`,
+    REQUEST_OPTIONS
+  )
+    .then((data) => data.json())
+    .then((result) => {
+      console.log(result.response);
+      result.response.forEach((match) =>
+        !whichTeam
+          ? state.lastMatches.homeTeam.unshift(match)
+          : state.lastMatches.awayTeam.unshift(match)
+      );
     });
 };

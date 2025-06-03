@@ -2,6 +2,7 @@ import { DEFAULT_LEAGUE, DEFAULT_SEASON, FIRST_GAMEWEEK } from "./config.js";
 import * as model from "./model.js";
 import FixturesView from "./views/FixturesView.js";
 import HeaderView from "./views/HeaderView.js";
+import LastMatchesView from "./views/LastMatchesView.js";
 import LeaguePhaseView from "./views/LeaguePhaseView.js";
 import LineupsView from "./views/LineupsView.js";
 import LogoView from "./views/LogoView.js";
@@ -17,8 +18,10 @@ const controlShowLeague = async function (
   season = model.state.season
 ) {
   try {
+    // await model.getLastMatches(33, 0);
     // await model.getFixture(1149523);
     // await model.getFixture(862964);
+    // await model.getFixture(710598);
     // MatchView.showMatch();
     // MatchView.generateMatchDetails(model.state.match);
     // model.state.matchTab = "0";
@@ -199,6 +202,7 @@ const controlShowMatch = async function (
   MatchView.generateMatchDetails(model.state.match);
   model.state.matchTab = "0";
   MatchView.changeDetailsTab(model.state.matchTab);
+  model.state.lastMatchesShown = 0;
 };
 
 const controlChangeDetailsTab = function (id) {
@@ -206,6 +210,31 @@ const controlChangeDetailsTab = function (id) {
   StatisticsView.showStatistics(model.state.match);
   LineupsView.showLineups(model.state.match);
   model.state.matchTab = id;
+};
+
+const controlChangeFixtureTab = async function (filter) {
+  MatchView.changeFixtureTab();
+  MatchView.changeDetailsTab();
+  if (filter && !model.state.lastMatchesShown) {
+    model.state.lastMatches.homeTeam = [];
+    model.state.lastMatches.awayTeam = [];
+    await model.getLastMatches(model.state.currentTeams.home.id, 0);
+    await model.getLastMatches(model.state.currentTeams.away.id, 1);
+    console.log(
+      model.state.currentTeams.home,
+      model.state.lastMatches.homeTeam
+    );
+    LastMatchesView.generateLastMatches(
+      model.state.currentTeams.home,
+      model.state.lastMatches.homeTeam,
+      0
+    );
+    LastMatchesView.generateLastMatches(
+      model.state.currentTeams.away,
+      model.state.lastMatches.awayTeam,
+      1
+    );
+  }
 };
 
 const init = async function () {
@@ -221,6 +250,7 @@ const init = async function () {
   LeaguePhaseView.addHandlerChangePhase(controlChangePhase);
   FixturesView.addHandlerShowMatch(controlShowMatch);
   MatchView.addHandlerChangeDetailsTab(controlChangeDetailsTab);
+  MatchView.addHandlerChangeFixtureTab(controlChangeFixtureTab);
 };
 
-init();
+init()aa;
