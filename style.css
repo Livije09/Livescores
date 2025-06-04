@@ -925,8 +925,14 @@ select {
   margin-left: auto;
 }
 
+.last-matches-away .last-matches-header {
+  margin-top: 0rem;
+  border-top: 1px solid #999;
+}
+
 .last-matches-header {
   margin-top: -1.2rem;
+  border-bottom: 1px solid #999;
 }
 
 .last-matches-row {
@@ -936,6 +942,10 @@ select {
   font-size: 1.2rem;
   padding: 0.4rem 0.8rem;
   border-bottom: 1px solid #999;
+}
+
+.last-matches-row:nth-child(even) {
+  background-color: #f3f2f2;
 }
 
 .last-matches-status {
@@ -951,6 +961,7 @@ select {
 
 .last-matches-team {
   display: flex;
+  align-items: center;
   gap: 0.8rem;
   width: 40rem;
 }
@@ -967,18 +978,30 @@ select {
   margin-left: auto;
 }
 
+.last-matches-result-p:first-child {
+  margin-bottom: 0.5rem;
+}
+
 .last-matches-btn-div {
   display: flex;
   justify-content: center;
+  /* align-items: center; */
   padding: 0.8rem;
 }
 
 .last-matches-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
   border: none;
   background-color: #fff;
-  border-bottom: 1px solid #333;
   cursor: pointer;
+  border-bottom: 1px solid #333;
   /* margin-bottom: 0.4rem; */
+}
+
+.last-matches-svg {
+  width: 1.6rem;
 }
 
 .last-matches-btn:hover {

@@ -21,7 +21,7 @@ const controlShowLeague = async function (
     // await model.getLastMatches(33, 0);
     // await model.getFixture(1149523);
     // await model.getFixture(862964);
-    // await model.getFixture(710598);
+    // await model.getFixture(710556);
     // MatchView.showMatch();
     // MatchView.generateMatchDetails(model.state.match);
     // model.state.matchTab = "0";
@@ -202,6 +202,7 @@ const controlShowMatch = async function (
   MatchView.generateMatchDetails(model.state.match);
   model.state.matchTab = "0";
   MatchView.changeDetailsTab(model.state.matchTab);
+  MatchView.showFirstTab();
   model.state.lastMatchesShown = 0;
 };
 
@@ -234,6 +235,7 @@ const controlChangeFixtureTab = async function (filter) {
       model.state.lastMatches.awayTeam,
       1
     );
+    model.state.lastMatchesShown = 1;
   }
 };
 
@@ -253,4 +255,4 @@ const init = async function () {
   MatchView.addHandlerChangeFixtureTab(controlChangeFixtureTab);
 };
 
-init()aa;
+init();
