@@ -36,11 +36,6 @@ export class LineupsView extends View {
     this.#formationsHeader.insertAdjacentHTML("beforeend", html);
   }
 
-  #checkWhichTeam(whichTeam) {
-    if (!whichTeam) return "home";
-    return "away";
-  }
-
   #returnSecondName(name) {
     const nameInParts = name.trim().split(" ");
     if (nameInParts.length < 2) return name;
@@ -70,7 +65,7 @@ export class LineupsView extends View {
     playerPositions.forEach((playerArray, i) => {
       html += `
                         <div
-                          class="formations-column-${this.#checkWhichTeam(
+                          class="formations-column-${this.checkWhichTeam(
                             whichTeam
                           )} formations-column
                           data-grid="${i}"
@@ -97,7 +92,7 @@ export class LineupsView extends View {
                                   : match.lineups[whichTeam].team.colors.player
                                       .border
                               }"
-                              class="jersey-${this.#checkWhichTeam(
+                              class="jersey-${this.checkWhichTeam(
                                 whichTeam
                               )} jersey"
                             >

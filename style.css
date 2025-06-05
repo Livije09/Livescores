@@ -944,6 +944,13 @@ select {
   border-bottom: 1px solid #999;
 }
 
+.last-matches-p:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7rem;
+}
+
 .last-matches-row:nth-child(even) {
   background-color: #f3f2f2;
 }

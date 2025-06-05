@@ -5,9 +5,9 @@ export class LastMatchesView extends View {
   #homeTeam = document.querySelector(".last-matches-home");
   #awayTeam = document.querySelector(".last-matches-away");
 
-  #checkWhichTeam(whichTeam) {
-    if (!whichTeam) return "home";
-    return "away";
+  clearLastMatches() {
+    this.#homeTeam.innerHTML = "";
+    this.#awayTeam.innerHTML = "";
   }
 
   #generateWhoWon(match, team) {
@@ -31,9 +31,6 @@ export class LastMatchesView extends View {
   }
 
   generateLastMatches(team, matches, whichTeam) {
-    !whichTeam
-      ? (this.#homeTeam.innerHTML = "")
-      : (this.#awayTeam.innerHTML = "");
     const firstMatches = matches.slice(0, 5);
     let html = `
                   <div class="last-matches-header">
@@ -52,31 +49,31 @@ export class LastMatchesView extends View {
                             src="${match.teams.home.logo}"
                             class="last-matches-logo"
                           />
-                          <p class="last-matches-name">${
-                            match.teams.home.name
-                          }</p>
+                          <p class="last-matches-name ${this.checkWinner(
+                            match.teams.home.winner
+                          )}">${match.teams.home.name}</p>
                         </div>
                         <div class="last-matches-team">
                           <img
                             src="${match.teams.away.logo}"
                             class="last-matches-logo"
                           />
-                          <p class="last-matches-name">${
-                            match.teams.away.name
-                          }</p>
+                          <p class="last-matches-name ${this.checkWinner(
+                            match.teams.away.winner
+                          )}">${match.teams.away.name}</p>
                         </div>
                       </div>
                       <div class="last-matches-result">
-                        <p class="last-matches-result-p ${
-                          match.teams.home.winner ? "winner" : ""
-                        }">${
+                        <p class="last-matches-result-p ${this.checkWinner(
+                          match.teams.home.winner
+                        )}">${
         match.score.extratime.home === null
           ? `${match.score.fulltime.home}`
           : `${match.score.extratime.home}`
       }</p>
-                        <p class="last-matches-result-p ${
-                          match.teams.away.winner ? "winner" : ""
-                        }">${
+                        <p class="last-matches-result-p ${this.checkWinner(
+                          match.teams.away.winner
+                        )}">${
         match.score.extratime.away === null
           ? `${match.score.fulltime.away}`
           : `${match.score.extratime.away}`
@@ -88,9 +85,9 @@ export class LastMatchesView extends View {
                     ${
                       i > 0 && (i + 1) % 5 === 0
                         ? `<div class="last-matches-btn-div">
-                      <button class="last-matches-btn last-matches-btn-${this.#checkWhichTeam(
+                      <button class="last-matches-btn last-matches-btn-${this.checkWhichTeam(
                         whichTeam
-                      )}">
+                      )}" data-lmbtn="${whichTeam}">
                         Show more matches
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="last-matches-svg">
   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -103,6 +100,13 @@ export class LastMatchesView extends View {
     !whichTeam
       ? this.#homeTeam.insertAdjacentHTML("beforeend", html)
       : this.#awayTeam.insertAdjacentHTML("beforeend", html);
+  }
+
+  addHandlerShowMoreMatches(handler) {
+    this.#parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".last-matches-btn");
+      if (!btn) return;
+    });
   }
 }
 

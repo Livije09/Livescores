@@ -38,6 +38,10 @@ export const state = {
     homeTeam: [],
     awayTeam: [],
   },
+  matchesShown: {
+    home: 0,
+    away: 0,
+  },
 };
 
 export const getLeague = async function (league, season) {

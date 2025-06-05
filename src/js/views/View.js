@@ -139,4 +139,9 @@ export default class View {
     }
     return "";
   }
+
+  checkWhichTeam(whichTeam) {
+    if (!whichTeam) return "home";
+    return "away";
+  }
 }

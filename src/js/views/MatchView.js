@@ -466,18 +466,17 @@ export class MatchView extends View {
     this.#showTab(id);
   }
 
-  changeFixtureTab() {
-    this.#fixtureTabs.forEach((tab) => tab.classList.toggle("hidden"));
-    this.#fixtureFilters.forEach((filter) =>
-      filter.classList.toggle("fixture-filter-p-active")
+  changeFixtureTab(id = 0) {
+    this.#fixtureTabs.forEach((tab) =>
+      +tab.dataset.fixturecont === id
+        ? tab.classList.remove("hidden")
+        : tab.classList.add("hidden")
     );
-  }
-
-  showFirstTab() {
-    this.#fixtureTabs[0].classList.remove("hidden");
-    this.#fixtureTabs[1].classList.add("hidden");
-    this.#fixtureFilters[0].classList.add("fixture-filter-p-active");
-    this.#fixtureFilters[1].classList.remove("fixture-filter-p-active");
+    this.#fixtureFilters.forEach((filter) => {
+      +filter.dataset.filter === id
+        ? filter.classList.add("fixture-filter-p-active")
+        : filter.classList.remove("fixture-filter-p-active");
+    });
   }
 
   addHandlerChangeFixtureTab(handler) {

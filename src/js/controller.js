@@ -202,8 +202,9 @@ const controlShowMatch = async function (
   MatchView.generateMatchDetails(model.state.match);
   model.state.matchTab = "0";
   MatchView.changeDetailsTab(model.state.matchTab);
-  MatchView.showFirstTab();
+  MatchView.changeFixtureTab();
   model.state.lastMatchesShown = 0;
+  LastMatchesView.clearLastMatches();
 };
 
 const controlChangeDetailsTab = function (id) {
@@ -214,17 +215,13 @@ const controlChangeDetailsTab = function (id) {
 };
 
 const controlChangeFixtureTab = async function (filter) {
-  MatchView.changeFixtureTab();
+  MatchView.changeFixtureTab(+filter);
   MatchView.changeDetailsTab();
   if (filter && !model.state.lastMatchesShown) {
     model.state.lastMatches.homeTeam = [];
     model.state.lastMatches.awayTeam = [];
     await model.getLastMatches(model.state.currentTeams.home.id, 0);
     await model.getLastMatches(model.state.currentTeams.away.id, 1);
-    console.log(
-      model.state.currentTeams.home,
-      model.state.lastMatches.homeTeam
-    );
     LastMatchesView.generateLastMatches(
       model.state.currentTeams.home,
       model.state.lastMatches.homeTeam,
