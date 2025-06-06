@@ -35,12 +35,12 @@ export const state = {
   },
   lastMatchesShown: 0,
   lastMatches: {
-    homeTeam: [],
-    awayTeam: [],
+    home: [],
+    away: [],
   },
   matchesShown: {
-    home: 0,
-    away: 0,
+    home: 5,
+    away: 5,
   },
 };
 
@@ -241,8 +241,8 @@ export const getLastMatches = async function (team, whichTeam) {
       console.log(result.response);
       result.response.forEach((match) =>
         !whichTeam
-          ? state.lastMatches.homeTeam.unshift(match)
-          : state.lastMatches.awayTeam.unshift(match)
+          ? state.lastMatches.home.unshift(match)
+          : state.lastMatches.away.unshift(match)
       );
     });
 };

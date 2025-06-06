@@ -1,4 +1,10 @@
-import { DEFAULT_LEAGUE, DEFAULT_SEASON, FIRST_GAMEWEEK } from "./config.js";
+import {
+  DEFAULT_LEAGUE,
+  DEFAULT_SEASON,
+  FIRST_GAMEWEEK,
+  HOME_TEAM,
+  LAST_MATCHES_ADD,
+} from "./config.js";
 import * as model from "./model.js";
 import FixturesView from "./views/FixturesView.js";
 import HeaderView from "./views/HeaderView.js";
@@ -191,48 +197,82 @@ const controlShowMatch = async function (
   homeGoals = null,
   awayGoals = null
 ) {
-  await model.getFixture(matchId);
-  MatchView.showMatch();
-  MatchView.generateMatchTeams(
-    secondMatch,
-    model.state.match,
-    homeGoals,
-    awayGoals
-  );
-  MatchView.generateMatchDetails(model.state.match);
-  model.state.matchTab = "0";
-  MatchView.changeDetailsTab(model.state.matchTab);
-  MatchView.changeFixtureTab();
-  model.state.lastMatchesShown = 0;
-  LastMatchesView.clearLastMatches();
+  try {
+    await model.getFixture(matchId);
+    MatchView.showMatch();
+    MatchView.generateMatchTeams(
+      secondMatch,
+      model.state.match,
+      homeGoals,
+      awayGoals
+    );
+    MatchView.generateMatchDetails(model.state.match);
+    model.state.matchTab = "0";
+    MatchView.changeDetailsTab(model.state.matchTab);
+    MatchView.changeFixtureTab();
+    model.state.lastMatchesShown = 0;
+    LastMatchesView.clearLastMatches();
+    model.state.matchesShown.home = 5;
+    model.state.matchesShown.away = 5;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const controlChangeDetailsTab = function (id) {
-  MatchView.changeDetailsTab(id);
-  StatisticsView.showStatistics(model.state.match);
-  LineupsView.showLineups(model.state.match);
-  model.state.matchTab = id;
+  try {
+    MatchView.changeDetailsTab(id);
+    StatisticsView.showStatistics(model.state.match);
+    LineupsView.showLineups(model.state.match);
+    model.state.matchTab = id;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const controlChangeFixtureTab = async function (filter) {
-  MatchView.changeFixtureTab(+filter);
-  MatchView.changeDetailsTab();
-  if (filter && !model.state.lastMatchesShown) {
-    model.state.lastMatches.homeTeam = [];
-    model.state.lastMatches.awayTeam = [];
-    await model.getLastMatches(model.state.currentTeams.home.id, 0);
-    await model.getLastMatches(model.state.currentTeams.away.id, 1);
-    LastMatchesView.generateLastMatches(
-      model.state.currentTeams.home,
-      model.state.lastMatches.homeTeam,
-      0
+  try {
+    MatchView.changeFixtureTab(+filter);
+    MatchView.changeDetailsTab();
+    if (filter && !model.state.lastMatchesShown) {
+      model.state.lastMatches.home = [];
+      model.state.lastMatches.away = [];
+      await model.getLastMatches(model.state.currentTeams.home.id, 0);
+      await model.getLastMatches(model.state.currentTeams.away.id, 1);
+      LastMatchesView.generateLastMatches(
+        model.state.currentTeams.home,
+        model.state.lastMatches.home,
+        0
+      );
+      LastMatchesView.generateLastMatches(
+        model.state.currentTeams.away,
+        model.state.lastMatches.away,
+        1
+      );
+      model.state.lastMatchesShown = 1;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const controlShowMoreMatches = function (whichTeam) {
+  try {
+    const whTeam = whichTeam === HOME_TEAM ? 0 : 1;
+    LastMatchesView.showMoreMatches(
+      model.state.lastMatches[whichTeam],
+      model.state.matchesShown[whichTeam],
+      model.state.currentTeams[whichTeam],
+      whTeam
     );
-    LastMatchesView.generateLastMatches(
-      model.state.currentTeams.away,
-      model.state.lastMatches.awayTeam,
-      1
-    );
-    model.state.lastMatchesShown = 1;
+    model.state.matchesShown[whichTeam] += LAST_MATCHES_ADD;
+    if (
+      model.state.matchesShown[whichTeam] >=
+      model.state.lastMatches[whichTeam].length
+    )
+      LastMatchesView.hideShowMoreBtn(whTeam);
+  } catch (e) {
+    console.log(e);
   }
 };
 
@@ -250,6 +290,7 @@ const init = async function () {
   FixturesView.addHandlerShowMatch(controlShowMatch);
   MatchView.addHandlerChangeDetailsTab(controlChangeDetailsTab);
   MatchView.addHandlerChangeFixtureTab(controlChangeFixtureTab);
+  LastMatchesView.addHandlerShowMoreMatches(controlShowMoreMatches);
 };
 
 init();

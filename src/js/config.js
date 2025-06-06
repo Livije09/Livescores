@@ -9,7 +9,7 @@ export const REQUEST_OPTIONS = {
 };
 
 export const DEFAULT_SEASON = 2021;
-export const DEFAULT_LEAGUE = 39;
+export const DEFAULT_LEAGUE = 2;
 export const DEFAULT_GAMEWEEK = 1;
 export const SHIFT_TOP = 22;
 export const WHICH_TABLE = ["all", "home", "away"];
@@ -21,4 +21,5 @@ export const NORMALIZE_TIME = 2;
 export const FIRST_GAMEWEEK = 0;
 export const HOME_TEAM = "home";
 export const AWAY_TEAM = "away";
-export const MATCHES_SHOW_ADD = 5;
+export const LAST_MATCHES_ADD = 5;
+export const DONT_GENERATE_BTN = 1;

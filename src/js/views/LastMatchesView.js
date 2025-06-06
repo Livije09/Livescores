@@ -1,3 +1,4 @@
+import { DONT_GENERATE_BTN, LAST_MATCHES_ADD } from "../config";
 import View from "./View";
 
 export class LastMatchesView extends View {
@@ -30,13 +31,9 @@ export class LastMatchesView extends View {
           </p>`;
   }
 
-  generateLastMatches(team, matches, whichTeam) {
-    const firstMatches = matches.slice(0, 5);
-    let html = `
-                  <div class="last-matches-header">
-                    <p class="last-matches-header-p">${team.name} last matches</p>
-                  </div>`;
-    firstMatches.forEach((match, i) => {
+  #generateLastMatchesHTML(matches, team, whichTeam, generateBtn = 0) {
+    let html = "";
+    matches.forEach((match, i) => {
       console.log(match);
       html += `
                     <div class="last-matches-row">
@@ -67,27 +64,29 @@ export class LastMatchesView extends View {
                         <p class="last-matches-result-p ${this.checkWinner(
                           match.teams.home.winner
                         )}">${
-        match.score.extratime.home === null
+        match.score.extratime.home === null &&
+        match.score.extratime.away === null
           ? `${match.score.fulltime.home}`
-          : `${match.score.extratime.home}`
+          : `${match.goals.home}`
       }</p>
                         <p class="last-matches-result-p ${this.checkWinner(
                           match.teams.away.winner
                         )}">${
+        match.score.extratime.home === null &&
         match.score.extratime.away === null
           ? `${match.score.fulltime.away}`
-          : `${match.score.extratime.away}`
+          : `${match.goals.away}`
       }</p>
 </p>
                       </div>
                       ${this.#generateWhoWon(match, team)}
                     </div>
                     ${
-                      i > 0 && (i + 1) % 5 === 0
+                      i > 0 && (i + 1) % 5 === 0 && !generateBtn
                         ? `<div class="last-matches-btn-div">
                       <button class="last-matches-btn last-matches-btn-${this.checkWhichTeam(
                         whichTeam
-                      )}" data-lmbtn="${whichTeam}">
+                      )}" data-lmbtn="${this.checkWhichTeam(whichTeam)}">
                         Show more matches
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="last-matches-svg">
   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -97,15 +96,52 @@ export class LastMatchesView extends View {
                         : ""
                     }`;
     });
+    return html;
+  }
+
+  generateLastMatches(team, matches, whichTeam) {
+    const firstMatches = matches.slice(0, 5);
+    let html = `
+                  <div class="last-matches-header">
+                    <p class="last-matches-header-p">${team.name} last matches</p>
+                  </div>`;
+    html += this.#generateLastMatchesHTML(firstMatches, team, whichTeam);
     !whichTeam
       ? this.#homeTeam.insertAdjacentHTML("beforeend", html)
       : this.#awayTeam.insertAdjacentHTML("beforeend", html);
+  }
+
+  showMoreMatches(matches, matchesShown, team, whichTeam) {
+    const matchesToShow = matches.slice(
+      matchesShown,
+      matchesShown + LAST_MATCHES_ADD
+    );
+    const html = this.#generateLastMatchesHTML(
+      matchesToShow,
+      team,
+      whichTeam,
+      DONT_GENERATE_BTN
+    );
+    const insertDiv = document.createElement("div");
+    insertDiv.innerHTML = html;
+    const teamContainer = !whichTeam ? this.#homeTeam : this.#awayTeam;
+    const btn = teamContainer.lastChild;
+    teamContainer.insertBefore(insertDiv, btn);
+  }
+
+  hideShowMoreBtn(whichTeam) {
+    const teamContainer = !whichTeam ? this.#homeTeam : this.#awayTeam;
+    const btn = teamContainer.lastChild;
+    btn.classList.add("hidden");
   }
 
   addHandlerShowMoreMatches(handler) {
     this.#parentElement.addEventListener("click", function (e) {
       const btn = e.target.closest(".last-matches-btn");
       if (!btn) return;
+
+      const id = btn.dataset.lmbtn;
+      handler(id);
     });
   }
 }
