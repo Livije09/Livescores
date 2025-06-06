@@ -36,7 +36,9 @@ export class LastMatchesView extends View {
     matches.forEach((match, i) => {
       console.log(match);
       html += `
-                    <div class="last-matches-row">
+                    <div class="last-matches-row" data-matchid="${
+                      match.fixture.id
+                    }">
                       <p class="last-matches-p">${this.getFixtureDate(
                         match
                       )}</p>
