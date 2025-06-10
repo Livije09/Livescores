@@ -8,6 +8,7 @@ export class StatisticsView extends View {
     let html = "";
     const homeValues = [];
     const awayValues = [];
+    if (!match.statistics[0]) return;
     match.statistics[0].statistics.forEach((stat, i) => {
       const homeValue = stat.value;
       const awayValue = match.statistics[1].statistics[i].value;

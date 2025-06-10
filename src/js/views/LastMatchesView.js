@@ -1,4 +1,9 @@
-import { DONT_GENERATE_BTN, LAST_MATCHES_ADD } from "../config";
+import {
+  AWAY_TEAM,
+  DONT_GENERATE_BTN,
+  HOME_TEAM,
+  LAST_MATCHES_ADD,
+} from "../config";
 import View from "./View";
 
 export class LastMatchesView extends View {
@@ -31,18 +36,54 @@ export class LastMatchesView extends View {
           </p>`;
   }
 
-  #generateLastMatchesHTML(matches, team, whichTeam, generateBtn = 0) {
+  #checkIfSecondMatch(match, prevMatch) {
+    console.log(match, prevMatch);
+    const teams1 = [match.teams.home.name, match.teams.away.name]
+      .sort()
+      .join("-")
+      .toLowerCase();
+    const teams2 = [prevMatch.teams.home.name, prevMatch.teams.away.name]
+      .sort()
+      .join("-")
+      .toLowerCase();
+    if (teams1 === teams2) return "second-game";
+    return "";
+  }
+
+  #returnScore(match, whichTeam) {
+    console.log(match);
+    const goals =
+      match.score.extratime.home === null && match.score.extratime.away === null
+        ? `${match.score.fulltime[whichTeam]}`
+        : `${match.goals[whichTeam]}`;
+    return goals;
+  }
+
+  #generateLastMatchesHTML(
+    matches,
+    team,
+    whichTeam,
+    allMatches,
+    generateBtn = 0
+  ) {
     let html = "";
     matches.forEach((match, i) => {
       console.log(match);
+      let secondMatch;
+      if (allMatches[i + 1])
+        secondMatch = this.#checkIfSecondMatch(match, allMatches[i + 1]);
       html += `
-                    <div class="last-matches-row" data-matchid="${
-                      match.fixture.id
-                    }">
+                    <div class="last-matches-row ${secondMatch}" data-matchid="${
+        match.fixture.id
+      }">
                       <p class="last-matches-p">${this.getFixtureDate(
                         match
                       )}</p>
-                      <div class="last-matches-teams">
+                      <div class="last-matches-teams last-matches-home-team" data-firstmatch="${
+                        allMatches[i + 1]
+                          ? this.#returnScore(allMatches[i + 1], HOME_TEAM)
+                          : ""
+                      }">
                         <div class="last-matches-team">
                           <img
                             src="${match.teams.home.logo}"
@@ -52,7 +93,11 @@ export class LastMatchesView extends View {
                             match.teams.home.winner
                           )}">${match.teams.home.name}</p>
                         </div>
-                        <div class="last-matches-team">
+                        <div class="last-matches-team last-matches-away-team" data-firstmatch="${
+                          allMatches[i + 1]
+                            ? this.#returnScore(allMatches[i + 1], AWAY_TEAM)
+                            : ""
+                        }">
                           <img
                             src="${match.teams.away.logo}"
                             class="last-matches-logo"
@@ -65,20 +110,10 @@ export class LastMatchesView extends View {
                       <div class="last-matches-result">
                         <p class="last-matches-result-p ${this.checkWinner(
                           match.teams.home.winner
-                        )}">${
-        match.score.extratime.home === null &&
-        match.score.extratime.away === null
-          ? `${match.score.fulltime.home}`
-          : `${match.goals.home}`
-      }</p>
+                        )}">${this.#returnScore(match, HOME_TEAM)}</p>
                         <p class="last-matches-result-p ${this.checkWinner(
                           match.teams.away.winner
-                        )}">${
-        match.score.extratime.home === null &&
-        match.score.extratime.away === null
-          ? `${match.score.fulltime.away}`
-          : `${match.goals.away}`
-      }</p>
+                        )}">${this.#returnScore(match, AWAY_TEAM)}</p>
 </p>
                       </div>
                       ${this.#generateWhoWon(match, team)}
@@ -107,7 +142,12 @@ export class LastMatchesView extends View {
                   <div class="last-matches-header">
                     <p class="last-matches-header-p">${team.name} last matches</p>
                   </div>`;
-    html += this.#generateLastMatchesHTML(firstMatches, team, whichTeam);
+    html += this.#generateLastMatchesHTML(
+      firstMatches,
+      team,
+      whichTeam,
+      matches
+    );
     !whichTeam
       ? this.#homeTeam.insertAdjacentHTML("beforeend", html)
       : this.#awayTeam.insertAdjacentHTML("beforeend", html);
@@ -122,6 +162,7 @@ export class LastMatchesView extends View {
       matchesToShow,
       team,
       whichTeam,
+      matches,
       DONT_GENERATE_BTN
     );
     const insertDiv = document.createElement("div");
@@ -144,6 +185,25 @@ export class LastMatchesView extends View {
 
       const id = btn.dataset.lmbtn;
       handler(id);
+    });
+  }
+
+  addHandlerShowMatch(handler) {
+    this.#parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".last-matches-row");
+      if (!btn) return;
+
+      const id = btn.dataset.matchid;
+      console.log(id);
+      const secondMatch = btn.classList.contains("second-game") ? 1 : 0;
+      console.log(secondMatch);
+      if (secondMatch) {
+        const homeGoalsFirstMatch = btn.querySelector(".last-matches-home-team")
+          .dataset.firstmatch;
+        const awayGoalsFirstMatch = btn.querySelector(".last-matches-away-team")
+          .dataset.firstmatch;
+        handler(secondMatch, id, awayGoalsFirstMatch, homeGoalsFirstMatch);
+      } else handler(secondMatch, id);
     });
   }
 }

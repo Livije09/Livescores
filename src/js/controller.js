@@ -26,8 +26,8 @@ const controlShowLeague = async function (
   try {
     // await model.getLastMatches(33, 0);
     // await model.getFixture(1149523);
-    // await model.getFixture(862964);
     // await model.getFixture(710556);
+    // await model.getFixture(851371);
     // MatchView.showMatch();
     // MatchView.generateMatchDetails(model.state.match);
     // model.state.matchTab = "0";
@@ -239,6 +239,7 @@ const controlChangeFixtureTab = async function (filter) {
       model.state.lastMatches.away = [];
       await model.getLastMatches(model.state.currentTeams.home.id, 0);
       await model.getLastMatches(model.state.currentTeams.away.id, 1);
+      console.log(model.state.lastMatches.home);
       LastMatchesView.generateLastMatches(
         model.state.currentTeams.home,
         model.state.lastMatches.home,
@@ -291,6 +292,7 @@ const init = async function () {
   MatchView.addHandlerChangeDetailsTab(controlChangeDetailsTab);
   MatchView.addHandlerChangeFixtureTab(controlChangeFixtureTab);
   LastMatchesView.addHandlerShowMoreMatches(controlShowMoreMatches);
+  LastMatchesView.addHandlerShowMatch(controlShowMatch);
 };
 
 init();
