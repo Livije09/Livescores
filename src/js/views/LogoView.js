@@ -1,14 +1,16 @@
 import View from "./View";
 
 export class LogoView extends View {
-  _parentElement = document.querySelector(".div-logo");
+  #parentElement = document.querySelector(".div-logo");
+  #overlay = document.querySelector(".overlay-2");
+  #chaneLeagueContainer = document.querySelector(".change-league-container");
 
   constructor() {
     super();
   }
 
   #clear() {
-    this._parentElement.innerHTML = "";
+    this.#parentElement.innerHTML = "";
   }
 
   showLogo(logo, logoid) {
@@ -19,7 +21,21 @@ export class LogoView extends View {
             class="logo"
             data-logoid="${logoid}"
           />`;
-    this._parentElement.insertAdjacentHTML("afterbegin", html);
+    this.#parentElement.insertAdjacentHTML("afterbegin", html);
+  }
+
+  showChangeLeague() {
+    this.#overlay.classList.remove("hidden");
+    this.#chaneLeagueContainer.classList.remove("hidden");
+  }
+
+  addHandlerShowChangeLeague(handler) {
+    this.#parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".logo");
+      if (!btn) return;
+
+      handler();
+    });
   }
 }
 

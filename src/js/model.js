@@ -42,6 +42,7 @@ export const state = {
     home: 5,
     away: 5,
   },
+  leaguesSearched: [],
 };
 
 export const getLeague = async function (league, season) {
@@ -244,5 +245,18 @@ export const getLastMatches = async function (team, whichTeam) {
           ? state.lastMatches.home.unshift(match)
           : state.lastMatches.away.unshift(match)
       );
+    });
+};
+
+export const getLeagues = async function (value) {
+  await fetch(
+    `https://v3.football.api-sports.io/leagues?search=${value}`,
+    REQUEST_OPTIONS
+  )
+    .then((data) => data.json())
+    .then((result) => {
+      state.leaguesSearched = [];
+      result.response.forEach((league) => state.leaguesSearched.push(league));
+      console.log(state.leaguesSearched);
     });
 };

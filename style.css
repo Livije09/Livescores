@@ -777,6 +777,18 @@ select {
   width: 50%;
 }
 
+.formations-column {
+  display: flex;
+  flex-direction: column;
+  gap: 3.6rem;
+  transform: translate(0, -5%);
+}
+
+.formations-column-home > :only-child,
+.formations-column-away > :only-child {
+  transform: translate(0, -15%);
+}
+
 .formations-column-3 {
   gap: 5.6rem;
 }
@@ -791,13 +803,6 @@ select {
 
 .formations-away {
   flex-direction: row-reverse;
-}
-
-.formations-column {
-  display: flex;
-  flex-direction: column;
-  gap: 3.6rem;
-  transform: translate(0, -5%);
 }
 
 .formations-column-home:first-child {
@@ -1016,6 +1021,199 @@ select {
   border-bottom: 1px solid #fff;
 }
 
+/* .change-league-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2.4rem;
+  border-radius: 5px;
+  background-color: #89ff9f;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+.change-league-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.search-icon {
+  width: 3rem;
+  cursor: pointer;
+}
+
+.search-input {
+  font-size: 1.6rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+}
+
+.search-input:focus {
+  border: 2px solid #167fdb;
+  outline: none;
+}
+
+.change-league-leagues {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.2rem;
+}
+
+.change-league-league {
+  width: 15%;
+  cursor: pointer;
+} */
+
+.change-league-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2.4rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #a8ff78, #78ffd6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  width: 80rem;
+  /* width: fit-content; */
+  max-width: 90%;
+  z-index: 50;
+}
+
+.search-close-svg {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: #333;
+  cursor: pointer;
+  padding: 0.4rem;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+}
+
+.search-close-svg:hover {
+  /* background-color: #ffe6e6; */
+  transform: scale(1.1);
+}
+
+.change-league-search {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background-color: white;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.search-icon {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.search-icon:hover {
+  opacity: 1;
+}
+
+.search-input {
+  font-size: 1.6rem;
+  border: none;
+  padding: 0.6rem 1rem;
+  outline: none;
+  width: 20rem;
+  background: transparent;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.change-league-leagues-container {
+  overflow: hidden;
+  width: 70rem;
+  padding: 1.2rem;
+  margin: 0 auto;
+}
+
+.change-league-leagues {
+  display: flex;
+  width: 100%;
+  transition: transform 0.4s ease;
+}
+
+.change-league-page {
+  flex: 0 0 100%; /* zauzima celu širinu kontejnera */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+}
+
+/* .change-league-leagues,
+.change-league-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.4rem;
+  position: relative;
+} */
+
+.search-arrow {
+  position: absolute;
+  top: 55%;
+  /* transform: translate(0, -50%); */
+  width: 3rem;
+  cursor: pointer;
+  color: #333;
+  background-color: white;
+  border-radius: 50%;
+  padding: 0.4rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+}
+
+.search-arrow-left {
+  left: 20;
+}
+
+.search-arrow-right {
+  right: 20;
+}
+
+.search-arrow:hover {
+  background-color: #dff6ff;
+  transform: scale(1.1);
+  /* box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); */
+}
+
+.change-league-league {
+  width: 10rem;
+  height: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.change-league-league:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
 .hidden {
   display: none;
 }
@@ -1024,7 +1222,8 @@ select {
   visibility: hidden;
 }
 
-.overlay {
+.overlay,
+.overlay-2 {
   position: fixed;
   top: 0;
   left: 0;

@@ -6,6 +6,7 @@ import {
   LAST_MATCHES_ADD,
 } from "./config.js";
 import * as model from "./model.js";
+import ChangeLeagueView from "./views/ChangeLeagueView.js";
 import FixturesView from "./views/FixturesView.js";
 import HeaderView from "./views/HeaderView.js";
 import LastMatchesView from "./views/LastMatchesView.js";
@@ -24,6 +25,7 @@ const controlShowLeague = async function (
   season = model.state.season
 ) {
   try {
+    // await model.getLeagues();
     // await model.getLastMatches(33, 0);
     // await model.getFixture(1149523);
     // await model.getFixture(710556);
@@ -277,6 +279,15 @@ const controlShowMoreMatches = function (whichTeam) {
   }
 };
 
+const controlShowChangeLeague = function () {
+  LogoView.showChangeLeague();
+};
+
+const controlChangeLeague = async function (value) {
+  await model.getLeagues(value);
+  console.log(model.state.leaguesSearched);
+};
+
 const init = async function () {
   TableView.addHandlerPageLoaded(controlShowLeague);
   SelectionView.addHandlerChangeSeason(controlShowLeague);
@@ -293,6 +304,8 @@ const init = async function () {
   MatchView.addHandlerChangeFixtureTab(controlChangeFixtureTab);
   LastMatchesView.addHandlerShowMoreMatches(controlShowMoreMatches);
   LastMatchesView.addHandlerShowMatch(controlShowMatch);
+  LogoView.addHandlerShowChangeLeague(controlShowChangeLeague);
+  ChangeLeagueView.addHandlerSearchLeagues(controlChangeLeague);
 };
 
 init();
