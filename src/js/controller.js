@@ -285,7 +285,7 @@ const controlShowChangeLeague = function () {
 
 const controlChangeLeague = async function (value) {
   await model.getLeagues(value);
-  console.log(model.state.leaguesSearched);
+  ChangeLeagueView.showFoundLeagues(model.state.leaguesSearched);
 };
 
 const init = async function () {
