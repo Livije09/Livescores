@@ -23,3 +23,5 @@ export const HOME_TEAM = "home";
 export const AWAY_TEAM = "away";
 export const LAST_MATCHES_ADD = 5;
 export const DONT_GENERATE_BTN = 1;
+export const COUNTER_STARTING_VALUE = -50;
+export const COUNTER_INCREASE = 200;

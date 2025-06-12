@@ -1,3 +1,4 @@
+import { COUNTER_INCREASE, COUNTER_STARTING_VALUE } from "../config";
 import View from "./View";
 
 export class ChangeLeagueView extends View {
@@ -14,6 +15,19 @@ export class ChangeLeagueView extends View {
   constructor() {
     super();
     this.#addHandlerClose();
+    this.#addHandlerChangePage();
+  }
+
+  #addHandlerChangePage() {
+    this.#arrowLeft.addEventListener("click", this.#previousPage.bind(this));
+    this.#arrowRight.addEventListener("click", this.#nextPage.bind(this));
+  }
+
+  #clearAndReset() {
+    if (document.querySelector(".div-pages-container"))
+      document.querySelector(".div-pages-container").innerHTML = "";
+    this.#currentPage = 1;
+    this.#maxPage = 1;
   }
 
   #hideOverlayAndChangeLeague() {
@@ -57,16 +71,20 @@ export class ChangeLeagueView extends View {
   }
 
   showFoundLeagues(leagues) {
+    this.#clearAndReset();
     let html = "";
     let page = 0;
     leagues.forEach((_, i) => {
       if (i % 5 === 0) {
         page++;
-        html += this.#generatePage(page, leagues.slice(i, page * 5));
+        html += this.#generatePage(page, leagues.slice(i, i + 5));
       }
     });
     console.log(html);
-    this.#changeLeagueContainer.insertBefore(html, this.#arrowRight);
+    const htmlDiv = document.createElement("div");
+    htmlDiv.classList.add("div-pages-container");
+    htmlDiv.innerHTML = html;
+    this.#changeLeagueContainer.insertBefore(htmlDiv, this.#arrowRight);
     const pagesContainers = document.querySelectorAll(".change-league-page");
     this.#movePages(pagesContainers);
     if (page > 1) {
@@ -75,15 +93,40 @@ export class ChangeLeagueView extends View {
       );
     }
     this.#maxPage = page;
+    console.log(this.#maxPage);
     this.#currentPage = 1;
   }
 
   #movePages(pages) {
-    let counter = 0;
-    pages.forEach((page) => {
-      page.style.transform = `translate(${counter}%, 0%)`;
-      counter += 200;
+    // let counter = 0;
+    // pages.forEach((page) => {
+    //   page.style.transform = `translate(${counter}%, 0%)`;
+    //   counter += 50;
+    // });
+    pages.forEach((page, i) => {
+      const offset = i * 0;
+      page.style.transform = `translateX(${offset}%)`;
     });
+  }
+
+  #changePage(pageNumber) {
+    const pages = document.querySelectorAll(".change-league-page");
+    pages.forEach((page, i) => {
+      const offset = (i - (pageNumber - 1)) * 100;
+      page.style.transform = `translateX(${offset}%)`;
+    });
+  }
+
+  #nextPage() {
+    if (this.#currentPage === this.#maxPage) this.#currentPage = 1;
+    else this.#currentPage++;
+    this.#changePage(this.#currentPage);
+  }
+
+  #previousPage() {
+    if (this.#currentPage === 1) this.#currentPage = this.#maxPage;
+    else this.#currentPage--;
+    this.#changePage(this.#currentPage);
   }
 }
 
