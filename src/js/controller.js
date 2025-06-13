@@ -35,6 +35,7 @@ const controlShowLeague = async function (
     // model.state.matchTab = "0";
     // MatchView.changeDetailsTab(model.state.matchTab);
     await model.getLeague(league, season);
+    ChangeLeagueView.hideOverlayAndChangeLeague();
     model.changeWhere();
     TableSelectionView.changeSelectedTab();
     model.changeSeason(season);
@@ -50,7 +51,7 @@ const controlShowLeague = async function (
     model.resetCurrentScorersAndFixtures();
     HeaderView.resetClicked();
   } catch (e) {
-    console.error(e);
+    ChangeLeagueView.renderError(e.message);
   }
 };
 
@@ -306,6 +307,7 @@ const init = async function () {
   LastMatchesView.addHandlerShowMatch(controlShowMatch);
   LogoView.addHandlerShowChangeLeague(controlShowChangeLeague);
   ChangeLeagueView.addHandlerSearchLeagues(controlChangeLeague);
+  ChangeLeagueView.addHandlerChangeLeague(controlShowLeague);
 };
 
 init();

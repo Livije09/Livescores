@@ -7,6 +7,44 @@ import {
 import { SVGS } from "../svgs";
 
 export default class View {
+  #timer;
+  #topMessage = document.querySelector(".top-message");
+
+  #resetTimer() {
+    if (this.#timer) {
+      clearTimeout(this.#timer);
+    }
+  }
+
+  #clear() {
+    this.#topMessage.innerHTML = "";
+  }
+
+  #hideMessage() {
+    this.#topMessage.style.transform = "translate(-50%, -250%)";
+  }
+
+  #prepareTopMessage() {
+    this.#topMessage.style.transform = "translate(-50%, -50%)";
+    this.#clear();
+  }
+
+  renderError(error) {
+    this.#resetTimer();
+    this.#prepareTopMessage();
+    // this.#topMessage.classList.remove("success-message");
+    const html = `
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="error-icon">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+    </svg>
+
+    <p class="top-message-text">${error}</p>
+    `;
+    this.#topMessage.insertAdjacentHTML("afterbegin", html);
+    this.#topMessage.classList.add("fail-message");
+    this.#timer = setTimeout(() => this.#hideMessage(), 2000);
+  }
+
   generateRecentForm(team) {
     let html = "";
     const lastFive = team.form.split("");

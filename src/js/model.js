@@ -46,27 +46,33 @@ export const state = {
 };
 
 export const getLeague = async function (league, season) {
-  await fetch(
-    `https://v3.football.api-sports.io/standings?league=${league}&season=${season}`,
-    REQUEST_OPTIONS
-  )
-    .then((data) => data.json())
-    .then((result) => {
-      console.log(result.response);
-      const { id, country, logo, name } = result.response[0].league;
-      state.league = { id, country, logo, name };
-      state.teams = [];
-      result.response[0].league.standings.forEach((standing) => {
-        const clubArray = [];
-        standing.forEach((club) => {
-          clubArray.push(club);
+  try {
+    await fetch(
+      `https://v3.football.api-sports.io/standings?league=${league}&season=${season}`,
+      REQUEST_OPTIONS
+    )
+      .then((data) => data.json())
+      .then((result) => {
+        if (!result.response || result.response.length === 0) {
+          throw new Error(`Liga nema podatke za sezonu ${season}.`);
+        }
+        console.log(result.response);
+        const { id, country, logo, name } = result.response[0].league;
+        state.league = { id, country, logo, name };
+        state.teams = [];
+        result.response[0].league.standings.forEach((standing) => {
+          const clubArray = [];
+          standing.forEach((club) => {
+            clubArray.push(club);
+          });
+          state.teams.push(clubArray);
         });
-        state.teams.push(clubArray);
+        state.currentTable = state.teams[0];
+        state.currentPoints = JSON.parse(JSON.stringify(state.teams));
       });
-      state.currentTable = state.teams[0];
-      state.currentPoints = JSON.parse(JSON.stringify(state.teams));
-    })
-    .catch((error) => console.log("error", error));
+  } catch (e) {
+    throw e;
+  }
 };
 
 export const changeSeason = function (season = state.season) {

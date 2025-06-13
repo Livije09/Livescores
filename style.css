@@ -18,6 +18,46 @@ select {
   font-family: inherit;
 }
 
+.top-message {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -250%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+
+  background-color: #aaa;
+  border-radius: 20px;
+  padding: 3.2rem 8rem;
+
+  transition: all 0.5s;
+
+  z-index: 150;
+}
+
+.top-message-text {
+  font-size: 2.4rem;
+  align-self: center;
+}
+
+.fail-message {
+  background-color: rgba(252, 161, 161, 0.9);
+  border: 3px solid rgb(248, 49, 49, 0.9);
+  /* transform: translate(-50%, -50%); */
+}
+
+.error-icon {
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.error-icon {
+  color: rgb(63, 1, 1);
+}
+
 .main {
   display: flex;
   align-items: center;
@@ -1165,6 +1205,16 @@ select {
   align-items: center;
 }
 
+.justify-content {
+  justify-content: center;
+}
+
+.change-league-no-results {
+  font-size: 3.2rem;
+  text-align: center;
+  color: #222;
+}
+
 .change-league-page {
   flex: 0 0 100%; /* zauzima celu širinu kontejnera */
   display: flex;
@@ -1173,22 +1223,12 @@ select {
   gap: 2.4rem;
   width: 100%;
   transition: transform 0.3s ease;
+  padding: 1.6rem;
 }
-
-/* .change-league-leagues,
-.change-league-page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2.4rem;
-  position: relative;
-} */
 
 .search-arrow {
   position: absolute;
   top: 55%;
-  /* transform: translate(0, -50%); */
   width: 3rem;
   cursor: pointer;
   color: #333;

@@ -25,19 +25,19 @@ export class ChangeLeagueView extends View {
 
   #clearAndReset() {
     if (document.querySelector(".div-pages-container"))
-      document.querySelector(".div-pages-container").innerHTML = "";
+      document.querySelector(".div-pages-container").remove();
     this.#currentPage = 1;
     this.#maxPage = 1;
   }
 
-  #hideOverlayAndChangeLeague() {
+  hideOverlayAndChangeLeague() {
     this.#parentElement.classList.add("hidden");
     this.#overlay.classList.add("hidden");
   }
 
   #addHandlerClose() {
     [this.#closeBtn, this.#overlay].forEach((click) => {
-      click.addEventListener("click", () => this.#hideOverlayAndChangeLeague());
+      click.addEventListener("click", () => this.hideOverlayAndChangeLeague());
     });
   }
 
@@ -63,11 +63,22 @@ export class ChangeLeagueView extends View {
         (league) => `<img
               src="${league.league.logo}"
               class="change-league-league"
-              data-leagueid="1"
+              data-leagueid="${league.league.id}"
+              title="${league.league.name}"
             />
       `
       )
       .join("");
+  }
+
+  #hideAndShowArrows(page) {
+    page > 1
+      ? [this.#arrowLeft, this.#arrowRight].forEach((arrow) =>
+          arrow.classList.remove("hidden")
+        )
+      : [this.#arrowLeft, this.#arrowRight].forEach((arrow) =>
+          arrow.classList.add("hidden")
+        );
   }
 
   showFoundLeagues(leagues) {
@@ -80,19 +91,22 @@ export class ChangeLeagueView extends View {
         html += this.#generatePage(page, leagues.slice(i, i + 5));
       }
     });
-    console.log(html);
+    if (page === 0)
+      html = `
+        <p class="change-league-no-results">
+          No results
+        </p>`;
     const htmlDiv = document.createElement("div");
     htmlDiv.classList.add("div-pages-container");
+    htmlDiv.style.justifyContent === "unset";
+    console.log(page);
+    if (+page === 0) htmlDiv.classList.add("justify-content");
     htmlDiv.innerHTML = html;
     this.#changeLeagueContainer.insertBefore(htmlDiv, this.#arrowRight);
     const pagesContainers = document.querySelectorAll(".change-league-page");
     this.#movePages(pagesContainers);
-    if (page > 1) {
-      [this.#arrowLeft, this.#arrowRight].forEach((arrow) =>
-        arrow.classList.remove("hidden")
-      );
-    }
-    this.#maxPage = page;
+    this.#hideAndShowArrows(page);
+    this.#maxPage = page * 2 - 1;
     console.log(this.#maxPage);
     this.#currentPage = 1;
   }
@@ -104,7 +118,7 @@ export class ChangeLeagueView extends View {
     //   counter += 50;
     // });
     pages.forEach((page, i) => {
-      const offset = i * 0;
+      const offset = i * 100;
       page.style.transform = `translateX(${offset}%)`;
     });
   }
@@ -119,14 +133,24 @@ export class ChangeLeagueView extends View {
 
   #nextPage() {
     if (this.#currentPage === this.#maxPage) this.#currentPage = 1;
-    else this.#currentPage++;
+    else this.#currentPage += 2;
     this.#changePage(this.#currentPage);
   }
 
   #previousPage() {
     if (this.#currentPage === 1) this.#currentPage = this.#maxPage;
-    else this.#currentPage--;
+    else this.#currentPage -= 2;
     this.#changePage(this.#currentPage);
+  }
+
+  addHandlerChangeLeague(handler) {
+    this.#parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".change-league-league");
+      if (!btn) return;
+
+      const id = btn.dataset.leagueid;
+      handler(id);
+    });
   }
 }
 
