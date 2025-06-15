@@ -1,0 +1,46 @@
+/* 944px */
+
+@media (max-width: 59em) {
+  .div-logo,
+  .selection,
+  .table-selection,
+  .table-header,
+  .table-body {
+    max-width: 92rem;
+  }
+}
+
+/* 700px */
+
+@media (max-width: 44em) {
+  .div-logo,
+  .selection,
+  .table-selection,
+  .table-header,
+  .table-body,
+  .top-scorers-header,
+  .top-scorers-body,
+  .top-scorers-row {
+    max-width: 65rem;
+  }
+
+  .table-header,
+  .table-row {
+    font-size: 1.2rem;
+    gap: 0.8rem;
+    padding: 0 0.4rem;
+  }
+
+  .table-row {
+    /* padding: 0 0.6rem; */
+  }
+
+  .club-position {
+    width: 2.4rem;
+  }
+
+  .club-last-five-p {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+}
