@@ -4,8 +4,15 @@ export class LeaguePhaseView extends View {
   #parentElement = document.querySelector(".league-phase-selection");
   #leaguePhaseList = document.querySelector(".league-phase-list");
 
+  clearLeaguePhaseList() {
+    this.#parentElement.style.border = "none";
+    this.#leaguePhaseList.innerHTML = "";
+  }
+
   generateLeaguePhaseSelection(phases) {
     this.#leaguePhaseList.innerHTML = "";
+    this.#parentElement.style.border = "solid #333";
+    this.#parentElement.style.borderTop = "none";
     phases.forEach((phase, i) => {
       const html = `
             <li class="league-phase-item">

@@ -41,6 +41,7 @@ const controlShowLeague = async function (
     model.changeSeason(season);
     if (model.state.teams.length > 1)
       LeaguePhaseView.generateLeaguePhaseSelection(model.state.teams);
+    else LeaguePhaseView.clearLeaguePhaseList();
     TableView.showTable(
       model.state.currentTable,
       model.state.where,
