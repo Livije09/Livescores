@@ -203,11 +203,14 @@ select {
   background-color: #eee;
 }
 
-.select-season:focus,
 .select-gameweek:focus {
   outline: none;
   border: none;
   box-shadow: none;
+}
+
+.select-season:focus {
+  outline: none;
 }
 
 .table {

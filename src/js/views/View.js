@@ -162,16 +162,23 @@ export default class View {
     if (whichTeam === "home") {
       if (homeGoals + homeGoals1 > awayGoals + awayGoals1) return returnHTML;
       if (homeGoals + homeGoals1 === awayGoals + awayGoals1) {
-        if (homePenalties > awayPenalties) return returnHTML;
-        if (awayGoals1 > awayGoals) return returnHTML;
+        if (homePenalties > awayPenalties) {
+          console.log("KOJ KURAC");
+          return returnHTML;
+        }
+        // if (homeGoals1 > homeGoals) return returnHTML;
         return "";
       }
     }
     if (whichTeam === "away") {
       if (homeGoals + homeGoals1 < awayGoals + awayGoals1) return returnHTML;
       if (homeGoals + homeGoals1 === awayGoals + awayGoals1) {
-        if (homePenalties < awayPenalties) return returnHTML;
-        if (awayGoals > awayGoals1) return returnHTML;
+        console.log(homePenalties, awayPenalties);
+        if (homePenalties < awayPenalties) {
+          console.log("RADI?");
+          return returnHTML;
+        }
+        // if (awayGoals > awayGoals1) return returnHTML;
         return "";
       }
     }
