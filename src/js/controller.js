@@ -283,6 +283,7 @@ const controlShowMoreMatches = function (whichTeam) {
 
 const controlShowChangeLeague = function () {
   LogoView.showChangeLeague();
+  ChangeLeagueView.resetChangeLeague();
 };
 
 const controlChangeLeague = async function (value) {
@@ -309,6 +310,7 @@ const init = async function () {
   LogoView.addHandlerShowChangeLeague(controlShowChangeLeague);
   ChangeLeagueView.addHandlerSearchLeagues(controlChangeLeague);
   ChangeLeagueView.addHandlerChangeLeague(controlShowLeague);
+  ChangeLeagueView.addHandlerSearchLeaguesIcon(controlChangeLeague);
 };
 
 init();

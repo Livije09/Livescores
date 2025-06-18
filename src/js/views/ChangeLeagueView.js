@@ -18,6 +18,17 @@ export class ChangeLeagueView extends View {
     this.#addHandlerChangePage();
   }
 
+  resetChangeLeague() {
+    this.#searchInput.value = "";
+    const pagesContainers = document.querySelectorAll(".change-league-page");
+    pagesContainers.forEach((container) => container.remove());
+    [this.#arrowLeft, this.#arrowRight].forEach((arrow) =>
+      arrow.classList.add("hidden")
+    );
+    const noResults = document.querySelector(".change-league-no-results");
+    if (noResults) noResults.remove();
+  }
+
   #addHandlerChangePage() {
     this.#arrowLeft.addEventListener("click", this.#previousPage.bind(this));
     this.#arrowRight.addEventListener("click", this.#nextPage.bind(this));
@@ -38,6 +49,16 @@ export class ChangeLeagueView extends View {
   #addHandlerClose() {
     [this.#closeBtn, this.#overlay].forEach((click) => {
       click.addEventListener("click", () => this.hideOverlayAndChangeLeague());
+    });
+  }
+
+  addHandlerSearchLeaguesIcon(handler) {
+    this.#parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".search-icon");
+      if (!btn) return;
+
+      const value = document.querySelector(".search-input").value;
+      handler(value);
     });
   }
 

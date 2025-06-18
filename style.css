@@ -1064,55 +1064,6 @@ select {
   border-bottom: 1px solid #fff;
 }
 
-/* .change-league-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 2.4rem;
-  border-radius: 5px;
-  background-color: #89ff9f;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  gap: 3.2rem;
-}
-
-.change-league-search {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-}
-
-.search-icon {
-  width: 3rem;
-  cursor: pointer;
-}
-
-.search-input {
-  font-size: 1.6rem;
-  padding: 0.2rem 0.4rem;
-  border-radius: 5px;
-}
-
-.search-input:focus {
-  border: 2px solid #167fdb;
-  outline: none;
-}
-
-.change-league-leagues {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3.2rem;
-}
-
-.change-league-league {
-  width: 15%;
-  cursor: pointer;
-} */
-
 .change-league-container {
   position: absolute;
   top: 50%;
@@ -1179,7 +1130,7 @@ select {
   border: none;
   padding: 0.6rem 1rem;
   outline: none;
-  width: 20rem;
+  width: 80rem;
   background: transparent;
   color: #333;
   transition: all 0.3s ease;

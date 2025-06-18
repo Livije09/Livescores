@@ -4,6 +4,7 @@ export class LogoView extends View {
   #parentElement = document.querySelector(".div-logo");
   #overlay = document.querySelector(".overlay-2");
   #chaneLeagueContainer = document.querySelector(".change-league-container");
+  #searchInput = document.querySelector(".search-input");
 
   constructor() {
     super();
