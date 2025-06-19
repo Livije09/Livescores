@@ -17,6 +17,10 @@
 /* 700px */
 
 @media (max-width: 44em) {
+  .main {
+    margin-top: 0;
+  }
+
   .div-logo,
   .selection,
   .table-selection,
@@ -25,7 +29,7 @@
   .top-scorers-header,
   .top-scorers-body,
   .top-scorers-row {
-    max-width: 65rem;
+    max-width: 100vw;
   }
 
   .table-header,
@@ -43,6 +47,11 @@
   .league-phase-btn {
     padding: 0.4rem;
     font-size: 1.4rem;
+  }
+
+  .club-position {
+    width: 2rem;
+    margin-right: 0.2rem;
   }
 
   /* FIXTURE */
@@ -73,6 +82,10 @@
 /* 544px */
 
 @media (max-width: 34em) {
+  .main {
+    margin-top: 0;
+  }
+
   .div-logo,
   .selection,
   .table-selection,
@@ -81,7 +94,7 @@
   .top-scorers-header,
   .top-scorers-body,
   .top-scorers-row {
-    max-width: 50rem;
+    max-width: 100vw;
   }
 
   .table-header,
@@ -156,6 +169,11 @@
   .league-phase-btn {
     padding: 0.4rem;
     font-size: 1.1rem;
+  }
+
+  .club-position {
+    width: 2rem;
+    margin-right: 0.2rem;
   }
 
   /* FIXTURE */
