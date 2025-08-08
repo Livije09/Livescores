@@ -298,6 +298,7 @@ select {
 .top-scorers-header-p:nth-child(2),
 .top-scorers-header-p:nth-child(3) {
   padding-left: 0.25rem;
+  /* padding-left: 0.25rem; */
 }
 
 .top-scorers-header-p:nth-child(3),
