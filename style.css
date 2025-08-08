@@ -290,7 +290,7 @@ select {
 .top-scorers-header-p:nth-child(2),
 .top-scorers-p:nth-child(2),
 .matches-p:nth-child(3) {
-  width: 22rem;
+  width: 25rem;
   justify-content: flex-start;
 }
 
