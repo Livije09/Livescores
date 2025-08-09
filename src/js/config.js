@@ -1,6 +1,6 @@
 const MY_HEADERS = new Headers();
-MY_HEADERS.append("x-rapidapi-key", "727b33a61481bce96db1c78dea5965d4");
-MY_HEADERS.append("x-rapidapi-host", "v3.football.api-sports.io");
+MY_HEADERS.append("x-rapidapi-key", "");
+MY_HEADERS.append("x-rapidapi-host", "");
 
 export const REQUEST_OPTIONS = {
   method: "GET",
