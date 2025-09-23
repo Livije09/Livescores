@@ -10,7 +10,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "parcel": "^2.14.2"
+    "parcel": "^2.16.0"
   },
   "dependencies": {
     "@balldontlie/sdk": "^1.2.2",
